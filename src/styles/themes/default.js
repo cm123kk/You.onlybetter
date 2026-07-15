@@ -1,91 +1,102 @@
 /**
- * Default Theme
+ * Default Theme — THE SUBSTANCE
  *
- * 프로젝트의 기본 디자인 토큰을 정의하는 표준 테마입니다.
+ * 스타터킷의 기본 디자인 토큰을 이 프로젝트(The Substance 랜딩)에 맞게 재정의한 테마입니다.
  * 피그마의 Design Tokens / Variables와 동일한 역할입니다.
  *
  * ## 핵심 철학
- * - **Sharp Corners**: borderRadius 0 (날카로운 모서리)
- * - **Dimmed Shadow**: offset 없이 blur만 사용하는 은은한 그림자
- * - **Pure White**: 깔끔한 흰색 배경
- * - **Brand Blue**: Primary 색상 #0000FF
+ * - **Clinical Dark**: #0A0A0A 딥 블랙 배경 (순수 #000 아님, 필름 LUT의 silky black)
+ * - **5색 고정 팔레트**: 아래 5색 외 임의 색상 사용 금지
+ *   - #0A0A0A 배경 / #F5F5F0 텍스트 / #F5E642 옐로(정적·로고) / #AAFF00 그린(동적·액체) / #C41E3A 레드(경고·극소량)
+ * - **ALL CAPS 단일 서체**: Bebas Neue, 본문 개념 없음(모든 텍스트가 헤드라인), letterSpacing -0.03em
+ * - **Sharp Corners**: borderRadius 0 (임상적 사각 기하학 — 유지)
+ * - **Glow, not Shadow**: 다크 표면에서 그림자 대신 #AAFF00 발광
  */
 
 import { createTheme } from '@mui/material/styles';
-import { blueGrey, grey } from '@mui/material/colors';
+import { grey } from '@mui/material/colors';
+
+// ============================================================
+// 0. Substance 5색 토큰 (Single Source)
+// ============================================================
+const BLACK = '#0A0A0A'; // background — deep silky black
+const WHITE = '#F5F5F0'; // text — warm clinical white
+const YELLOW = '#F5E642'; // primary — yolk yellow · 정적 · 로고 ◗◗
+const GREEN = '#AAFF00'; // secondary — ampoule green · 동적 · 액체/hover/CTA
+const RED = '#C41E3A'; // error — 경고 · Phase 03 · 면책 (극소량)
 
 // ============================================================
 // 1. Color Tokens (색상 토큰)
 // ============================================================
 const palette = {
-  mode: 'light',
+  mode: 'dark',
   // 브랜드 색상
   primary: {
-    light: '#6666FF',
-    main: '#0000FF',
-    dark: '#0000B2',
-    contrastText: '#FFFFFF',
+    light: '#FFF17A',
+    main: YELLOW, // 옐로 — 로고·원본 자아 (정적)
+    dark: '#C9BE2F',
+    contrastText: BLACK,
   },
   secondary: {
-    light: blueGrey[700],
-    main: blueGrey[900],
-    dark: '#1a252b',
-    contrastText: '#FFFFFF',
+    light: '#C4FF4D',
+    main: GREEN, // 그린 — 활성화된 서브스탠스 (동적)
+    dark: '#7FBF00',
+    contrastText: BLACK,
   },
 
-  // 상태 색상 (Feedback)
+  // 상태 색상 (Feedback) — 5색 팔레트 밖 사용 금지. 오용 방지를 위해 팔레트 내로 매핑.
   error: {
-    light: '#ef5350',
-    main: '#d32f2f',
-    dark: '#c62828',
-    contrastText: '#FFFFFF',
+    light: '#E14257',
+    main: RED, // 딥 레드 — 경고·Phase 03·면책 (페이지 전체 3~4곳 이하)
+    dark: '#9B1730',
+    contrastText: WHITE,
   },
   warning: {
-    light: '#ff9800',
-    main: '#ed6c02',
-    dark: '#e65100',
-    contrastText: '#FFFFFF',
+    light: '#FFF17A',
+    main: YELLOW,
+    dark: '#C9BE2F',
+    contrastText: BLACK,
   },
   success: {
-    light: '#4caf50',
-    main: '#2e7d32',
-    dark: '#1b5e20',
-    contrastText: '#FFFFFF',
+    light: '#C4FF4D',
+    main: GREEN,
+    dark: '#7FBF00',
+    contrastText: BLACK,
   },
   info: {
-    light: '#03a9f4',
-    main: '#0288d1',
-    dark: '#01579b',
-    contrastText: '#FFFFFF',
+    light: '#C4FF4D',
+    main: GREEN,
+    dark: '#7FBF00',
+    contrastText: BLACK,
   },
 
-  // 텍스트 색상
+  // 텍스트 색상 — 항상 warm white on black (반전 없음, CTA hover만 예외)
   text: {
-    primary: 'rgba(0, 0, 0, 0.87)',
-    secondary: 'rgba(0, 0, 0, 0.6)',
-    disabled: 'rgba(0, 0, 0, 0.38)',
+    primary: WHITE,
+    secondary: 'rgba(245, 245, 240, 0.6)',
+    disabled: 'rgba(245, 245, 240, 0.38)',
   },
 
-  // 배경 색상
+  // 배경 색상 — 플랫 다크
   background: {
-    default: '#FFFFFF',
-    paper: '#FFFFFF',
+    default: BLACK,
+    paper: BLACK,
   },
 
   // 구분선
-  divider: 'rgba(0, 0, 0, 0.12)',
+  divider: 'rgba(245, 245, 240, 0.12)',
 
   // 액션 상태
   action: {
-    active: 'rgba(0, 0, 0, 0.54)',
-    hover: 'rgba(0, 0, 0, 0.04)',
-    selected: 'rgba(0, 0, 0, 0.08)',
-    disabled: 'rgba(0, 0, 0, 0.26)',
-    disabledBackground: 'rgba(0, 0, 0, 0.12)',
-    focus: 'rgba(0, 0, 0, 0.12)',
+    active: 'rgba(245, 245, 240, 0.7)',
+    hover: 'rgba(245, 245, 240, 0.06)',
+    selected: 'rgba(245, 245, 240, 0.12)',
+    disabled: 'rgba(245, 245, 240, 0.3)',
+    disabledBackground: 'rgba(245, 245, 240, 0.12)',
+    focus: 'rgba(245, 245, 240, 0.12)',
   },
 
-  // Grey 스케일
+  // Grey 스케일 (유지 — 유틸리티용)
   grey: {
     50: grey[50],
     100: grey[100],
@@ -103,164 +114,172 @@ const palette = {
 // ============================================================
 // 2. Typography Tokens (타이포그래피 토큰)
 // ============================================================
-const typography = {
-  // 기본 폰트 패밀리
-  fontFamily: [
-    '"Pretendard Variable"',
-    'Pretendard',
-    '-apple-system',
-    'BlinkMacSystemFont',
-    'system-ui',
-    'Roboto',
-    '"Helvetica Neue"',
-    '"Segoe UI"',
-    '"Apple SD Gothic Neo"',
-    '"Noto Sans KR"',
-    '"Malgun Gothic"',
-    '"Apple Color Emoji"',
-    '"Segoe UI Emoji"',
-    '"Segoe UI Symbol"',
-    'sans-serif',
-  ].join(','),
+// 단일 서체 · ALL CAPS 전용 · 본문 개념 없음(모든 텍스트가 헤드라인, 크기만 다름)
+const FONT_STACK = "'Bebas Neue', 'Arial Narrow', 'Oswald', sans-serif";
 
-  // 헤딩 폰트 패밀리
-  headingFontFamily: '"Outfit", "Pretendard Variable", Pretendard, sans-serif',
+const typography = {
+  // 기본 폰트 패밀리 (헤딩=본문 통일)
+  fontFamily: FONT_STACK,
+
+  // 헤딩 폰트 패밀리 (동일 — 단일 서체)
+  headingFontFamily: FONT_STACK,
 
   // 폰트 크기 기준
   fontSize: 14,
   htmlFontSize: 16,
 
-  // 폰트 굵기
-  fontWeightLight: 300,
+  // 폰트 굵기 (Bebas Neue는 단일 웨이트 — 폴백 시 heavy)
+  fontWeightLight: 400,
   fontWeightRegular: 400,
-  fontWeightMedium: 500,
+  fontWeightMedium: 400,
   fontWeightBold: 700,
 
-  // 헤딩 스타일
+  // 헤딩 스타일 — condensed 특성상 큰 사이즈에서 임팩트 극대화
   h1: {
-    fontFamily: '"Outfit", "Pretendard Variable", Pretendard, sans-serif',
-    fontWeight: 900,
-    fontSize: '2.5rem',      // 40px
-    lineHeight: 1.2,
-    letterSpacing: '-0.02em',
+    fontFamily: FONT_STACK,
+    fontWeight: 400,
+    fontSize: 'clamp(4rem, 12vw, 9rem)', // Chapter/Hero — "NOT FOR EVERYONE"
+    lineHeight: 0.95,
+    letterSpacing: '-0.03em',
+    textTransform: 'uppercase',
   },
   h2: {
-    fontFamily: '"Outfit", "Pretendard Variable", Pretendard, sans-serif',
-    fontWeight: 900,
-    fontSize: '2rem',        // 32px
-    lineHeight: 1.2,
-    letterSpacing: '-0.02em',
+    fontFamily: FONT_STACK,
+    fontWeight: 400,
+    fontSize: 'clamp(2.5rem, 6vw, 4rem)', // Section title
+    lineHeight: 1,
+    letterSpacing: '-0.03em',
+    textTransform: 'uppercase',
   },
   h3: {
-    fontFamily: '"Outfit", "Pretendard Variable", Pretendard, sans-serif',
-    fontWeight: 800,
-    fontSize: '1.75rem',     // 28px
-    lineHeight: 1.3,
-    letterSpacing: '-0.01em',
+    fontFamily: FONT_STACK,
+    fontWeight: 400,
+    fontSize: 'clamp(2rem, 5vw, 3rem)',
+    lineHeight: 1,
+    letterSpacing: '-0.03em',
+    textTransform: 'uppercase',
   },
   h4: {
-    fontFamily: '"Outfit", "Pretendard Variable", Pretendard, sans-serif',
-    fontWeight: 700,
-    fontSize: '1.5rem',      // 24px
-    lineHeight: 1.3,
-    letterSpacing: '-0.01em',
+    fontFamily: FONT_STACK,
+    fontWeight: 400,
+    fontSize: 'clamp(1.75rem, 4vw, 2.25rem)', // Phase 라벨
+    lineHeight: 1.05,
+    letterSpacing: '-0.03em',
+    textTransform: 'uppercase',
   },
   h5: {
-    fontFamily: '"Outfit", "Pretendard Variable", Pretendard, sans-serif',
-    fontWeight: 700,
-    fontSize: '1.25rem',     // 20px
-    lineHeight: 1.4,
-    letterSpacing: '0',
+    fontFamily: FONT_STACK,
+    fontWeight: 400,
+    fontSize: '1.5rem',
+    lineHeight: 1.1,
+    letterSpacing: '-0.03em',
+    textTransform: 'uppercase',
   },
   h6: {
-    fontFamily: '"Outfit", "Pretendard Variable", Pretendard, sans-serif',
-    fontWeight: 600,
-    fontSize: '1.125rem',    // 18px
-    lineHeight: 1.4,
-    letterSpacing: '0',
+    fontFamily: FONT_STACK,
+    fontWeight: 400,
+    fontSize: '1.25rem',
+    lineHeight: 1.1,
+    letterSpacing: '-0.03em',
+    textTransform: 'uppercase',
   },
 
-  // 본문 스타일
+  // "본문" — 존재하지 않음. 활성화 스크립트도 헤드라인 취급 (크기만 작게)
   body1: {
-    fontSize: '1rem',        // 16px
-    lineHeight: 1.6,
-    letterSpacing: '0',
+    fontFamily: FONT_STACK,
+    fontSize: '1.5rem', // Body-as-headline
+    lineHeight: 1.15,
+    letterSpacing: '-0.03em',
+    textTransform: 'uppercase',
   },
   body2: {
-    fontSize: '0.875rem',    // 14px
-    lineHeight: 1.6,
-    letterSpacing: '0',
+    fontFamily: FONT_STACK,
+    fontSize: '1.25rem',
+    lineHeight: 1.15,
+    letterSpacing: '-0.03em',
+    textTransform: 'uppercase',
   },
 
   // 부제목
   subtitle1: {
-    fontSize: '1rem',        // 16px
-    fontWeight: 500,
-    lineHeight: 1.5,
-    letterSpacing: '0.01em',
+    fontFamily: FONT_STACK,
+    fontSize: '1.25rem',
+    fontWeight: 400,
+    lineHeight: 1.2,
+    letterSpacing: '-0.02em',
+    textTransform: 'uppercase',
   },
   subtitle2: {
-    fontSize: '0.875rem',    // 14px
-    fontWeight: 500,
-    lineHeight: 1.5,
-    letterSpacing: '0.01em',
+    fontFamily: FONT_STACK,
+    fontSize: '1rem',
+    fontWeight: 400,
+    lineHeight: 1.2,
+    letterSpacing: '-0.02em',
+    textTransform: 'uppercase',
   },
 
-  // 기타
+  // 버튼 — 전면 ALL CAPS
   button: {
-    fontSize: '0.875rem',    // 14px
-    fontWeight: 600,
-    lineHeight: 1.75,
-    letterSpacing: '0.02em',
-    textTransform: 'none',   // 대문자 변환 비활성화
-  },
-  caption: {
-    fontSize: '0.75rem',     // 12px
+    fontFamily: FONT_STACK,
+    fontSize: '1rem',
+    fontWeight: 400,
     lineHeight: 1.5,
     letterSpacing: '0.02em',
+    textTransform: 'uppercase',
+  },
+  // Fine print — 같은 폰트·같은 웨이트, 크기만 작게 (면책·클리니컬 데이터)
+  caption: {
+    fontFamily: FONT_STACK,
+    fontSize: '0.75rem',
+    lineHeight: 1.4,
+    letterSpacing: '0.01em',
+    textTransform: 'uppercase',
   },
   overline: {
-    fontSize: '0.75rem',     // 12px
-    fontWeight: 600,
-    lineHeight: 2,
+    fontFamily: FONT_STACK,
+    fontSize: '0.75rem',
+    fontWeight: 400,
+    lineHeight: 1.6,
     letterSpacing: '0.08em',
     textTransform: 'uppercase',
   },
 };
 
 // ============================================================
-// 3. Spacing Token (간격 토큰)
+// 3. Spacing Token (간격 토큰) — 유지
 // ============================================================
-const spacing = 8; // 기본 단위: 8px
+const spacing = 8; // 기본 단위: 8px (임상적 사각 그리드에 부합 — 변경 없음)
 
 // ============================================================
-// 4. Shape Token (모양 토큰)
+// 4. Shape Token (모양 토큰) — 유지
 // ============================================================
 const shape = {
-  borderRadius: 0, // Sharp corners (0px)
+  borderRadius: 0, // Sharp corners (0px) — 임상적 사각 기하학
 };
 
 // ============================================================
-// 5. Shadow Tokens (그림자 토큰)
+// 5. Shadow Tokens (그림자 토큰) — Glow(발광) 개념으로 전환
 // ============================================================
+// 다크 배경에서는 dimmed shadow 대신 #AAFF00 글로우. 일반 표면은 그림자 거의 없음(플랫).
 const customShadows = {
   none: 'none',
-  sm: '0 0 12px rgba(0, 0, 0, 0.06)',
-  md: '0 0 16px rgba(0, 0, 0, 0.08)',
-  lg: '0 0 20px rgba(0, 0, 0, 0.10)',
-  xl: '0 0 24px rgba(0, 0, 0, 0.12)',
+  sm: 'none',
+  md: 'none',
+  lg: '0 0 20px rgba(170, 255, 0, 0.2)',
+  xl: '0 0 32px rgba(170, 255, 0, 0.35)',
+  glow: '0 0 20px rgba(170, 255, 0, 0.4)', // 그린 요소 hover 발광
 };
 
 // ============================================================
-// 6. Breakpoints (브레이크포인트)
+// 6. Breakpoints (브레이크포인트) — 유지
 // ============================================================
 const breakpoints = {
   values: {
-    xs: 0,      // 모바일
-    sm: 600,    // 태블릿 세로
-    md: 900,    // 태블릿 가로
-    lg: 1200,   // 데스크톱
-    xl: 1536,   // 대형 데스크톱
+    xs: 0, // 모바일
+    sm: 600, // 태블릿 세로
+    md: 900, // 태블릿 가로
+    lg: 1200, // 데스크톱
+    xl: 1536, // 대형 데스크톱
   },
 };
 
@@ -306,6 +325,7 @@ const components = {
   MuiCssBaseline: {
     styleOverrides: {
       body: {
+        backgroundColor: BLACK,
         scrollbarWidth: 'thin',
       },
     },
@@ -313,30 +333,22 @@ const components = {
   MuiPaper: {
     styleOverrides: {
       root: {
-        boxShadow: customShadows.lg,
+        backgroundColor: BLACK,
+        backgroundImage: 'none', // MUI dark elevation overlay 제거 (플랫 표면)
+        boxShadow: 'none',
       },
-      elevation0: {
-        boxShadow: customShadows.none,
-      },
-      elevation1: {
-        boxShadow: customShadows.sm,
-      },
-      elevation2: {
-        boxShadow: customShadows.md,
-      },
-      elevation3: {
-        boxShadow: customShadows.lg,
-      },
-      elevation4: {
-        boxShadow: customShadows.xl,
-      },
+      elevation0: { boxShadow: customShadows.none },
+      elevation1: { boxShadow: customShadows.none },
+      elevation2: { boxShadow: customShadows.none },
+      elevation3: { boxShadow: customShadows.lg },
+      elevation4: { boxShadow: customShadows.xl },
     },
   },
   MuiButton: {
     styleOverrides: {
       root: {
         borderRadius: 0,
-        textTransform: 'none',
+        textTransform: 'uppercase', // 전면 ALL CAPS
       },
     },
   },
@@ -344,13 +356,15 @@ const components = {
     styleOverrides: {
       root: {
         borderRadius: 0,
+        backgroundColor: BLACK,
+        backgroundImage: 'none',
       },
     },
   },
   MuiChip: {
     styleOverrides: {
       root: {
-        borderRadius: 4,
+        borderRadius: 0, // Sharp — 이 페이지는 4px 예외 없이 전부 각짐
       },
     },
   },
@@ -374,7 +388,20 @@ const defaultTheme = createTheme({
 defaultTheme.customShadows = customShadows;
 
 /**
- * 대시보드 스타일 설정 (Default)
+ * Substance 전용 커스텀 토큰 (MUI 표준 팔레트 밖)
+ * theme.substance.* 로 접근 — 컬러 아크·발광·과잉조명 등 페이지 전용 값
+ */
+defaultTheme.substance = {
+  arcYellow: YELLOW, // 컬러 아크 시작점 (옐로 100%)
+  arcGreen: GREEN, // 컬러 아크 종점 (그린 100%)
+  glowGreen: '0 0 20px rgba(170, 255, 0, 0.4)', // hover 발광
+  deniedRed: RED, // ACCESS DENIED
+  overbright: 'brightness(2.2)', // 과잉 조명 플래시
+  maxWidth: 680, // 센터 컬럼 폭(px)
+};
+
+/**
+ * 대시보드 스타일 설정 (Default) — 다크로 정합
  */
 defaultTheme.dashboard = {
   style: 'default',
@@ -382,48 +409,48 @@ defaultTheme.dashboard = {
   iconWeight: 400,
   cardBorderRadius: 0,
   cardColors: [
-    'linear-gradient(to bottom, #FFFFFF 0%, #FFFFFF 100%)',
-    'linear-gradient(to bottom, #FFFFFF 0%, #FFFFFF 100%)',
-    'linear-gradient(to bottom, #FFFFFF 0%, #FFFFFF 100%)',
-    'linear-gradient(to bottom, #FFFFFF 0%, #FFFFFF 100%)',
-    'linear-gradient(to bottom, #FFFFFF 0%, #FFFFFF 100%)',
-    'linear-gradient(to bottom, #FFFFFF 0%, #FFFFFF 100%)',
+    'linear-gradient(to bottom, #0A0A0A 0%, #0A0A0A 100%)',
+    'linear-gradient(to bottom, #0A0A0A 0%, #0A0A0A 100%)',
+    'linear-gradient(to bottom, #0A0A0A 0%, #0A0A0A 100%)',
+    'linear-gradient(to bottom, #0A0A0A 0%, #0A0A0A 100%)',
+    'linear-gradient(to bottom, #0A0A0A 0%, #0A0A0A 100%)',
+    'linear-gradient(to bottom, #0A0A0A 0%, #0A0A0A 100%)',
   ],
   subCardColors: [
-    'linear-gradient(to bottom, #FAFAFA 0%, #FAFAFA 100%)',
-    'linear-gradient(to bottom, #FAFAFA 0%, #FAFAFA 100%)',
-    'linear-gradient(to bottom, #FAFAFA 0%, #FAFAFA 100%)',
-    'linear-gradient(to bottom, #FAFAFA 0%, #FAFAFA 100%)',
-    'linear-gradient(to bottom, #FAFAFA 0%, #FAFAFA 100%)',
-    'linear-gradient(to bottom, #FAFAFA 0%, #FAFAFA 100%)',
+    'linear-gradient(to bottom, #121212 0%, #121212 100%)',
+    'linear-gradient(to bottom, #121212 0%, #121212 100%)',
+    'linear-gradient(to bottom, #121212 0%, #121212 100%)',
+    'linear-gradient(to bottom, #121212 0%, #121212 100%)',
+    'linear-gradient(to bottom, #121212 0%, #121212 100%)',
+    'linear-gradient(to bottom, #121212 0%, #121212 100%)',
   ],
   textColor: palette.text.primary,
   textSecondary: palette.text.secondary,
   textShadow: '0 0 0 rgba(0, 0, 0, 0)',
   backdropFilter: 'blur(0px)',
   WebkitBackdropFilter: 'blur(0px)',
-  border: '1px solid transparent',
-  borderColor: 'transparent',
+  border: '1px solid rgba(245, 245, 240, 0.12)',
+  borderColor: 'rgba(245, 245, 240, 0.12)',
   shadow: customShadows.lg,
-  subBorder: '1px solid rgba(0, 0, 0, 0.06)',
+  subBorder: '1px solid rgba(245, 245, 240, 0.06)',
   subShadow: '0 0 0 rgba(0, 0, 0, 0)',
   subBackdropFilter: 'blur(0px)',
   subBorderRadius: 0,
-  dividerColor: 'rgba(0, 0, 0, 0.12)',
+  dividerColor: 'rgba(245, 245, 240, 0.12)',
   progressHeight: 6,
-  progressTrackColor: 'rgba(0, 0, 0, 0.08)',
-  progressBarColor: palette.primary.main,
+  progressTrackColor: 'rgba(245, 245, 240, 0.08)',
+  progressBarColor: palette.secondary.main,
   progressGradient: false,
   progressBorderRadius: 0,
-  background: '#FFFFFF',
-  atmosphere: 'linear-gradient(to bottom, #FFFFFF 0%, #FFFFFF 100%)',
+  background: BLACK,
+  atmosphere: 'linear-gradient(to bottom, #0A0A0A 0%, #0A0A0A 100%)',
   atmosphereOpacity: 0,
-  accentColor: palette.primary.main,
+  accentColor: palette.secondary.main,
   accentColors: {
-    wind: '#4DB6AC',
-    humidity: '#FFB74D',
-    uvIndex: '#FF8A65',
-    pressure: '#64B5F6',
+    wind: GREEN,
+    humidity: YELLOW,
+    uvIndex: GREEN,
+    pressure: YELLOW,
   },
   blobs: null,
 };

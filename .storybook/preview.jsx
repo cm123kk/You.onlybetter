@@ -9,8 +9,10 @@ const googleFonts = [
   'Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200',
   'Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200',
   'Material+Symbols+Sharp:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200',
-  // Default Theme Font
-  'Outfit:wght@300;400;500;600;700;800;900',
+  // Default Theme Font — Bebas Neue (THE SUBSTANCE, ALL CAPS condensed)
+  'Bebas+Neue',
+  // Fine-print condensed 폴백 보강
+  'Oswald:wght@300;400;500;600;700',
 ];
 
 googleFonts.forEach((font) => {

@@ -14,7 +14,7 @@
 | 2 | **증거 없는 확신** | 검증 불가능성이 역설적 신뢰 | 증언에 이름·직업 없이 나이만 |
 | 3 | **거절 불안** | 구매가 아니라 "지원" | "Request Consideration" · Acceptance is not guaranteed |
 | 4 | **경고가 유혹** | 임상적 경고일수록 진짜 같다 | "Results vary. Irreversible."을 숨기지 않고 전면에 |
-| 5 | **영구성** | 되돌릴 수 없음이 헌신을 만든다 | "There's no going back" 반복, 선형 여정 |
+| 5 | **영구성** | 되돌릴 수 없음이 헌신을 만든다 | 전면은 **"Forever."**(영원한 젊음=보상). "There's no going back"은 상실 뉘앙스라 **제출 이후에만**, 선형 여정 |
 
 ### 긴장감을 만드는 구체 장치 (과하지 않게, 서사에 봉사)
 
@@ -23,6 +23,48 @@
 - **사라지는 면책조항**: hover 시 페이드 — 읽히지 않으려는 텍스트라는 연출 (단, 키보드 focus로는 읽을 수 있게 접근성 보장)
 - **잠긴 Phase 03**: hover 시 #C41E3A "ACCESS DENIED" — 거부가 갈망으로
 - **침묵의 순간**: 사운드 ON 시 Phase 03 구간은 앰비언트가 끊기고 형광등 허밍만 — 정적의 긴장
+
+---
+
+## 카피 전략 — "꿈은 공개, 대가는 은닉" (Copy Strategy)
+
+> 사운드와 동일한 "욕망의 UX" 원리가 카피에도 적용된다. **good UX(명료·안심)가 아니라 욕망의 UX** — 유저가 유혹당하는 줄 모르게 스스로 욕망을 발견하고, 어두운 대가는 영화처럼 **너무 늦게** 알게 된다.
+
+### 판정 기준 — 유혹적 두려움 vs 반발적 위협
+
+같은 "무서운 카피"라도 갈린다. 경계는 하나: **카피가 유저를 공격하는가, 유혹하는가.**
+
+| | 유혹적 두려움 (사용) | 반발적 위협 (금지) |
+|---|---|---|
+| 대상 | 유저가 **욕망의 주체** | 유저가 **공격의 대상** |
+| 방식 | 유보·암시·거울·초대 | 위협·수치·부담·구체적 대가 폭로 |
+| 이성의 반응 | 반박할 구체물 없음 → 각성 지속 | 반박할 구체물 제공 → 냉정·이탈 |
+
+### 4대 카피 원칙 (모든 문구 결정 기준)
+
+1. **꿈은 아낌없이 공개, 대가는 은닉** — 영화 속 인물은 조인 전까지 불가역성을 모른다(무지가 함정). 조인 전 랜딩은 **순수한 욕망 충족**처럼 느껴져야 함. 어두운 대가는 조인 후/fine-print로 미룬다.
+2. **경고는 임상적·모호하게만** — "Results vary. Irreversible."(모호=유혹) OK / **구체적 상실 폭로 금지**("what has been transferred won't come back" = 경보 = 도망).
+3. **불가역성 = 경고 아닌 보상** — "no going back"(상실) 대신 **"Forever."**(영원한 젊음=선물)을 전면에. 상실 뉘앙스는 제출 이후에만.
+4. **유혹을 선언하지 않는다** — "you'll say yes"처럼 못박으면 반발. 유저가 **자기 욕망을 스스로 발견**하게("You've already imagined it.").
+
+### 순서 원칙 (Sequencing) — 개별 문구보다 중요
+
+dread는 **욕망이 먼저 형성된 뒤에만** "진짜구나"로 읽힌다. 욕망 대상(Younger/More perfect)보다 dread(mirror knows)가 먼저 오면 그냥 무섭다. → **판타지로 먼저 유혹 → 그다음 임상적 dread.** (인트로가 "Younger…"를 dread보다 앞세운 것은 정확.)
+
+### 카피 판정 결과 (유지 / 리프레임 / 제거)
+
+| 카피 | 판정 | 이유 |
+|------|------|------|
+| the mirror / camera / room knows | ✅ 유지 | 제품 위협이 아니라 유저가 **이미 아는 고통의 명명** = 간파당함 = 자석 |
+| NOT FOR EVERYONE | ✅ 유지 | 금지·배제(reactance). 막힐수록 원함 |
+| Acceptance is not guaranteed | ✅ 유지 | 거절 불안·희소. 못 가질수록 원함 |
+| Investment discussed upon selection (가격 없음) | ✅ 유지 | 가격 = 1순위 이탈 트리거. 은닉이 판타지 유지 |
+| 증언 나이만(51/47/44/53) | ✅ 유지 | 검증 불가 = 반박 불가(역설적 신뢰) |
+| Younger. More beautiful. More perfect. | ✅ 유지(필수) | 거의 유일한 순수 욕망-대상. 없으면 dread만 남아 무섭기만 함 |
+| Results vary. Irreversible. | ✅ 유지 | 단 **임상적·작게**. 헤드라인화 금지 |
+| **There's no going back** | 🔧 리프레임 | 전면은 **"Forever."**(보상). 상실 뉘앙스는 **제출 이후**에만 |
+| **What has been transferred won't come back** | ❌ 제거 | 구체적 상실 폭로 = 경보. 전면 삭제, 사라지는 면책조항 fine-print로만 |
+| **You already know you're going to say yes** | 🔧 리프레임 | 유혹 선언 = 반발. → **"You've already imagined it."**(유저 자신의 욕망을 가리킴) |
 
 ---
 
@@ -39,9 +81,9 @@
   3. 배경에서 세포가 분열하고 노른자가 갈라짐. 처음엔 옐로, 스크롤할수록 그린으로 물듦
   4. "This is the Substance." → 딩~ (사운드 ON 시). "You. Are. One." → 딩~ 피치 다운 변형
   5. 텍스트가 사라지지 않고 쌓임 → 화면 과부하 → 압도당하는 감각 (의도적)
-  6. 인트로 종료 → HERO "NOT FOR EVERYONE." / "You already know you're going to say yes."
+  6. 인트로 종료 → HERO "NOT FOR EVERYONE." / "You've already imagined it." (유혹을 선언하지 않고 유저 자신의 욕망을 가리킴)
 - **성공 조건**: 유저가 "판매 페이지"라고 인지하기 전에 이미 서사에 몰입
-- **예외 상황**: 사운드 기본 OFF → 시각만으로도 서사가 성립해야 함 (사운드는 증폭, 필수 정보 아님)
+- **예외 상황**: 사운드 기본 ON이되 첫 제스처(스크롤) 전엔 무음(autoplay 정책 준수) → 시각만으로도 서사가 성립해야 함 (사운드는 증폭, 필수 정보 아님)
 
 ### 시나리오 2: 의심하다가 설득당함 — "The Skeptic"
 
@@ -63,7 +105,7 @@
 - **플로우**:
   1. ACCESS 섹션 — ◗◗ / "REQUEST CONSIDERATION" / 이메일 입력창 1개
   2. 레이아웃이 미세하게 기울어져 있음(대칭 붕괴) → 중심을 잃은 감각
-  3. 이메일 입력 → "SUBMIT REQUEST" 클릭 → 주사 트리거 사운드(짧은 임팩트)
+  3. 이메일 입력 → "SUBMIT REQUEST" 클릭 → 인젝션 사운드(수중 dispersion — 주사액이 물에 퍼지는 먹먹한 소리)
   4. "Acceptance is not guaranteed. There's no going back." → 제출했는데 확답 없음 → 불안 지속
   5. FOOTER — "You are one. Respect the balance." + 면책조항(hover 시 사라짐)
 - **성공 조건**: 제출 = 안도가 아니라 **더 깊은 불안**으로 끝남 (거절 불안 유지)
@@ -71,10 +113,10 @@
 
 ### 시나리오 4: 소리를 켠 사람 — "Full Immersion"
 
-- **사용자**: 우측 하단 사운드 토글을 ON 한 사람
+- **사용자**: 기본 ON 상태로 들어와 음소거하지 않은 사람 (대다수 유저)
 - **목표**: 최대 몰입
 - **플로우**:
-  1. 토글 ON (사용자 제스처) → AudioContext resume → 40Hz 유기적 드론 시작
+  1. 진입 시 토글은 시각적으로 ON → **첫 스크롤(유효한 제스처)에서 AudioContext resume** → 40Hz 유기적 드론 페이드인 (첫 소리는 딩이 아니라 드론). 유저 체감상 "OFF였다가 켠" 감각 없이 소리가 살아남
   2. 스크롤 깊이에 따라 앰비언트 진화: 초반(옐로) 느린 드론 → 후반(그린) 펄스 베이스 추가
   3. 세포 분열 순간마다 막 스트레칭→분열 임팩트→버블링 사운드가 애니메이션과 동기
   4. Substance 언급 텍스트마다 딩~ 시그니처
@@ -94,7 +136,7 @@
 |--------|------------------------|------------|----------|---------------|
 | 0.00 | **◗◗ 로고만 (선명, 화면 중앙)** — 텍스트 없음 | 정지 (로고 단독) | 옐로 100% | (무음) 첫 스크롤 대기 |
 | 0.03 | 로고 아래 "SCROLL" 미세 표시 | 노른자 원(#F5E642) 로고 뒤에서 서서히 등장 | 옐로 | 첫 스크롤 대기 |
-| 0.05 | "Have you ever dreamt..." blur→선명, 아래→위 | 노른자 미세 진동 시작 | 옐로 | **딩~** (LAYER 5) + 드론 ON (LAYER 1, 40Hz) |
+| 0.05 | "Have you ever dreamt..." blur→선명, 아래→위 | 노른자 미세 진동 시작 | 옐로 | **드론 페이드인** (LAYER 1, 40Hz) — 딩 없음(첫 소리는 드론) |
 | 0.15 | "Younger. / More beautiful. / More perfect." 누적 stamp | 세포 파티클 등장(소수), 매크로 클로즈업 | 옐로 95% | 드론 지속, 저역 버블링 시작 |
 | 0.30 | "One single injection unlocks your DNA..." | 노른자 **분열 시작**(YolkMorph) | 옐로→연두 전환 개시 | 막 스트레칭(LAYER 2) → 분열 임팩트(LAYER 3) |
 | 0.40 | "This is the Substance." | 세포 분열 가속, 액체 출렁임 진해짐 | 연두 | **딩~** (텍스트 동시) + 버블링(LAYER 4) |
@@ -131,24 +173,25 @@
 
 ## 인터랙션 → 사운드 매핑
 
-> 모든 사운드는 Web Audio API 실시간 합성(오디오 파일 없음). 5레이어 구조. 아래는 **어떤 사건이 어떤 레이어를 트리거하는가**의 계약(contract) — 구현 시 이 표가 오디오 엔진 사양의 입력이 된다.
+> 사운드는 **하이브리드** — 유기음(막/분열/버블/인젝션)은 저작권 프리(CC0) 실제 녹음 샘플(`public/audio/substance/`, 없으면 합성 폴백), 톤 계열(드론·딩)은 Web Audio 합성. 순수 합성으론 영화의 유기적 질감에 도달 불가(영화팀은 화산 녹음·청진기 내장음 등 실제 폴리를 타임스트레치)하여 방향 변경. 5레이어 구조. 아래는 **어떤 사건이 어떤 레이어를 트리거하는가**의 계약(contract) — 구현 시 이 표가 오디오 엔진 사양의 입력이 된다.
 
-### 사운드 레이어 (5종)
+### 사운드 레이어 (6종)
 
 | 레이어 | 이름 | 성격 | 지속 |
 |--------|------|------|------|
-| L1 | 베이스 드론 | 40→55Hz 유기적 저음, 페이지가 살아있는 느낌 | 상시(스크롤 연동) |
-| L2 | 세포막 스트레칭 | 밴드패스 노이즈 상승, 끈적한 늘어남 | 분열 직전 1.5s |
-| L3 | 분열 임팩트 | 저역 텀프 + 습한 노이즈 버스트 | 순간(~0.15s) |
-| L4 | 액체 버블링 | 랜덤 간격 점성 버블 | 분열 후 일정 시간 |
-| L5 | 딩~ 시그니처 | 880Hz + 배음, 금속·임상 | 2.5s 페이드 |
+| L1 | 베이스 드론 (합성) | 40→55Hz 유기적 저음 + 미세 디튠 비팅, 페이지가 살아있는 느낌 | 상시(스크롤 연동) |
+| L2 | 세포막 스트레칭 (샘플→합성) | 끈적한 늘어남 (wet squelch 샘플, 없으면 밴드패스 노이즈) | 분열 직전 1.5s |
+| L3 | 분열 임팩트 (샘플→합성) | 습하고 육중한 파열 (wet splat 샘플 + 저역 킥 보강) | 순간(~0.15s) |
+| L4 | 액체 버블링 (샘플 루프→합성) | 수중 점성 기포 (underwater bubbles 루프, 없으면 랜덤 합성 버블) | 상시(앰비언트) |
+| L5 | 딩~ 시그니처 (합성) | 440Hz 저역 벨 + 미세 디튠, 금속·임상 (attack 0.04s·tail 2.8s로 완만화 — 경보 아닌 종) | 2.8s 페이드 |
+| L6 | **보이스 라인 (TTS 클립→SpeechSynthesis 폴백)** | 활성화 스크립트를 읽는 **차갑고 가까운 임상적 내레이션**. 광고 VO 아님 — 머릿속 지시/속삭임. lowpass + 잔향 + 미세 디튠으로 "dematerialized" 처리, 재생 중 드론 살짝 덕킹 | 라인당 2~4s (**설계만 — 구현 보류**) |
 
 ### 이벤트 → 트리거 계약
 
 | 인터랙션 / 이벤트 | 트리거 사운드 | 타이밍 | 비고 |
 |-------------------|--------------|--------|------|
-| 페이지 첫 진입(제스처 후) | L5 딩~ | 0.5s 지연 | AudioContext resume 필요 |
-| 첫 스크롤 | L1 드론 ON | 즉시 | 이후 스크롤 깊이로 주파수 상승 |
+| 첫 진입 / 첫 스크롤 | L1 드론 페이드인 (딩 없음) | 즉시 | 기본 ON이되 첫 스크롤=유효한 제스처로 AudioContext resume. 첫 소리는 드론(딩 아님). 이후 스크롤 깊이로 주파수 상승 |
+| **활성화 스크립트 라인이 stamped 될 때** | **L6 보이스 라인 낭독** | 라인 리빌 동기 | 라인마다 1회. 드론 덕킹 + 클리닉 처리. 딩과 겹치지 않게 스케줄. **설계만 — 구현 보류** |
 | 세포 스트레칭 시작 | L2 막 스트레칭 | 애니메이션 동기 | Canvas 이벤트 연동 |
 | 세포 분열 순간 | L3 분열 임팩트 | 분열 프레임 정각 | 시각과 프레임 일치 필수 |
 | 분열 직후 | L4 버블링 시작 | +0.1s | 일정 시간 후 자동 종료 |
@@ -160,11 +203,15 @@
 | **Phase 03 hover** | **전체 앰비언트 페이드아웃 + 형광등 허밍(60Hz)** | 즉시 | 침묵의 건축 — 가장 중요한 사운드 연출 |
 | Phase 03 hover 해제 | 앰비언트 복귀 | 0.3s ramp | |
 | CTA hover | 미세 충전음(상승 톤) | 즉시 | 반전 애니메이션과 동기 |
-| **SUBMIT REQUEST 클릭** | **주사 트리거(짧은 클릭+임팩트)** | 즉시 | 일상음 재맥락화 — UI음 아닌 임상 장비음 |
+| **SUBMIT REQUEST 클릭** | **인젝션 — 수중 dispersion**(주사액이 물에 퍼지는 먹먹한 lowpass + 저역 스웰 + 버블) | 즉시 | "뾱" 클릭 아님. 액체가 물에 퍼지는 영상과 프레임 동기 |
 | 사운드 토글 OFF | 마스터 게인 0.1s fade | — | 즉시 끊으면 클릭 노이즈 |
 | 탭 백그라운드 전환 | 버블링 스케줄러 정지 | visibilitychange | 배터리 |
 
-> **사운드 설계 철학**(영화 기법 번역): UI 소리를 쓰지 않는다. 버튼은 "클릭"이 아니라 주사 트리거처럼, 앰비언트는 배경음악이 아니라 내장 소리처럼 들린다. 소리는 장식이 아니라 **경험의 절반** — 토글 OFF일 때도 서사는 성립하되, ON일 때 완전히 다른 밀도가 되어야 한다(성공 기준 최우선 항목).
+> **딩 배치 원칙**: 딩은 부팅음이 아니라 계시의 종 — 첫 진입엔 드론만, 딩은 의미 있는 서사 비트("This is the Substance." 등)에만 (여정 통틀어 3~4회).
+
+> **L6 보이스 — 결정 보류(설계만)**: 영화 인트로처럼 각 라인을 읽는 임상적 내레이션을 얹을지, 아니면 **텍스트 애니메이션 + 배경 애니메이션 + 효과음(L1~L5)만**으로 갈지는 **조립 단계에서 결정**한다. 여기엔 계약(톤·처리·트리거·덕킹)만 명문화해 두고, 구현하기로 하면 Path 2(사전 생성 TTS 클립 → SpeechSynthesis 폴백)를 기존 하이브리드 구조에 얹는다. 보이스 없이 가더라도 시각+효과음만으로 서사가 성립해야 함(사운드는 증폭, 필수 정보 아님 — 성공 기준과 일치).
+
+> **사운드 설계 철학**(영화 기법 번역): UI 소리를 쓰지 않는다. 버튼은 "클릭"이 아니라 주사액이 물에 퍼지듯, 앰비언트는 배경음악이 아니라 내장 소리처럼 들린다. 유기적 질감은 순수 합성으로 도달 불가하므로 **CC0 실제 녹음을 영화팀 방식(타임스트레치·리버스·레이어링)으로 재가공**해 쓴다. 소리는 장식이 아니라 **경험의 절반** — 토글 OFF일 때도 서사는 성립하되, ON일 때 완전히 다른 밀도가 되어야 한다(성공 기준 최우선 항목).
 
 ---
 
@@ -173,9 +220,9 @@
 ```mermaid
 flowchart TD
     START([링크 진입 · #0A0A0A]) --> INTRO[Section 00 · SCROLL INTRO<br/>스크롤 잠금 · 활성화 스크립트 리빌]
-    INTRO -->|첫 스크롤| SOUNDGATE{사운드 토글 ON?}
-    SOUNDGATE -->|OFF 기본| VISUAL[시각 서사만 · 컬러 아크 진행]
-    SOUNDGATE -->|ON| FULL[시청각 완전 몰입 · 딩~/드론/세포음]
+    INTRO -->|첫 스크롤| SOUNDGATE{음소거 토글 상태?}
+    SOUNDGATE -->|OFF로 음소거| VISUAL[시각 서사만 · 컬러 아크 진행]
+    SOUNDGATE -->|ON 기본 · 첫 스크롤에 resume| FULL[시청각 완전 몰입 · 첫 소리는 드론 페이드인, 딩은 서사 비트에만]
     VISUAL --> HERO
     FULL --> HERO
 
@@ -195,7 +242,7 @@ flowchart TD
     DISC -->|hover| VANISH[opacity 0 · 읽기 불가]
     VANISH --> ACCESS
 
-    ACCESS -->|이메일 입력 + SUBMIT| INJECT[주사 트리거 사운드]
+    ACCESS -->|이메일 입력 + SUBMIT| INJECT[인젝션 · 수중 dispersion 사운드]
     INJECT --> RESULT[Acceptance is not guaranteed.<br/>There's no going back.]
     RESULT --> FOOTER([Section 08 · FOOTER<br/>Respect the balance · 출처/면책])
 
@@ -222,7 +269,7 @@ THE SUBSTANCE (single-page · 선형)
 ├── Section 01 — HERO (center column, max 680px)
 │   ├── ◗◗
 │   ├── NOT FOR EVERYONE.
-│   └── You already know you're going to say yes.
+│   └── You've already imagined it.
 │
 ├── Section 02 — PROBLEM
 │   └── "the mirror knows / the camera knows / the room knows" → Until now.
@@ -252,12 +299,13 @@ THE SUBSTANCE (single-page · 선형)
 │   └── Acceptance is not guaranteed. There's no going back.
 │
 ├── Section 08 — FOOTER
-│   ├── Results vary / What has been transferred won't come back / Respect the balance
+│   ├── Results vary. / Respect the balance.  (임상적·모호한 경고만 전면)
+│   │   └── ※ "What has been transferred won't come back"(구체적 상실)는 전면 제거 → 사라지는 면책조항 fine-print로만(조인 후에야 읽힘)
 │   ├── youonlybetter.com
 │   ├── Inspired by The Substance (2024), dir. Coralie Fargeat
 │   └── [면책조항 전문 — hover 시 사라짐]
 │
-└── [Fixed] 사운드 토글 (우측 하단, 기본 OFF)
+└── [Fixed] 음소거 토글 (우측 하단, 기본 ON · 첫 스크롤에 AudioContext resume · 항상 명확히 노출)
 ```
 
 > 브리프의 6섹션 구조에 PROBLEM·DUALITY·PRICING을 추가 반영해 총 **8섹션 + 인트로**로 구성. HERO→THE SUBSTANCE 사이 PROBLEM, THE SUBSTANCE 내부에 DUALITY 시퀀스, THEY KNOW 뒤 PRICING을 배치 (youonlybetter.com 콘텐츠 기준).
@@ -342,5 +390,5 @@ THE SUBSTANCE (single-page · 선형)
 
 - **모바일**: 스크롤 잠금은 터치 환경에서 완화(잠금보다 스냅). Canvas 파티클 수 감소, 사운드 버블링은 백그라운드 시 정지
 - **prefers-reduced-motion**: 세포 분열·모핑·과잉조명 플래시 축소, 텍스트 리빌은 페이드로 대체 (서사는 유지)
-- **사운드**: 기본 OFF, 명시적 토글 필요(자동재생 금지). 시각만으로 전체 서사 성립
+- **사운드**: 기본 ON이되 첫 제스처(스크롤) 전엔 무음(자동재생 정책 준수). 음소거 토글은 항상 명확히 노출(우측 하단). 시각만으로 전체 서사 성립 유지
 - **면책조항**: hover로 사라지지만, 접근성을 위해 focus/키보드로는 읽을 수 있게 유지(법적 고지 최소 보장)

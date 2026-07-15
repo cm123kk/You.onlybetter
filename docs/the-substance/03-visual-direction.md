@@ -157,3 +157,70 @@ MUI 표준 팔레트 밖의, 이 페이지 전용 값. `theme.substance.*`로 �
 - **격리**: The Substance 비주얼은 `default.js`를 수정하지 않는다. 별도 다크 테마로 분리 → 기존 컴포넌트/스토리의 라이트 테마 무손상
 - **유지 토큰의 이유**: `borderRadius: 0`(sharp)와 `spacing: 8`은 우연히도 이 브랜드의 임상적 사각 미학과 완전히 일치 → 재사용이 곧 정합
 - **재활용 컴포넌트 적용**: ux-flow에서 재활용/수정 지정한 기존 컴포넌트(ScrollRevealText, SectionContainer 등)는 이 다크 테마 `ThemeProvider` 하위에서 렌더 → sx 오버라이드로 5색 팔레트 주입
+
+> ⚠️ **업데이트 노트(2026-07-14)**: 위 "격리 원칙"은 이후 방향 변경으로 **폐기**되었다. 스타터킷의 `default.js` 토큰 자체를 이 프로젝트에 맞게 전면 교체하기로 결정 → 별도 `substance.js` 없이 단일 다크 테마로 운용한다. (별도 테마 격리 대신 스타터킷을 프로젝트에 맞게 갱신하는 워크플로우)
+
+---
+
+## 공식 브랜딩·마케팅 레퍼런스 (영화 제작진 오피셜)
+
+> 영화 자체가 완결된 브랜드 시스템을 갖고 있으므로, 임의 창작 대신 **제작진이 실제로 만든 아이덴티티를 근거로** 디자인한다. 아래는 배급사(MUBI)·타이틀 디자이너·인월드 제품 디자인에 대한 조사 결과다. 출처는 문서 하단.
+
+### 1. 커스텀 서체 — 브랜딩의 실제 주인공
+
+- **설계자**: **Gilles Pointeau + FUGU Productions**. 영화의 시각 아이덴티티(인필름 그래픽 + 프로모션 캠페인) 전체를 담당. **상업적으로 구매 불가**.
+- **형태 특성**: **narrow, bold weight** / **ALL CAPS 전용** / **타이트한 자간**. 목적은 "epic significance, intensity and tension" — 차갑고 명령적이며 공격적인 톤으로 서사와 동조.
+- **핵심 통찰**: 이 브랜드의 커뮤니케이션은 **로고 심볼이 아니라 서체가 주도**한다. 로고 ◗◗는 드물게 등장하고, **모든 화면 지배력은 타이포에서 나온다**. → 우리 랜딩도 "워드마크 없이 타이포로 지배" 원칙을 강화.
+- **인필름 사용처**: USB 속 마케팅 프레젠테이션 영상(**검정 배경 위 흰 텍스트**), 챕터 라벨(**ELISABETH / SUE / MONSTRO ELISASUE**).
+- **설계자 자기비평(디테일 참고)**: 'E·F·L'이 narrow-bold 치고 다소 넓음, 'E' 폭이 'H'와 같음, 'TA'·'BS' 커닝을 더 조일 여지 — 우리가 대체 서체(Bebas Neue)를 쓸 때 **자간을 더 타이트(-0.03em)하게** 가져갈 근거.
+
+### 2. 로고 심볼 ◗◗ — 도플갱어의 시각 은유
+
+- **구성**: 마주보는 **두 개의 노란 반원**. 옐로 = **계란 노른자 = "matrix"(원본 자아)**.
+- **의미**: 주사 시 벌어지는 일 — **도플갱어(또 다른 나) 생성** — 의 직접 은유. 분열/창조, 갈라진 자아, (임신한) 배(belly)의 형상까지 중의적.
+- **사용 빈도**: **의도적으로 희소**. 남발하지 않아 등장할 때 무게가 실림. → 우리 랜딩에서도 ◗◗는 인트로 시작점·HERO·ACCESS·FOOTER 등 **소수 지점에만** 배치(현행 설계와 일치).
+
+### 3. 컬러 심볼리즘 (제작진 의도 기준)
+
+| 색 | 인월드 의미 | 비고 |
+|----|------------|------|
+| **옐로** | 계란 노른자 = 원본 자아(matrix). Demi Moore의 **노란 코트** = "shield, hope", 약의 코어 이미지와의 링크 | **정적**·로고 |
+| **그린** | 앰풀 **액체**. 서브스탠스가 **변질**되며 옐로→그린으로 진행(엘리자베스→수) | **동적**·활성화 |
+| **블랙** | 미니멀·독점적 마케팅 배경 | 표면 |
+| **레드** | 경고/결과 | 극소량 |
+
+> 컬러 아크(옐로→그린)는 우리가 만든 장치가 아니라 **영화 제작진이 명시한 "변질(deterioration)" 서사** 그대로다 — 스크롤로 이 전이를 재현하는 것이 핵심.
+
+### 4. 제품 디자인 미학 — "seductive minimalism"
+
+- 표현: **"stripped down / pure / clean / almost completely devoid of distractions / mostly black."**
+- 전략: **less is more** — 정보를 줄여 **exclusivity·mystery·ambiguity**를 만든다(=우리의 "정보 결핍" 유혹 설계와 정확히 동일 논리).
+- 제작진/평론이 든 **포지셔닝 비교 브랜드**: **HUEL · IL MAKIAGE · SOYLENT** (미니멀 럭셔리/기능성 소비재). → 레이아웃·카피 톤의 벤치마크로 활용 가능.
+- **제품이 하나의 캐릭터처럼 작동**: "commanding attention, telling the characters clearly what to do" — 자본주의적 심리 압박. → CTA·카피를 "선언/지시" 어조로.
+
+### 5. 마케팅 캠페인 (MUBI)
+
+- **배급/캠페인 주체**: **MUBI** (전 세계 배급권). 공식 포스터·굿즈(MUBI Shop)로 미니멀 블랙 아이덴티티 확장.
+- **공식 카피(그대로 인용, 우리 인트로 스크립트의 원천)**:
+  > "Have you ever dreamt of a better version of yourself? **You, only better in every way.** You should try this new product, it's called The Substance. **IT CHANGED MY LIFE.** With The Substance, you can generate another you: **younger, more beautiful, more perfect.**"
+- **포스터 아트**: 공식 MUBI 포스터 외 한정판 실크스크린(아티스트 **Jay Shaw**, 18"×24" 핸드넘버), "Mutant" 포스터 등 — 스플릿 페이스/이중 자아 모티프.
+
+### 6. 우리 랜딩 적용 요약
+
+| 오피셜 근거 | 우리 페이지 결정 |
+|------------|-----------------|
+| 서체가 브랜딩을 주도, 로고는 희소 | 워드마크 없음 · 타이포 지배 · ◗◗ 소수 배치 |
+| ALL CAPS · narrow bold · 타이트 자간 | Bebas Neue · uppercase · letterSpacing -0.03em |
+| 옐로(노른자/원본)→그린(액체/변질) | 스크롤 컬러 아크 = 변질 서사 재현 |
+| seductive minimalism / less is more | 압도적 여백 · 정보 결핍 유혹 설계 |
+| 공식 카피 "You, only better" | 인트로 활성화 스크립트 원문으로 사용 |
+| 제품=캐릭터, 명령형 | 선언/지시 어조 카피, 확답 없는 CTA |
+
+---
+
+## 출처 (Sources)
+
+- Lorain Colors — [*The Substance — Branding and typography design*](https://loraincolors.com/the-substance-branding-typography-design)
+- Aleksey Busygin — [*◗◗ in "The Substance" (2024)*](https://alekseybusygin.medium.com/in-the-substance-2024-2d69c6bcf14b)
+- [MUBI — The Substance (official)](https://mubi.com/en/us/films/the-substance) · [MUBI Shop — Official Poster](https://shop.mubi.com/products/the-substance-official-poster)
+- Typography.Guru — [secondary font ID discussion](https://typography.guru/forums/topic/140178-help-with-identifying-secondary-font-on-the-substance-movie-poster/)
