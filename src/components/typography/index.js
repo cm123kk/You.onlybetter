@@ -33,3 +33,6 @@ export {
 
 // QuotedContainer - 장식적 인용 부호가 있는 인용문
 export { QuotedContainer } from './QuotedContainer.jsx';
+
+// VanishingDisclaimer - hover 시 사라지고 focus로는 읽히는 면책조항 (The Substance)
+export { VanishingDisclaimer } from './VanishingDisclaimer.jsx';

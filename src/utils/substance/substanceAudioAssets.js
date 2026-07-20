@@ -16,6 +16,9 @@
  * 파일 포맷: .mp3 권장(용량·호환). 파일명은 아래 url과 정확히 일치시킬 것.
  */
 export const SAMPLE_MANIFEST = {
+  // L1 저역 펄스 베드 — Raffertie "The Substance" 무드 번역(신스 베이스 펄스, 상시 루프).
+  // 합성 드론/펄스 아래에 깔려 "페이지가 살아있는" 저역 텐션을 만든다. ambientGain 경유(Phase 침묵 덕킹).
+  bassPulse: { url: '/audio/substance/bass-pulse.mp3', loop: true },
   // 단발 물방울(느린 스케줄러용) — 점성 있는 "또옥…또옥…". L4의 주 소스.
   bubbleA: { url: '/audio/substance/bubble-a.mp3', loop: false },
   bubbleB: { url: '/audio/substance/bubble-b.mp3', loop: false },

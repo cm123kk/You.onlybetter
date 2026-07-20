@@ -26,3 +26,7 @@ CLAUDE.local.md
 *.sln
 *.sw?
 storybook-static
+
+# 대용량 히어로 lips 영상 — GitHub 100MB 초과라 제외(로컬 전용, 필요 시 LFS/경량 인코딩)
+public/video/lips-loop.mp4
+public/video/lips-loop.webm

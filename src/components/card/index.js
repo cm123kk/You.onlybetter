@@ -7,3 +7,6 @@ export { MoodboardCard } from './MoodboardCard.jsx';
 
 // Style variant wrapper
 export { CardContainer } from './CardContainer.jsx';
+
+// ProtocolPhaseCard - The Substance Phase 카드 (full/half/locked 공개도)
+export { ProtocolPhaseCard } from './ProtocolPhaseCard.jsx';

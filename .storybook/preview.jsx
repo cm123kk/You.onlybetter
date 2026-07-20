@@ -13,6 +13,8 @@ const googleFonts = [
   'Bebas+Neue',
   // Fine-print condensed 폴백 보강
   'Oswald:wght@300;400;500;600;700',
+  // 본문(sentence-case) 서체
+  'Inter:wght@300;400;500;600',
 ];
 
 googleFonts.forEach((font) => {

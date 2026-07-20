@@ -41,6 +41,7 @@ export function useSubstanceAudio(progressRef, { initialEnabled = false } = {}) 
   const samplesStartedRef = useRef(false);
   const bubbleTimerRef = useRef(null);
   const bubbleLoopRef = useRef(null);
+  const bassPulseSrcRef = useRef(null); // L1 저역 펄스 베드(루프 샘플) 소스
   const bubbleGenRef = useRef(0); // 스케줄러 세대 — 이전 체인 무효화(겹침 방지)
   const driveRafRef = useRef(null);
   const silencedRef = useRef(false);
@@ -109,6 +110,11 @@ export function useSubstanceAudio(progressRef, { initialEnabled = false } = {}) 
     pulseGain.connect(ambientGain);
     pulseOsc.start();
 
+    // L1 저역 펄스 베드(mp3 루프) — 로드되면 여기로 연결. ambientGain 경유(Phase 침묵 덕킹).
+    const bassPulseGain = ctx.createGain();
+    bassPulseGain.gain.value = 0; // 시작 시 페이드인
+    bassPulseGain.connect(ambientGain);
+
     // 형광등 허밍(60Hz) — 평소 무음, Phase 침묵 시만 등장 (master 직결)
     const humOsc = ctx.createOscillator();
     humOsc.type = 'sawtooth';
@@ -125,10 +131,38 @@ export function useSubstanceAudio(progressRef, { initialEnabled = false } = {}) 
     humOsc.start();
 
     nodesRef.current = {
-      master, ambientGain, droneFilter, droneGain, osc1, osc2, pulseGain, humGain,
+      master, ambientGain, droneFilter, droneGain, osc1, osc2, pulseGain, bassPulseGain, humGain,
     };
     return ctx;
   }, []);
+
+  /** L1 저역 펄스 베드 정지 */
+  const stopBassPulse = useCallback(() => {
+    if (bassPulseSrcRef.current) {
+      try { bassPulseSrcRef.current.stop(); } catch { /* 이미 정지 */ }
+      bassPulseSrcRef.current = null;
+    }
+  }, []);
+
+  /** L1 저역 펄스 베드 시작(루프 샘플 → bassPulseGain, 페이드인). 파일 없으면 스킵(합성 드론 유지) */
+  const startBassPulse = useCallback(() => {
+    const ctx = ctxRef.current;
+    const nodes = nodesRef.current;
+    if (!ctx || !nodes || !enabledRef.current) return;
+    const buf = buffersRef.current.bassPulse;
+    if (!buf) return; // mp3 미로드 → 합성 드론/펄스로 충분
+    stopBassPulse();
+    const src = ctx.createBufferSource();
+    src.buffer = buf;
+    src.loop = true;
+    src.connect(nodes.bassPulseGain);
+    src.start();
+    bassPulseSrcRef.current = src;
+    const t = ctx.currentTime;
+    nodes.bassPulseGain.gain.cancelScheduledValues(t);
+    nodes.bassPulseGain.gain.setValueAtTime(0, t);
+    nodes.bassPulseGain.gain.linearRampToValueAtTime(0.12, t + 1.5); // 드론과 함께 서서히 살아남
+  }, [stopBassPulse]);
 
   /** CC0 샘플 로드(fetch → decode). 실패(404 등)는 조용히 건너뜀 → 합성 폴백 */
   const loadSamples = useCallback(async (ctx) => {
@@ -523,13 +557,27 @@ export function useSubstanceAudio(progressRef, { initialEnabled = false } = {}) 
         nodes.master.gain.linearRampToValueAtTime(0, t + 0.1);
       }
       stopBubbles();
+      stopBassPulse();
       return undefined;
     }
 
     const ctx = ensureContext();
     if (!ctx) return undefined;
-    if (ctx.state === 'suspended') ctx.resume();
     const nodes = nodesRef.current;
+
+    // 로고 등장 시 무음 → 첫 유효 제스처(스크롤/포인터/터치/키)에서 AudioContext resume.
+    // (문서: 사운드 기본 ON이되 첫 스크롤=유효 제스처로 살아남. 첫 소리는 딩이 아니라 드론/펄스 페이드인)
+    let removeGesture = () => {};
+    if (ctx.state === 'suspended') {
+      ctx.resume();
+      if (ctx.state === 'suspended') {
+        const evs = ['scroll', 'pointerdown', 'touchstart', 'keydown'];
+        const onGesture = () => { ctx.resume(); removeGesture(); };
+        evs.forEach((ev) => window.addEventListener(ev, onGesture, { passive: true }));
+        removeGesture = () => evs.forEach((ev) => window.removeEventListener(ev, onGesture));
+      }
+    }
+
     const t = ctx.currentTime;
     nodes.master.gain.cancelScheduledValues(t);
     nodes.master.gain.setValueAtTime(nodes.master.gain.value, t);
@@ -538,7 +586,10 @@ export function useSubstanceAudio(progressRef, { initialEnabled = false } = {}) 
 
     startBubbles(); // 샘플 로드 전엔 합성 폴백으로 시작
     loadSamples(ctx).then(() => {
-      if (enabledRef.current) startBubbles(); // 로드되면 샘플 루프로 교체
+      if (enabledRef.current) {
+        startBubbles(); // 로드되면 샘플 루프로 교체
+        startBassPulse(); // L1 저역 펄스 베드 시작(mp3 루프)
+      }
     });
 
     // [진단용] 레이어별 on/off 스위치 — 콘솔에서 껐다 켜며 "빠른 소리" 범인 격리
@@ -556,8 +607,8 @@ export function useSubstanceAudio(progressRef, { initialEnabled = false } = {}) 
     // 소비자(랜딩)가 서사 비트("This is the Substance." 등)에서 triggerDing()을 직접 호출.
     // 첫 진입에 자동 딩을 치지 않는 이유: 의미에 붙지 않은 딩은 알림/에러음처럼 들리고,
     // 디폴트 ON에서 유저가 처음 듣는 소리가 되어 첫인상을 해친다.
-    return undefined;
-  }, [isEnabled, ensureContext, loadSamples, startBubbles, stopBubbles]);
+    return () => { removeGesture(); };
+  }, [isEnabled, ensureContext, loadSamples, startBubbles, stopBubbles, startBassPulse, stopBassPulse]);
 
   // 스크롤 진행도 → 드론 주파수(40→55Hz) + 그린 구간 펄스
   useEffect(() => {

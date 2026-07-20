@@ -18,8 +18,9 @@
 
 ### 긴장감을 만드는 구체 장치 (과하지 않게, 서사에 봉사)
 
-- **스크롤 리듬 제어**: 인트로에서 텍스트 리빌 속도를 페이지가 이끎(완전 잠금 아님 — 리듬 유도)
-- **컬러 아크의 방향성**: 옐로→그린 전환은 스크롤 진행의 감정선. 되돌릴 때 약한 저항(히스테리시스)으로 "진행됐다"는 감각
+- **스크롤 리듬 제어**: 인트로에서 텍스트 리빌 속도를 페이지가 이끎(완전 잠금 아님 — 리듬 유도). 인트로는 **영화처럼 빠른 페이싱** — 각 스크립트가 배경음과 함께 속도감 있게 지나감(느긋한 리빌 아님)
+- **로고 블리드(인트로 오프닝)**: **흰 배경** 위 **검은 ◗◗ 로고**로 시작 → 스크롤하면 로고의 검정이 원형으로 배경 전체에 번져 `#0A0A0A`로 전환. 어둠이 로고에서 태어나 화면을 삼키는 감각. 배경이 검어진 뒤 각 활성화 스크립트는 **형광 그린**(secondary.main)으로 stamp
+- **컬러 아크의 방향성**: 옐로→그린 전환은 스크롤 진행의 감정선(주로 **HOW IT WORKS의 노른자**와 전체 액센트에 적용). 되돌릴 때 약한 저항(히스테리시스)으로 "진행됐다"는 감각. ※ 인트로 자체는 흰→검 블리드 + 그린 텍스트의 모노 팔레트(옐로 아님)
 - **사라지는 면책조항**: hover 시 페이드 — 읽히지 않으려는 텍스트라는 연출 (단, 키보드 focus로는 읽을 수 있게 접근성 보장)
 - **잠긴 Phase 03**: hover 시 #C41E3A "ACCESS DENIED" — 거부가 갈망으로
 - **침묵의 순간**: 사운드 ON 시 Phase 03 구간은 앰비언트가 끊기고 형광등 허밍만 — 정적의 긴장
@@ -76,12 +77,13 @@ dread는 **욕망이 먼저 형성된 뒤에만** "진짜구나"로 읽힌다. �
 - **목표(표면)**: 이게 뭔지 알아내려 함
 - **목표(실제, 페이지가 유도)**: 끝까지 스크롤하고 이메일을 남기게 됨
 - **플로우**:
-  1. #0A0A0A 검은 화면. ◗◗ 심볼만 희미하게. 아무 설명 없음
-  2. 스크롤 시작 → 활성화 스크립트가 한 줄씩 아래에서 위로, blur→선명하게 stamp (POV 내부 시점)
-  3. 배경에서 세포가 분열하고 노른자가 갈라짐. 처음엔 옐로, 스크롤할수록 그린으로 물듦
+  1. **흰 배경** + **검은 ◗◗ 로고**만 중앙에. 아무 설명 없음
+  2. 스크롤 시작 → 로고의 **검정이 원형으로 배경 전체에 번져** `#0A0A0A`로 전환(로고 블리드)
+  3. 배경이 검어진 뒤, 활성화 스크립트가 **형광 그린**으로 한 줄씩 **빠르게**(영화식 페이싱) stamp — 각 라인에 배경음 stinger 동기. ※ 인트로엔 노른자·세포 없음(그건 HOW IT WORKS 전용) — 인트로는 서비스 인트로/긴장 조성
   4. "This is the Substance." → 딩~ (사운드 ON 시). "You. Are. One." → 딩~ 피치 다운 변형
-  5. 텍스트가 사라지지 않고 쌓임 → 화면 과부하 → 압도당하는 감각 (의도적)
-  6. 인트로 종료 → HERO "NOT FOR EVERYONE." / "You've already imagined it." (유혹을 선언하지 않고 유저 자신의 욕망을 가리킴)
+  5. 텍스트는 **한 번에 한 줄만** — 올라와 선명해졌다 위로 빠지며 다음 줄로 교체(빠른 페이싱, 한 문장씩 집중)
+  6. **블리드 완료 시점에 흰색 소형 ◗◗ 로고가 GNB 좌측 상단에 등장** → 이후 모든 섹션에서 상시 노출(서비스 페이지 아이덴티티)
+  7. 인트로 종료 → HERO "NOT FOR EVERYONE." / "You've already imagined it." (유혹을 선언하지 않고 유저 자신의 욕망을 가리킴)
 - **성공 조건**: 유저가 "판매 페이지"라고 인지하기 전에 이미 서사에 몰입
 - **예외 상황**: 사운드 기본 ON이되 첫 제스처(스크롤) 전엔 무음(autoplay 정책 준수) → 시각만으로도 서사가 성립해야 함 (사운드는 증폭, 필수 정보 아님)
 
@@ -130,40 +132,97 @@ dread는 **욕망이 먼저 형성된 뒤에만** "진짜구나"로 읽힌다. �
 
 > 스크롤은 이 페이지의 유일한 입력이자 타임라인이다. 하나의 `scrollProgress`(0–1)가 **배경 3레이어 · 텍스트 리빌 · 컬러 아크 · 사운드**를 동시에 구동한다. 아래는 인트로 구간(Section 00)의 프레임별 안무.
 
-### 인트로 타임라인 — 배경 × 텍스트 × 컬러 × 사운드 동기화
+### 인트로 타임라인 — 로고 블리드 × 그린 스크립트 × 사운드 동기화
 
-| 진행도 | 활성화 스크립트 (텍스트) | 배경 레이어 | 컬러 아크 | 사운드 (ON 시) |
-|--------|------------------------|------------|----------|---------------|
-| 0.00 | **◗◗ 로고만 (선명, 화면 중앙)** — 텍스트 없음 | 정지 (로고 단독) | 옐로 100% | (무음) 첫 스크롤 대기 |
-| 0.03 | 로고 아래 "SCROLL" 미세 표시 | 노른자 원(#F5E642) 로고 뒤에서 서서히 등장 | 옐로 | 첫 스크롤 대기 |
-| 0.05 | "Have you ever dreamt..." blur→선명, 아래→위 | 노른자 미세 진동 시작 | 옐로 | **드론 페이드인** (LAYER 1, 40Hz) — 딩 없음(첫 소리는 드론) |
-| 0.15 | "Younger. / More beautiful. / More perfect." 누적 stamp | 세포 파티클 등장(소수), 매크로 클로즈업 | 옐로 95% | 드론 지속, 저역 버블링 시작 |
-| 0.30 | "One single injection unlocks your DNA..." | 노른자 **분열 시작**(YolkMorph) | 옐로→연두 전환 개시 | 막 스트레칭(LAYER 2) → 분열 임팩트(LAYER 3) |
-| 0.40 | "This is the Substance." | 세포 분열 가속, 액체 출렁임 진해짐 | 연두 | **딩~** (텍스트 동시) + 버블링(LAYER 4) |
-| 0.55 | "You are the matrix. / Everything is you." | 파티클 밀도 최대, 매크로→풀아웃 | 그린 70% | 드론 55Hz로 상승, 펄스 베이스 추가 |
-| 0.70 | "You just have to share. / One week for one..." | 대칭 구도 유지 | 그린 | 버블링 지속 |
-| 0.85 | "You. Are. One." | 화면 과부하(텍스트 누적) | 그린 90% | **딩~ 피치 다운 변형** (dematerialized) |
-| 0.95 | "You can't escape from yourself." | 미세 대칭 붕괴 시작(skew) | 그린 100% | 드론 잔향, 인트로 종료 신호 |
-| 1.00 | → HERO로 전환 | 배경 잔류(저투명), 이후 섹션 뒤에 은은히 | 그린 유지 | 앰비언트 계속(섹션별 진화) |
+> 인트로엔 노른자·세포가 없다. 오프닝은 **흰 배경 + 검은 로고**, 스크롤하면 로고의 검정이 배경으로 번져 어두워지고(블리드), 그 위에 활성화 스크립트가 **형광 그린**으로 빠르게 stamp된다. 페이싱은 영화처럼 속도감 있게.
+>
+> **인트로 배경음 레퍼런스(조사)**: 영화 오프닝(할리우드 워크오브페임 스타 타임랩스)에는 작곡가 **Raffertie**의 타이틀 트랙 **"The Substance"** — 어둡고 테크노풍의, 필터링된 저역이 맥동하는 불안한 톤 — 이 깔린다. 저작권상 원곡을 웹에 쓸 수 없으므로 **L1 베이스 드론(합성)으로 그 무드(저역 펄스·불안)만 번역**한다. 각 스크립트 라인엔 짧은 stinger를 얹어 영화식 속도감을 만든다.
+
+> **욕망 3연**("Younger./More beautiful./More perfect.")은 아래 **0.20~0.28 구간의 립스→TV월 멀티플라이 비트**로 처리한다(개별 stamp, 별도 안무 표 참조).
+
+| 진행도 | 활성화 스크립트 (텍스트, 그린) | 로고 블리드 / 배경 | 사운드 (ON 시) |
+|--------|------------------------------|-------------------|---------------|
+| 0.00 | (텍스트 없음) | **흰 배경 + 검은 ◗◗ 로고**, 화면 중앙 선명 | (무음) 첫 스크롤 대기 |
+| 0.03 | 로고 아래 "SCROLL" 미세 표시(검정) | 흰 배경 유지 | 첫 스크롤 대기 |
+| 0.06 | "Have you ever dreamt…" blur→선명, 빠르게 | **블리드 개시** — 로고 검정이 원형으로 번지기 시작 | **드론 페이드인** (L1, 40Hz) — 딩 없음 |
+| 0.13 | "…a better version of yourself?" (태그라인 연속) | 검정 원 확산(화면 ~60%) | 드론 지속, 저역 텐션 상승 |
+| 0.17 | (전환) | **블리드 완료 = 배경 #0A0A0A** → **흰색 소형 ◗◗ 로고 GNB 좌상단 등장(이후 상시)** | 드론 |
+| 0.20 | **"Younger."** | **단일 립스 클로즈업**(웜핑크, 검은 배경 위) — `9e32…jpg` | stinger 1 |
+| 0.24 | **"More beautiful."** | 립스 **2×2~3×3 멀티플라이** 시작 | stinger 2 (피치↑) |
+| 0.28 | **"More perfect."** | **풀 CRT TV 월** + 글로우·스캔라인 — `4aa6ec…jpg` | stinger 3 + 미세 딩 |
+| 0.34 | "One single injection unlocks your DNA…" | TV 월 페이드아웃 → 검은 배경, 그린 텍스트 | 라인 stinger |
+| 0.42 | "This is the Substance." | 검은 배경(#0A0A0A) | **딩~** (텍스트 동시) + 과잉조명 플래시 |
+| 0.58 | "You are the matrix. / Everything is you." (한 비트, 2줄) | 검은 배경, 그린 텍스트 교체 | 드론 55Hz 상승, 펄스 베이스 |
+| 0.74 | "You just have to share. / One week for one." (한 비트, 2줄) | 검은 배경 | 라인 stinger |
+| 0.90 | "You. Are. One." | 미세 대칭 붕괴 시작(skew) | **딩~ 피치 다운 변형** (dematerialized), 인트로 종료 신호 |
+| 1.00 | → HERO로 전환 | 검은 배경 유지 | 앰비언트 계속(섹션별 진화) |
+
+> 라인은 한 번에 한 **비트**만 노출(교체). 한 비트가 여러 줄(예: "You are the matrix. / Everything is you.")이어도 됨. 마지막 "You can't escape from yourself."는 제거.
 
 > **핵심 원칙 3가지**
-> 1. **하나의 소스** — 별도 애니메이션 타이머 없이 `scrollProgress`에서 모든 값을 파생(배경 밀도, 텍스트 리빌, 컬러 lerp, 드론 주파수)
-> 2. **누적, 비삭제** — 인트로 텍스트는 사라지지 않고 쌓임(의도적 과부하). "긴 숏" 기법의 번역
-> 3. **되돌림 저항** — 위로 스크롤 시 컬러 아크·드론은 약한 히스테리시스로 즉시 복귀하지 않음(진행됐다는 감각)
+> 1. **하나의 소스** — 별도 애니메이션 타이머 없이 `scrollProgress`에서 모든 값을 파생(블리드 반경, 텍스트 리빌, 드론 주파수)
+> 2. **한 번에 한 줄(교체)** — 인트로 텍스트는 쌓지 않는다. 한 라인이 아래에서 올라와 선명해졌다가 위로 빠져나가며 다음 라인으로 교체(동시에 한 줄만 노출). 빠른 페이싱과 맞물려 각 문장에 집중.
+> 3. **블리드는 소프트·빠르게** — 딱딱한 원이 커지는 게 보이면 안 됨. 크게 블러된 검정이 중심에서 ease-out으로 빠르게 번져 배경이 됨.
+> 4. **되돌림 저항** — 위로 스크롤 시 드론은 약한 히스테리시스로 즉시 복귀하지 않음(진행됐다는 감각)
 
 ### 섹션별 배경/모션 + 영화 기법 매핑
 
 | 섹션 | 배경 상태 | 스크롤/등장 모션 | 영화 기법 번역 |
 |------|----------|-----------------|---------------|
-| 00 INTRO | 3레이어 풀가동 | 텍스트 순차 stamp | 매크로→풀아웃, POV 내부 등장 |
-| 01 HERO | 저투명 잔류 | ◗◗ 작게→아이레벨로 확대 | 버즈아이→아이레벨, 미세 왜곡(perspective) |
+| 00 INTRO | 흰→검 로고 블리드 → (욕망 비트) 립스 → CRT TV 월 | 검은 로고 → 검정 원 확산, 그린 텍스트 stamp, 립스 멀티플라이 | 어둠의 탄생, POV 내부, "가지고 싶은 젊음" 방송 |
+| 01 HERO | 검정 배경 | ◗◗ 작게→아이레벨로 확대 | 버즈아이→아이레벨, 미세 왜곡(perspective) |
 | 02 PROBLEM | 어두워짐 | 라인별 페이드 인 | 롱렌즈 고립(주변 압축) |
-| 03 SUBSTANCE/DUALITY | 세포·노른자 전면 복귀 | YOU 텍스트 분화(옐로/그린) | 대칭 미러링(◗◗ 구조), 매크로 |
+| 03 HOW IT WORKS | 노른자·세포 전면 + 좌측 주사기 게이지 | 좌측 형광 바 배출 → 노른자에 그린 주입 → 노른자 분열 → 세포 분열, 키트 등장, YOU 텍스트 분화 | 대칭 미러링(◗◗ 구조), 매크로, 임상 계측 |
 | 04 PROTOCOL | 잔류, Phase03서 어두워짐 | Phase 카드 순차 등장 | 대칭 구도 유지 |
 | 05 THEY KNOW | 거의 무배경(고립) | 증언 페이드 | 롱렌즈 고립 극대화 |
 | 06 PRICING | 무배경 | 정적 | 침묵 |
 | 07 ACCESS | 액체 미세 출렁임 | 레이아웃 미세 기울어짐 | 대칭 붕괴 |
 | 08 FOOTER | 정지 | — | — |
+
+### 인트로 — 립스 → TV 월 멀티플라이 (욕망 비트, "…a better version of yourself?" 직후)
+
+> **위치: 인트로 시퀀스 안** (HOW IT WORKS 아님 — 노른자·키트와 무관). 로고 블리드로 배경이 `#0A0A0A`로 검어지고 "Have you ever dreamt… / …a better version of yourself?"가 지나간 **바로 다음**에 오는 욕망 비트다. 검은 배경 위에 **빈티지 글로시 립스 루프 영상**(음파음파/미소, 웜핑크 그레인 — 레퍼런스 `9e3290242cea636378a3f9856a627420.jpg`)이 뜨고, 스크롤에 따라 **단일 → 레트로 CRT TV 월(격자)로 멀티플라이**된다(레퍼런스 `4aa6ec837f596d81f8d4bc296af4eab1.jpg` — 우드 캐비닛 브라운관 격자에서 같은 입술이 동시 재생). "어디서나 방송되는, 가지고 싶은 젊음."
+>
+> **핵심 규칙**: 이 배경 멀티플라이 각 단계에 **욕망 3연**("Younger. / More beautiful. / More perfect.")을 **한 번에 몰아 보여주지 않고 하나씩** 동기화해 stamp한다. 템포는 빠르되 **텍스트 1개 = 배경 증식 1스텝**으로 딱 맞아떨어져야 한다(동시 노출 금지).
+
+| 스텝 | 배경 (립스 영상) | 등장 텍스트 (개별 stamp) | 사운드 |
+|------|-----------------|------------------------|--------|
+| 1 | 단일 립스 클로즈업 (음파음파) | **"Younger."** | stinger 1 |
+| 2 | 2×2~3×3 격자로 멀티플라이 시작 | **"More beautiful."** | stinger 2 (피치↑) |
+| 3 | 풀 TV 월(격자 가득) + CRT 글로우·스캔라인 | **"More perfect."** | stinger 3 + 미세 딩 |
+
+> - **DualitySequence 방식 아님** — 각 단어는 순차 stamp이며, 배경 멀티플라이 한 단계와 1:1로 리듬을 맞춘다. 빠른 템포에서도 "단어 = 화면 증식"의 스텝감으로 욕망이 증폭.
+> - **성능**: 캔버스 타일링(영상 1개 디코드 → 격자 draw)으로 12+ `<video>` 동시재생 회피. `scrollProgress`가 격자 밀도(1→N×N)를 구동.
+> - **reduced-motion/모바일**: 멀티플라이 대신 poster 스틸 크로스페이드, 텍스트는 그대로 순차 stamp.
+
+### PHASE 키트 주입 완료 → 소진 (PROTOCOL 스크롤 메커닉)
+
+> THE PROTOCOL의 각 Phase 카드는 disclosure 텍스트와 **해당 키트 실사**를 side-by-side로 둔다(SplitScreen). 스크롤로 다음 Phase로 넘어갈 때, 현재 키트가 **주입 완료 → 소진**된다: 내용물이 빠져 액면/튜브가 비고, 끝에 **비닐만 남아 쪼글쪼글**(deflate). "이미 몸에 주입됐다"는 감각 + 인젝션 사운드.
+>
+> **키트 실사 레퍼런스(영화 실물 — "그대로" 재현)**: `848f1eaf…jpg`(전체 구성) · `c4edf4f8…jpg`(언박싱 4패널) · `7b43d278…jpg`(FOOD 넘버링 1–7 튜브) · `fe71bdf0…jpg`(STABILIZER 넘버링 1–7 그린캡 바이알). 라벨 서체 = 볼드 콘덴스드 블랙 올캡스, 진공성형 투명 파우치, 크래프트 박스.
+
+| Phase | 키트 (실사, 영화 실물) | full → consumed | 사운드 |
+|-------|----------------------|-----------------|--------|
+| 01 ACTIVATION | **ACTIVATOR** 블리스터 트레이(주사기 + 형광그린 바이알 + 툴) | 그린 바이알 액면 하강 → 빈 유리병, 트레이 눌림 | 인젝션 1회 |
+| 02 STABILIZATION | **STABILIZER** 파우치(넘버링 1–7 그린캡 바이알 + 화이트 주사기건) | 바이알 소진(넘버 순) → 쭈그러든 빈 파우치 | 인젝션 1회 |
+| 03 CONTINUATION [LOCKED] | **FOOD MATRIX / FOOD OTHER SELF**(넘버링 1–7 크림 튜브) + **SWITCH**(투명 튜빙) | 크림 튜브 비워짐(넘버 순) → 비닐만 쪼글쪼글 | 인젝션 1회(잠금 침묵/허밍과 조율) |
+
+#### Phase 카피 — 키트에 정렬 (disclosure 준수)
+
+> 각 Phase 텍스트는 그 Phase의 키트와 일치한다. 카피 원칙(꿈은 공개·대가는 은닉, 임상적·모호)을 유지: Phase 01은 순수 욕망(전문 공개), Phase 02는 절반만(——— 처리로 대가 암시), Phase 03은 잠금(hover ACCESS DENIED).
+
+| Phase (키트) | disclosure | 카피 (요지, ALL CAPS) |
+|---|---|---|
+| 01 ACTIVATION (ACTIVATOR) | full | "ONE ACTIVATION. YOUR OTHER SELF IS BORN — YOUNGER, MORE PERFECT." · 임상 소자: "Administered once. Irreversible." |
+| 02 STABILIZATION (STABILIZER 1–7) | half | "ONE DOSE. EVERY DAY. SEVEN DAYS." · "Extracted from ————, injected into ————. The balance holds only while you comply." (——— 리댁션으로 대가 암시) |
+| 03 CONTINUATION [LOCKED] (SWITCH + FOOD 1–7) | locked | 잠김 · hover 시 **ACCESS DENIED** · 티저: "SWITCH EVERY SEVEN DAYS. FEED BOTH. ████████" · "RESPECT THE BALANCE. YOU ARE ONE." |
+
+> - **수직 넘버-라인 프로그레스 바 (넘버링 키트)**: STABILIZER(1–7 그린캡 바이알)·FOOD MATRIX/OTHER SELF(1–7 크림 튜브)처럼 넘버링된 키트는 아이템을 **세로로 적층**하고 **각 넘버(1…7)에 가로 라인(rule)**을 달아 **수직 프로그레스 게이지**처럼 읽히게 한다(레퍼런스 `fe71bdf0`·`7b43d278` 그대로 — 넘버 옆 눈금 라인). 주입/소진은 이 세로 게이지를 **넘버 순(위→아래)으로 채움→비움**하며 진행 = 말 그대로 프로그레스 바. `scrollProgress`가 채움 레벨(`fill` 1→0)과 **활성 넘버**를 구동하고, `KitSpecimen`이 넘버-라인 눈금을 **코드 오버레이**로 실사 위에 정합해 그린다(소진된 넘버는 dim/비움, 활성 넘버 강조). ACTIVATOR(단일 바이알)는 넘버 없이 단일 액면 하강.
+> - **봉인 뜯기 = 스크롤 스크럽 이미지 시퀀스 (비디오 아님)**: 봉인된 진공 파우치가 **뜯겨 열리는** 비트는 영상이 아니라 **생성 키프레임 시퀀스**를 `scrollProgress`로 스크럽한다(VideoScrubbing의 이미지 버전). ACTIVATOR 기준 **5프레임**: ① 봉인(intact) → ② 코너 탭 당김/씰 벌어짐 시작 → ③ 상단 씰 1/3 필링 → ④ 절반 뜯김·내용물 노출 → ⑤ 완전 개봉·필름 벗겨짐. 프레이밍(각도·스케일·라벨·내용물) 동결(A1 마스터를 i2i 레퍼런스로 파생해 정합). 스크롤로 프레임 인덱스 구동 → 역스크롤도 매끄러움. **왜 영상 아님**: 스크롤이 타임라인이라 video currentTime 스크럽은 무겁고 역방향 버벅, payload 과다. 키프레임 스크럽이 가볍고 정밀 동기.
+> - **하이브리드 구현**: (뜯기=이미지 시퀀스 스크럽) → (주입/비우기=**코드 드레인** 액면/넘버-라인 마스크 하강, 스크롤 동기 — `SubstanceSyringe` fill 방식) → (**소진**='쭈글 빈 비닐' 실사 1장 crossfade). 즉 **뜯기·소진=생성 실사, 비우기=코드**를 KitSpecimen이 합침(영상 0개, 노른자 하이브리드 철학과 동일).
+> - **컴포넌트**: 신규 `KitSpecimen`(props `frames[]`(봉인→개봉 시퀀스) · `openProgress` 0→1(뜯기 스크럽) · `fill` 1→0(비우기) · `isConsumed`(쭈글 crossfade) · `onAdminister` · **넘버-라인 게이지(`segments` 1–7 · `activeSegment`)**) + `ProtocolPhaseCard` 수정(side-by-side 키트 슬롯 · `scrollProgress` · administer 콜백. 기존 disclosure(full/half/locked)·ACCESS DENIED 유지).
+> - **사운드**: 기존 인젝션 샘플(`injection-disperse`/`membrane-stretch`) 재활용, Phase 완료당 1회(토글·딩 비충돌). Phase 03 잠금 구간은 앰비언트 침묵/형광등 허밍과 겹치지 않게 조율.
+> - **접근성/성능**: reduced-motion → 뜯기 스크럽·드레인 생략, 봉인↔소진 crossfade만. 키프레임 ~5장/키트, WebP/AVIF, 페이즈별 lazy(preload 현재 페이즈만).
 
 ### 과잉 조명 플래시 (특수 큐)
 
@@ -219,7 +278,7 @@ dread는 **욕망이 먼저 형성된 뒤에만** "진짜구나"로 읽힌다. �
 
 ```mermaid
 flowchart TD
-    START([링크 진입 · #0A0A0A]) --> INTRO[Section 00 · SCROLL INTRO<br/>스크롤 잠금 · 활성화 스크립트 리빌]
+    START([링크 진입 · 흰 배경 + 검은 로고]) --> INTRO[Section 00 · SCROLL INTRO<br/>로고 블리드 → 검정 배경 · 그린 스크립트 리빌]
     INTRO -->|첫 스크롤| SOUNDGATE{음소거 토글 상태?}
     SOUNDGATE -->|OFF로 음소거| VISUAL[시각 서사만 · 컬러 아크 진행]
     SOUNDGATE -->|ON 기본 · 첫 스크롤에 resume| FULL[시청각 완전 몰입 · 첫 소리는 드론 페이드인, 딩은 서사 비트에만]
@@ -227,7 +286,7 @@ flowchart TD
     FULL --> HERO
 
     HERO[Section 01 · HERO<br/>NOT FOR EVERYONE] --> PROBLEM[Section 02 · PROBLEM<br/>the mirror knows]
-    PROBLEM --> SUBSTANCE[Section 03 · THE SUBSTANCE / DUALITY<br/>세포 분열 · YOU 분화]
+    PROBLEM --> SUBSTANCE[Section 03 · HOW IT WORKS / DUALITY<br/>주사기 주입 · 노른자 분열 · 세포 분열 · 키트 · YOU 분화]
     SUBSTANCE --> PROTOCOL[Section 04 · THE PROTOCOL<br/>Phase 01/02 절반공개]
 
     PROTOCOL --> LOCK{Phase 03 hover}
@@ -246,7 +305,7 @@ flowchart TD
     INJECT --> RESULT[Acceptance is not guaranteed.<br/>There's no going back.]
     RESULT --> FOOTER([Section 08 · FOOTER<br/>Respect the balance · 출처/면책])
 
-    style START fill:#0A0A0A,color:#F5E642
+    style START fill:#FFFFFF,color:#0A0A0A
     style DENIED fill:#C41E3A,color:#F5F5F0
     style INJECT fill:#AAFF00,color:#0A0A0A
     style FOOTER fill:#0A0A0A,color:#F5F5F0
@@ -261,10 +320,13 @@ flowchart TD
 ```
 THE SUBSTANCE (single-page · 선형)
 │
-├── Section 00 — SCROLL INTRO (full-bleed, 스크롤 잠금)
-│   ├── ◗◗ 로고 (최초 진입 화면 · 선명 · 중앙 · 텍스트 없음 → 시작점)
-│   ├── 활성화 스크립트 (순차 리빌, 15+ 라인)
-│   └── 배경 레이어 3종 (세포 분열 / 노른자 모핑 / 형광 액체)
+├── Section 00 — SCROLL INTRO (full-bleed, 스크롤 잠금 · 서비스 인트로/긴장)
+│   ├── ◗◗ 로고 (최초 진입: 흰 배경 + 검은 로고 · 중앙 · 텍스트 없음 → 시작점)
+│   ├── 로고 블리드 (스크롤 시 검정이 원형 확산 → 배경 #0A0A0A)
+│   ├── 활성화 스크립트 (형광 그린 · 빠른 페이싱 · 순차 stamp, 15+ 라인)
+│   ├── [립스 욕망 비트(LipsVideoWall): "…a better version of yourself?" 직후 · 단일 립스 → CRT TV 월 멀티플라이
+│   │    · 욕망 3연 "Younger./More beautiful./More perfect." 순차 stamp 1:1 동기 — 안무 참조]
+│   └── ※ 노른자·세포·액체 배경 없음 (HOW IT WORKS 전용) · SFX만(VO는 나중)
 │
 ├── Section 01 — HERO (center column, max 680px)
 │   ├── ◗◗
@@ -274,16 +336,22 @@ THE SUBSTANCE (single-page · 선형)
 ├── Section 02 — PROBLEM
 │   └── "the mirror knows / the camera knows / the room knows" → Until now.
 │
-├── Section 03 — THE SUBSTANCE / THE DUALITY
+├── Section 03 — HOW IT WORKS / THE DUALITY  (원리 설명 — 노른자·세포·키트)
+│   ├── 배경: 소프트 블루 flat-lay(영화 egg 씬, #87C1E0) — 노른자/주입 구간
 │   ├── You are the matrix / Everything is you
-│   ├── [세포 분열 애니메이션 · #AAFF00]
+│   ├── [좌측 형광 주사기 게이지(SubstanceSyringe) — 스크롤로 배출/주입]
+│   ├── [노른자 주입→꿀렁→분열 (YolkMorph) · 옐로 기본, 그린 주입 · 블루 배경 + 반투명 흰자]
+│   ├── [세포 분열 애니메이션(CellDivisionCanvas) · #AAFF00]
+│   ├── [THE KIT — 영화 고증(크래프트 박스): ACTIVATOR(형광그린 바이알)·STABILIZER·SWITCH·
+│   │    FOOD MATRIX/FOOD OTHER SELF(베이지 앰플 2열)·"REMEMBER YOU ARE ONE" 카드]
+│   ├── (배경은 소프트 블루 flat-lay만 — 립스/TV월은 인트로로 이동)
 │   ├── DUALITY 시퀀스 (STAGE A/B/C — YOU 텍스트 분화)
 │   └── DNA CELLULAR REPLICATION PROTOCOL · Est. ————
 │
-├── Section 04 — THE PROTOCOL
-│   ├── PHASE 01 — ACTIVATION (전문 공개, Irreversible)
-│   ├── PHASE 02 — STABILIZATION (절반 공개, ——— 처리)
-│   └── PHASE 03 — CONTINUATION [LOCKED] (전체 잠김, hover: ACCESS DENIED)
+├── Section 04 — THE PROTOCOL  (각 Phase = 키트 side-by-side + 카피 정렬, 스크롤로 주입/소진)
+│   ├── PHASE 01 — ACTIVATION · 키트 ACTIVATOR (전문 공개, Irreversible)
+│   ├── PHASE 02 — STABILIZATION · 키트 STABILIZER 1–7 (절반 공개, ——— 처리)
+│   └── PHASE 03 — CONTINUATION [LOCKED] · 키트 SWITCH + FOOD 1–7 (전체 잠김, hover: ACCESS DENIED)
 │
 ├── Section 05 — THEY KNOW (롱렌즈 고립)
 │   └── 증언 4개 (이름·직업 없음, 나이만: 51 / 47 / 44 / 53)
@@ -305,10 +373,11 @@ THE SUBSTANCE (single-page · 선형)
 │   ├── Inspired by The Substance (2024), dir. Coralie Fargeat
 │   └── [면책조항 전문 — hover 시 사라짐]
 │
+├── [Fixed] GNB 로고 (좌측 상단 · 흰색 소형 ◗◗ · 인트로 블리드 완료 후 등장 · 이후 모든 섹션에서 항상 노출 — 서비스 페이지 아이덴티티)
 └── [Fixed] 음소거 토글 (우측 하단, 기본 ON · 첫 스크롤에 AudioContext resume · 항상 명확히 노출)
 ```
 
-> 브리프의 6섹션 구조에 PROBLEM·DUALITY·PRICING을 추가 반영해 총 **8섹션 + 인트로**로 구성. HERO→THE SUBSTANCE 사이 PROBLEM, THE SUBSTANCE 내부에 DUALITY 시퀀스, THEY KNOW 뒤 PRICING을 배치 (youonlybetter.com 콘텐츠 기준).
+> 브리프의 6섹션 구조에 PROBLEM·DUALITY·PRICING을 추가 반영해 총 **8섹션 + 인트로**로 구성. HERO→HOW IT WORKS 사이 PROBLEM, HOW IT WORKS 내부에 노른자·세포·키트 + DUALITY 시퀀스, THEY KNOW 뒤 PRICING을 배치 (youonlybetter.com 콘텐츠 기준). ※ 노른자·세포는 인트로가 아니라 HOW IT WORKS 전용(인트로는 로고 블리드+그린 스크립트만).
 
 ---
 
@@ -346,6 +415,7 @@ THE SUBSTANCE (single-page · 선형)
 | FullPageContainer | 인트로 풀뷰포트 | 재활용 | `layout/FullPageContainer.jsx` |
 | QuotedContainer | THEY KNOW 증언 인용 | 재활용 | `typography/QuotedContainer.jsx` |
 | StretchedHeadline | HERO/챕터 대형 타이포 | 재활용 | `typography/StretchedHeadline.jsx` |
+| SubstanceSyringe | HOW IT WORKS 좌측 형광 주사기 게이지(배출/주입) | 재활용 | `common/ui/SubstanceSyringe.jsx` |
 | TextField [MUI] | ACCESS 이메일 입력 | 재활용 | MUI |
 
 ### 수정 — props 추가/스타일 오버라이드 필요
@@ -364,14 +434,18 @@ THE SUBSTANCE (single-page · 선형)
 
 | 컴포넌트 | 용도 | 구분 | 배치 카테고리 |
 |----------|------|------|--------------|
-| SubstanceLogo | ◗◗ 심볼 + hover 시 두 반원 분리 애니메이션 | 신규 | `common/ui/` (범용 아이덴티티) |
-| CellDivisionCanvas | Canvas 세포 분열 파티클 (#AAFF00) | 신규 | `scroll/` 또는 `media/` |
-| YolkMorph | SVG 계란 노른자 옐로 원 → 둘로 분열 | 신규 | `motion/` |
+| SubstanceLogo | ◗◗ 심볼 + hover 시 두 반원 분리 애니메이션 (인트로 로고 블리드에도 사용) | 신규 | `common/ui/` (범용 아이덴티티) |
+| CellDivisionCanvas | HOW IT WORKS 세포 분열 파티클 (#AAFF00) | 신규 | `scroll/` |
+| YolkMorph | HOW IT WORKS 노른자 주입→꿀렁→분열 (옐로 기본, 그린 주입) | 신규 | `motion/` |
+| SubstanceKit | HOW IT WORKS 영화 고증 키트(넘버링 clinical 케이스 · 7-바이알 · 주사기 · 영양팩) — 코드 SVG, 조사 후 제작 | 신규 | `media/` |
+| IntroLogoBleed | 인트로 오프닝: 흰 배경 검은 로고 → 스크롤 시 검정 원 확산으로 배경 전환 | 신규 | `scroll/` 또는 `motion/` |
+| LipsVideoWall | **인트로** 욕망 비트("…a better version of yourself?" 직후): 빈티지 글로시 립스 루프 영상 → 스크롤로 레트로 CRT TV 월(격자)로 멀티플라이. 캔버스 타일링(영상 1개 디코드 → 격자 draw) + poster 스틸 폴백. 욕망 3연 순차 stamp와 1:1 동기 | 신규 | `scroll/` (또는 `media/`) |
+| KitSpecimen | PROTOCOL Phase별 키트 실사(영화 실물 "그대로"). 하이브리드: 실사 사진(full) + 코드 드레인(액면/튜브 하강) + '쭈글 빈 비닐' 실사 crossfade. props `fill`(1→0)·`isConsumed`·`onAdminister`(인젝션 사운드) | 신규 | `media/` |
 | DualitySequence | STAGE A/B/C — YOU 텍스트 분화 (옐로/그린) | 신규 | `kinetic-typography/` |
 | LockedPhase | Phase 03 잠금 + hover ACCESS DENIED (#C41E3A) | 신규 | `overlay-feedback/` 또는 `card/` |
 | VanishingDisclaimer | hover 시 opacity 0 면책조항 | 신규 | `typography/` |
 | RequestConsideration | ACCESS 폼 래퍼 (이메일 + 확답없는 제출) | 신규 | `templates/` |
-| ProtocolPhaseCard | Phase 01/02/03 공개도(full/half/locked) 카드 | 신규 | `card/` |
+| ProtocolPhaseCard | Phase 01/02/03 공개도(full/half/locked) 카드. **확장**: 키트(KitSpecimen) side-by-side + Phase 카피를 키트에 정렬 + `scrollProgress`/administer 콜백 | 신규(확장) | `card/` |
 
 ### 훅 / 유틸 (컴포넌트 외)
 
@@ -383,6 +457,89 @@ THE SUBSTANCE (single-page · 선형)
 | useCinematicCue | 영화 기법 트리거(매크로/대칭붕괴/과잉조명 플래시) | 훅 |
 
 > **재활용률**: 인트로 텍스트 리빌·섹션 구조·모션 전환은 기존 컴포넌트로 상당 부분 커버. 신규는 대부분 "영화 고유의 유기적 비주얼"(세포/노른자/액체/로고 분리)과 "서사 장치"(잠금/사라짐/확답없는 폼)에 집중됨 — 이 프로젝트의 차별점이 정확히 신규 컴포넌트와 사운드 엔진에 몰려 있음.
+
+---
+
+## 계획 요약 & 구현 로드맵 (지금까지 확정)
+
+### 확정 설계 결정
+
+- **두 섹션 분리**: INTRO(서비스 인트로/긴장 — 노른자·세포 없음) ↔ HOW IT WORKS(노른자·세포·키트).
+- **INTRO**: 흰 배경+검은 로고 → **로고 블리드**(검정 확산)로 배경 #0A0A0A → **그린 스크립트 빠른 페이싱 + SFX**(VO는 나중). 블리드 완료 시 **흰 소형 ◗◗ 로고가 GNB 좌상단에 상시**.
+- **오프닝 음악**: 레퍼런스 = Raffertie "The Substance"(저역 테크노 펄스) → 저작권상 **L1 드론으로 무드만 번역** + 라인별 stinger.
+- **HOW IT WORKS 배경**: 소프트 블루 egg 씬(#87C1E0) + 반투명 흰자. 좌측 주사기 게이지 배출 → 노른자 **네온그린 주입 → 용암 블리스터 꿀렁 → budding 분열** → 세포 분열.
+- **립스 → TV 월**: 빈티지 립스 루프(실사 생성) → 스크롤 **멀티플라이(CRT 캔버스 타일링)**. **욕망 3연**("Younger./More beautiful./More perfect.") **순차 stamp 1:1 동기**(동시 노출 금지).
+- **PROTOCOL 키트**: Phase별 키트 실사 side-by-side, 스크롤로 **주입 완료→소진(쭈글 빈 비닐, 하이브리드)** + 인젝션 사운드. **Phase 카피를 키트에 정렬**(01 ACTIVATOR/full · 02 STABILIZER/half · 03 SWITCH+FOOD/locked).
+
+### 컴포넌트 상태
+
+- **완료**: SubstanceLogo · SubstanceSyringe · YolkMorph(블루+흰자+주입/블리스터/budding) · CellDivisionCanvas(뼈대) · DualitySequence · ProtocolPhaseCard(기본) · VanishingDisclaimer · RequestConsideration.
+- **신규 예정**: IntroLogoBleed · LipsVideoWall · KitSpecimen.
+- **확장 예정**: ProtocolPhaseCard(키트+카피+스크롤) · 수정 목록(FadeTransition/Perspective/ScrollScale/GradientOverlay/Button/Switch/HighlightedTypography).
+
+### 빌드 순서 (제안)
+
+1. **INTRO** — IntroLogoBleed + 그린 스크립트 리빌 + **LipsVideoWall**(욕망 3연 비트, poster 폴백) + SFX
+2. **HOW IT WORKS 조립** — 주사기 게이지 + 노른자 + 세포 (1개 scrollProgress로 구동)
+3. **KitSpecimen** + **ProtocolPhaseCard 확장**(키트 side-by-side + 카피 정렬 + 주입/소진)
+4. **나머지 섹션** 조립 — HERO/PROBLEM/THEY KNOW/PRICING/ACCESS/FOOTER
+5. **사운드 배선** + 접근성/reduced-motion + 오디오 디버그 정리
+
+### 필요 자산 (생성)
+
+- `public/video/lips-loop.webm` (+ poster = 기존 립스 스틸) — 프롬프트 확정
+- 키트 실사(영화 레퍼런스 기반 생성): ACTIVATOR / STABILIZER / FOOD 각 **full + consumed(쭈글)**
+- `public/cell-green.png` — 세포 텍스처
+
+---
+
+## 레퍼런스 이미지 카탈로그 (`src/assets/reference/`)
+
+> 작업 시 참조하는 실제 이미지 자산 목록. 각 파일이 **정확히 무엇인지**와 **어느 컴포넌트/섹션에 쓰는지**를 명시한다. (영화 실물 스틸은 "그대로" 재현 기준, 그 외는 룩/모션 레퍼런스)
+
+### 1. 브랜드 · 로고
+
+| 파일 | 무엇인지 (정확히) | 용도 |
+|------|------------------|------|
+| `logo.jpg` | 검정 배경 위 **노란 ◗◗ 심볼**(마주보는 두 반원 = D + 역D). 공식 스타일 로고 | `SubstanceLogo` 벡터화 소스 · 인트로/GNB/HERO/ACCESS/FOOTER |
+| `8381f5beeefc17ddce6c7568069fd11e.jpg` | **THE SUBSTANCE 공식 포스터 몽타주 그리드** — 볼드 화이트 타이틀 + 스틸 12컷(옐로 노른자에 그린 주입 · 데미 무어 키스 · 눈 클로즈업 · 액티베이터 바이알 등) | 전체 무드·그리드 미학·타이포 톤 레퍼런스 |
+
+### 2. 노른자 (HOW IT WORKS · YolkMorph)
+
+| 파일 | 무엇인지 (정확히) | 용도 |
+|------|------------------|------|
+| `egg yolk 1.png` (= `eggyolk-topdown.png`, 동일본) | **노른자 top-down 실사** 한 알(젖은 글로시 돔) | `YolkMorph` 사진 텍스처 소스(`eggyolk-topdown.png`로 import) |
+| `eggyolk 2.png` | 노른자 실사 대체 고해상본(5.7MB) | 고해상 필요 시 텍스처 교체 후보 |
+| `7f4dd4fff506c43a086935fa7f9b86e3.jpg` | **소프트 블루 배경 위 더블 노른자**(하나의 흰자 안에 노른자 2개, 분열 완료 상태) | 노른자 씬 **배경색(#87C1E0)** + 흰자 웅덩이 + 분열 결과 레퍼런스 |
+
+### 3. 인젝션 / 수중 dispersion (노른자 주입 배경 · 잉크 번짐)
+
+> 노른자에 형광그린이 주입될 때 "잉크가 물에 퍼지는" 매크로 확대 레퍼런스. `YolkMorph` 플룸/텐드릴 + 배경 dispersion 연출 기준. (메모리: substance-injection-dispersion)
+
+| 파일 | 무엇인지 (정확히) | 용도 |
+|------|------------------|------|
+| `8e998ca8b0b155eea4a01137fc407a00.jpg` | 물잔에 **눈금 주사기**로 하얀 액체를 주입 → 수중에 점성 dispersion으로 가라앉음 | 인젝션(주사기+수중 확산) 직접 레퍼런스 |
+| `e32512bca47a8edf3c3369d2a75a1ff2.jpg` | 눈금 실린더에 스포이드에서 **오렌지 잉크**가 수중으로 갈라지며 퍼지는 매크로(텐드릴) | 주입 텐드릴/갈래 퍼짐 레퍼런스 |
+| `7a613b29ad5b96b3722e0bcbdcd81649.jpg` | 물잔에 **파란 잉크** 한 방울이 떨어져 수중 dispersion | 잉크-인-워터 기본 형태 레퍼런스 |
+| `a4e8c151914950f38791103cb0de931c.jpg` | 수면 매크로 클로즈업 — **옐로(노른자색) 액체**가 물에 들어가며 하얀 점성 기둥 형성 | 옐로 주입 순간 수면/점성 레퍼런스 |
+| `7381b695321b89588141e208008ba84f.jpg` | 유리 실린더 맑은 액체에 상단 스패출러에서 **앰버/오렌지 분말** 투하 → 기포와 확산 | 클리니컬 투하·기포 레퍼런스 |
+| `cffe1697e35e3209e5bd60cd5dd06c7a.jpg` | 삼각플라스크(225ml 눈금)에 **진한 옐로 화학물질** dispersion(다크 배경) | 임상 계측기 톤 + 짙은 옐로 확산 레퍼런스 |
+
+### 4. 키트 (PROTOCOL · KitSpecimen — 영화 실물 "그대로")
+
+| 파일 | 무엇인지 (정확히) | 용도 |
+|------|------------------|------|
+| `c4edf4f8fe36b39a60b9677b309504b4.jpg` | **키트 언박싱 4패널** — ①ACTIVATOR 블리스터 트레이(주사기+그린 바이알+툴) ②STABILIZER 파우치(넘버링 바이알+화이트 주사기건) ③FOOD MATRIX/OTHER SELF 넘버링 튜브 ④전체 배치(+SWITCH 튜빙·REMEMBER YOU ARE ONE 카드, 골드 트레이) | 키트 전 구성·레이아웃 마스터 레퍼런스 |
+| `848f1eaf85c89dcd9d782df0548df6bc.jpg` | 키트 3컷 — 전체 구성 오버헤드 · **ACTIVATOR 형광그린 바이알**(세로 블랙 라벨) 클로즈업 · "REMEMBER YOU ARE ONE" 카드를 든 손 | 아이템별 라벨/색·카드 레퍼런스 |
+| `7b43d278a1bad4e41df92a7eae8f329a.jpg` | **FOOD MATRIX / FOOD OTHER SELF** 파우치 클로즈업 — 크림색 튜브가 **1–7 넘버링**으로 적층(볼드 콘덴스드 블랙 라벨) | FOOD 아이템 실사(full 상태·넘버링) 레퍼런스 |
+| `fe71bdf0f9e06bcb5d9154cebce35a1a.jpg` | 진공성형 투명 파우치의 **STABILIZER 넘버링 1–7 그린캡 바이알** 매크로(엠보싱 번호) | STABILIZER 아이템 실사·질감 레퍼런스 |
+
+### 5. 립스 · TV 월 (인트로 욕망 비트 · LipsVideoWall)
+
+| 파일 | 무엇인지 (정확히) | 용도 |
+|------|------------------|------|
+| `9e3290242cea636378a3f9856a627420.jpg` | **젊고 탱탱한 글로시 핑크 립스** 매크로(살짝 벌어짐, 웜핑크 빈티지 톤) — 영화 실물 스틸 | 립스 루프 영상 **첫 프레임/포스터**(음파음파 모션 생성 소스) |
+| `4aa6ec837f596d81f8d4bc296af4eab1.jpg` | **레트로 CRT TV 월** — 우드 캐비닛 브라운관 격자, 모든 화면에 같은 핑크 립스 재생 | TV 월 멀티플라이(격자·베젤·CRT 룩) 레퍼런스 |
 
 ---
 
