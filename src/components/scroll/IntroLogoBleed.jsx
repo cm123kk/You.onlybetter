@@ -197,7 +197,7 @@ const IntroLogoBleed = forwardRef(function IntroLogoBleed({
         position: 'relative',
         width: '100%',
         height: '100%',
-        minHeight: '100dvh',
+        minHeight: '100vh',
         overflow: 'hidden',
         backgroundColor: bgColor,
         ...sx,
@@ -237,12 +237,17 @@ const IntroLogoBleed = forwardRef(function IntroLogoBleed({
           top: '50%',
           left: '50%',
           zIndex: 1,
-          transform: 'translate(-50%, -50%)',
+          // 데스크탑: size를 키워 벡터 재렌더(크리스프). 모바일: 고정 300px 렌더 + CSS scale(GPU) —
+          //   매 프레임 최대 5800px SVG 재렌더로 메인스레드가 질식해 로고가 멈추고 극심히 끊기던 것 해소.
+          transform: coarse
+            ? `translate(-50%, -50%) scale(${ (logoSize * logoScale) / 300 })`
+            : 'translate(-50%, -50%)',
+          willChange: coarse ? 'transform' : undefined,
           lineHeight: 0,
           opacity: 1 - clamp01((bluePhase - 0.1) / 0.3),
         } }
       >
-        <SubstanceLogo size={ Math.round(logoSize * logoScale) } color="#0A0A0A" hasSplitOnHover={ false } />
+        <SubstanceLogo size={ coarse ? 300 : Math.round(logoSize * logoScale) } color="#0A0A0A" hasSplitOnHover={ false } />
       </Box>
 
       {/* 립스 → TV 월 욕망 비트 — 풀블리드, 로컬 progress로 단일→멀티플라이, 3연 stamp(내장) */}

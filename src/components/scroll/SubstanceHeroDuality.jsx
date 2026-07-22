@@ -101,7 +101,7 @@ function SubstanceHeroDuality({
         position: 'relative',
         width: '100%',
         height: '100%',
-        minHeight: '100dvh',
+        minHeight: '100vh',
         overflow: 'hidden',
         backgroundColor: '#0A0A0A', // 인트로 끝과 동일 검정 → 이음새 없음
         ...sx,

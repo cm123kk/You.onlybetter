@@ -66,7 +66,7 @@ const SubstanceHowItWorks = forwardRef(function SubstanceHowItWorks({
         position: 'relative',
         width: '100%',
         height: '100%',
-        minHeight: '100dvh',
+        minHeight: '100vh',
         overflow: 'hidden',
         // 임시: HOW IT WORKS 배경 흰색(원복 시 BLUE + 위 라디얼 그라데이션으로 되돌리기)
         backgroundColor: '#FFFFFF',

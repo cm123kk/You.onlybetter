@@ -131,11 +131,6 @@ function IntroLanding() {
         const p = a.play(); if (p && p.catch) p.catch(() => {});
       });
     }
-    // 스크롤 시동 — 모바일에서 ENTER 직후 첫 스와이프가 안 먹혀 몇 번 스크롤해야 반응하던 문제 완화.
-    //  부드럽게 살짝 진입시켜 인트로가 즉시 시작되고 이후 사용자 스크롤이 이어짐.
-    if (typeof window !== 'undefined') {
-      window.scrollTo({ top: Math.round(window.innerHeight * 0.6), behavior: 'smooth' });
-    }
   }, []);
 
   // 오디오는 선언적 <audio autoPlay muted>(return 하단)로 렌더 → muted 재생이 실제로 걸림(new Audio()
@@ -530,7 +525,7 @@ function IntroLanding() {
           섹션을 나누지 않으므로 사이에 죽은 중간 영역(seam)이 생기지 않는다. works(블루)에서 THE PROTOCOL로
           같은 화면에서 이어짐: 블루 액체가 배수되며 검정 노출 → 검정 위 Phase 01 키트 뜯기. */}
       <Box ref={sceneRef} sx={{ position: 'relative', height: `${SCENE_VH}vh`, backgroundColor: '#0A0A0A' }}>
-        <Box sx={{ position: 'sticky', top: 0, height: '100dvh', width: '100%', overflow: 'hidden' }}>
+        <Box sx={{ position: 'sticky', top: 0, height: '100vh', width: '100%', overflow: 'hidden' }}>
           {/* 인트로 — melt는 검정으로 수렴(HERO와 동일 배경). 블루 아님. GNB 로고는 App 레벨 고정으로 대체(중복 방지) */}
           <IntroLogoBleedMemo progress={introPhase} meltProgress={handoffPhase} bluePhase={handoffPhase} bleedColor="#0A0A0A" hasGnbLogo={false} />
           {/* HERO — 이중자아 회전(검정). 인트로 다음, 와이프 전까지 표시 */}
@@ -701,7 +696,7 @@ function HomePage() {
       sx={{
         p: 4,
         textAlign: 'center',
-        minHeight: '100dvh',
+        minHeight: '100vh',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
