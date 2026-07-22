@@ -446,10 +446,11 @@ function IntroLanding() {
                   component="button"
                   onClick={handleEnter}
                   sx={{
-                    position: 'fixed', left: '50%', bottom: '13%', transform: 'translateX(-50%)', zIndex: 9,
-                    px: 3, py: 1, borderRadius: '999px', border: '1px solid', borderColor: line,
+                    position: 'fixed', left: '50%', bottom: { xs: '22%', md: '13%' }, transform: 'translateX(-50%)', zIndex: 15,
+                    px: 4, py: 1.6, minHeight: 48, borderRadius: '999px', border: '1px solid', borderColor: line,
                     backgroundColor: 'transparent', color: faint, cursor: 'pointer',
-                    fontFamily: '"Bebas Neue", sans-serif', fontSize: '0.92rem', letterSpacing: '0.16em',
+                    touchAction: 'manipulation', WebkitTapHighlightColor: 'transparent',
+                    fontFamily: '"Bebas Neue", sans-serif', fontSize: '1rem', letterSpacing: '0.16em',
                     opacity: gateOp, transition: 'opacity 0.3s ease, color 0.35s ease, border-color 0.35s ease',
                     '&:hover': { color: strong, borderColor: strong },
                   }}
