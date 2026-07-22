@@ -102,6 +102,8 @@ const YolkMorph = forwardRef(function YolkMorph({
   const rightCx = attachedCx + (separatedCx - attachedCx) * splitP;
   const dispScale = 3 + wobbleWindow * 13; // 정적 미세 유기 엣지 + 주입 후 꿀렁
   const blurAmt = 1 + 3.5 * Math.sin(Math.PI * splitP); // pinch(목 잇는 순간)만 gooey, 온전/완전분열 시 선명(광택)
+  // 비싼 turbulence+displacement 필터는 꿀렁/분열이 실제로 일어나는 구간에만 적용(그 외엔 clip 원형 그대로) → 프레임당 재래스터화 제거
+  const useFx = wobbleWindow > 0.02 || splitP > 0.02;
 
   /** 노른자 하나 렌더(사진 + 붉은점 뭉갬 + 그린 주입) — r: 이 노른자 반경(bud는 자람) */
   const yolk = (cx, clipId, r) => {
@@ -187,6 +189,7 @@ const YolkMorph = forwardRef(function YolkMorph({
         sx={ {
           display: 'block',
           transformOrigin: 'center',
+          willChange: 'transform',
           animation: hasWobble ? `${ wobbleKeyframe } 6s ease-in-out infinite` : 'none',
           '@media (prefers-reduced-motion: reduce)': { animation: 'none' },
         } }
@@ -196,7 +199,7 @@ const YolkMorph = forwardRef(function YolkMorph({
           <clipPath id={ clipR }><circle cx={ rightCx } cy={ cy } r={ budR } /></clipPath>
           {/* 변위(꿀렁) + gooey 병합(점성 pinch) — 변위 강도는 progress로, 흐름은 시간으로 */}
           <filter id={ fx } x="-40%" y="-40%" width="180%" height="180%">
-            <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="4" result="n" />
+            <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="1" seed="4" result="n" />
             <feDisplacementMap in="SourceGraphic" in2="n" scale={ dispScale } xChannelSelector="R" yChannelSelector="G" result="d" />
             <feGaussianBlur in="d" stdDeviation={ blurAmt } result="b" />
             <feColorMatrix in="b" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 28 -12" />
@@ -265,8 +268,9 @@ const YolkMorph = forwardRef(function YolkMorph({
           </g>
         ) }
 
-        {/* 노른자: 원본(왼쪽, 온전) + 싹터 자라는 두 번째(오른쪽, budR) → 꿀렁 변위 + gooey 점성 분열 */}
-        <g filter={ `url(#${ fx })` }>
+        {/* 노른자: 원본(왼쪽, 온전) + 싹터 자라는 두 번째(오른쪽, budR) → 꿀렁 변위 + gooey 점성 분열.
+            변위 필터는 활성 구간(useFx)에만 — 나머지 스크롤 구간은 필터 없이 저비용 렌더 */}
+        <g filter={ useFx ? `url(#${ fx })` : undefined }>
           { yolk(leftCx, clipL, rClip) }
           { yolk(rightCx, clipR, budR) }
         </g>

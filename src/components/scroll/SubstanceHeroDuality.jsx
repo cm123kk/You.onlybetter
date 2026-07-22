@@ -137,7 +137,10 @@ function SubstanceHeroDuality({
               height: '100%',
               objectFit: 'cover',
               display: 'block',
-              filter: 'saturate(1.05) contrast(1.05)',
+              // 스크럽 영상엔 CSS filter를 걸지 않음(시크마다 필터 재페인트 → 버벅임). 색보정은 인코딩에 baking.
+              transform: 'translateZ(0)', // 자체 GPU 레이어로 승격(마스크/합성 캐시)
+              willChange: 'transform',
+              backfaceVisibility: 'hidden',
             } }
           />
         </Box>
