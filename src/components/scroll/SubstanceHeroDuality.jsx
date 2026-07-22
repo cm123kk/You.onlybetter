@@ -216,7 +216,12 @@ function SubstanceHeroDuality({
         <Box component="span">{ headlineHead }&nbsp;</Box>
         <Box
           component="span"
-          sx={ { textShadow: '0 0 0.06em rgba(170,255,0,0.95), 0 0 0.18em rgba(170,255,0,0.55), 0 0 0.4em rgba(170,255,0,0.35)' } }
+          sx={ {
+            textShadow: {
+              xs: '0 0 0.03em rgba(170,255,0,0.7), 0 0 0.09em rgba(170,255,0,0.3)', // 모바일: 글로우 약하게
+              md: '0 0 0.06em rgba(170,255,0,0.95), 0 0 0.18em rgba(170,255,0,0.55), 0 0 0.4em rgba(170,255,0,0.35)',
+            },
+          } }
         >
           { headlineRest }
         </Box>

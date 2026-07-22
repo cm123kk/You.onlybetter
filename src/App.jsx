@@ -131,6 +131,11 @@ function IntroLanding() {
         const p = a.play(); if (p && p.catch) p.catch(() => {});
       });
     }
+    // 스크롤 시동 — 모바일에서 ENTER 직후 첫 스와이프가 안 먹혀 몇 번 스크롤해야 반응하던 문제 완화.
+    //  부드럽게 살짝 진입시켜 인트로가 즉시 시작되고 이후 사용자 스크롤이 이어짐.
+    if (typeof window !== 'undefined') {
+      window.scrollTo({ top: Math.round(window.innerHeight * 0.6), behavior: 'smooth' });
+    }
   }, []);
 
   // 오디오는 선언적 <audio autoPlay muted>(return 하단)로 렌더 → muted 재생이 실제로 걸림(new Audio()
@@ -484,7 +489,7 @@ function IntroLanding() {
         );
       })()}
       {/* GNB 로고 — 블리드 완료 후 좌상단 고정(상시). 그린 ◗◗(검정·흰 배경 모두 가시). 인트로→히어로 사라짐/재등장 없음 */}
-      <Box sx={{ position: 'fixed', top: { xs: 20, md: 36 }, left: { xs: 20, md: 44 }, zIndex: 20, opacity: clamp01((introPhase - 0.08) / 0.06), pointerEvents: 'none' }}>
+      <Box sx={{ position: 'fixed', top: { xs: 18, md: 34 }, left: { xs: 20, md: 44 }, height: { xs: 40, md: 44 }, display: 'flex', alignItems: 'center', zIndex: 20, opacity: clamp01((introPhase - 0.08) / 0.06), pointerEvents: 'none' }}>
         <SubstanceLogo size={44} color="secondary.main" hasSplitOnHover={false} />
       </Box>
 
@@ -493,8 +498,11 @@ function IntroLanding() {
         component="button"
         sx={{
           position: 'fixed',
-          top: { xs: 16, md: 30 },
+          top: { xs: 18, md: 34 },
           right: { xs: 20, md: 44 },
+          height: { xs: 40, md: 44 },
+          display: 'inline-flex',
+          alignItems: 'center',
           zIndex: 20,
           opacity: clamp01(heroP / 0.05),
           pointerEvents: heroP > 0 ? 'auto' : 'none',
@@ -505,7 +513,6 @@ function IntroLanding() {
           backgroundColor: 'secondary.main',
           color: '#0A0A0A',
           px: { xs: 1.75, md: 2.5 },
-          py: { xs: 0.75, md: 1 },
           fontFamily: '"Bebas Neue", sans-serif',
           fontSize: { xs: '0.85rem', md: '1rem' },
           letterSpacing: '0.14em',
