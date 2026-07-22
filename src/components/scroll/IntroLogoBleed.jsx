@@ -1,4 +1,4 @@
-import { forwardRef, useEffect, useId, useMemo, useRef } from 'react';
+import { forwardRef, useEffect, useId, useMemo, useRef, useState } from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
@@ -6,6 +6,13 @@ import { SubstanceLogo } from '../../common/ui/SubstanceLogo.jsx';
 import { LipsVideoWall } from './LipsVideoWall.jsx';
 
 const clamp01 = (v) => Math.min(1, Math.max(0, v));
+
+/** 터치/모바일(coarse pointer) — iOS는 paused video seek 프레임 미렌더(스크럽 깨짐) + 무거운 SVG melt 필터에 GPU 질식.
+ *  이 경우 인젝션 영상은 루프 재생, melt 필터는 경량 blur로 대체. */
+const isCoarsePointer = () =>
+  typeof window !== 'undefined' &&
+  typeof window.matchMedia === 'function' &&
+  window.matchMedia('(pointer: coarse)').matches;
 
 /** 영화 노른자 씬 소프트 블루 — 전환(handoff)에서 배경이 이 색으로 안→밖 확산 */
 const BLUE = '#87C1E0';
@@ -119,12 +126,15 @@ const IntroLogoBleed = forwardRef(function IntroLogoBleed({
   /** 스크롤로 영상 재생 위치 스크럽 — 텍스트 등장과 확산이 동기 */
   const injLocal = clamp01((p - injectionStart) / Math.max(1e-4, injectionEnd - injectionStart));
   const injVideoRef = useRef(null);
+  const [coarse] = useState(isCoarsePointer);
   useEffect(() => {
     const v = injVideoRef.current;
     if (!v || !injectionActive) return;
+    // 모바일: 스크럽(seek) 대신 재생 — iOS는 paused seek 프레임을 안 그려 배경영상이 검게 멈춤
+    if (coarse) { const pr = v.play(); if (pr && pr.catch) pr.catch(() => {}); return; }
     const dur = Number.isFinite(v.duration) && v.duration > 0 ? v.duration : 5;
     try { v.currentTime = injLocal * dur * 0.985; } catch { /* not seekable yet */ }
-  }, [injLocal, injectionActive]);
+  }, [injLocal, injectionActive, coarse]);
 
   /** 리빌·블리드 완료 트리거(중복 방지) — side effect */
   const firedRef = useRef({ lines: 0, bleed: false });
@@ -197,7 +207,7 @@ const IntroLogoBleed = forwardRef(function IntroLogoBleed({
       {/* 녹아내림+번짐 필터 — HTML 텍스트에 filter: url(#meltId)로 적용.
           초반(meltP): gooey 세로 드립으로 제자리에서 녹음. 후반(flood): blur를 크게 키우고 alpha를 강하게
           dilate → 파랗게 물든 글자가 잉크처럼 크게 번져 배경을 뒤덮는다(글자가 배경을 전환). */}
-      { meltP > 0.001 && (
+      { meltP > 0.001 && !coarse && (
         <Box
           component="svg"
           aria-hidden="true"
@@ -262,6 +272,7 @@ const IntroLogoBleed = forwardRef(function IntroLogoBleed({
           muted
           playsInline
           preload="auto"
+          { ...(coarse ? { autoPlay: true, loop: true } : {}) }
           onLoadedMetadata={ (e) => {
             const v = e.currentTarget;
             const dur = Number.isFinite(v.duration) && v.duration > 0 ? v.duration : 5;
@@ -312,7 +323,8 @@ const IntroLogoBleed = forwardRef(function IntroLogoBleed({
                   // flood 완료(배경=블루 수렴)에 맞춰 텍스트 요소를 완전히 페이드아웃 → 반투명 블루가 배경 위에 겹쳐
                   // 남는 "진한 블루 블롭/사각형" 잔상 제거.
                   opacity: 1 - clamp01((floodP - 0.55) / 0.45),
-                  filter: `url(#${ meltId })`,
+                  // 모바일은 무거운 turbulence/displacement/morphology 필터 대신 경량 blur(GPU 질식 방지)
+                  filter: coarse ? `blur(${ 1 + floodP * 6 }px)` : `url(#${ meltId })`,
                   transform: 'none',
                   transition: 'none',
                 } : {

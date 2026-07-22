@@ -34,6 +34,28 @@ const SND_SX = { position: 'fixed', width: 64, height: 64, bottom: 0, right: 0, 
 const LIPS_START = 0.33; // 이 진행도(립스월)부터 youth 레이어 인 (IntroLogoBleed lipsStart와 동일)
 const INJECTION_START = 0.60; // 인젝션 비트(ONE SINGLE INJECTION) 사운드 인 (IntroLogoBleed injectionStart와 동일)
 
+/** iOS 오디오 언락 — new Audio() SFX는 사용자 제스처 안에서 1회 재생돼야 이후 프로그램 재생이 허용됨.
+ *  첫 제스처에 주어진 요소들을 muted play→pause로 언락한 뒤 리스너를 뗀다. 반환값=수동 해제 함수. */
+function attachAudioUnlock(elements) {
+  let done = false;
+  const evs = ['pointerdown', 'touchstart', 'keydown'];
+  const remove = () => evs.forEach((e) => window.removeEventListener(e, unlock));
+  function unlock() {
+    if (done) return;
+    done = true;
+    elements.forEach((a) => {
+      if (!a) return;
+      a.muted = true;
+      const p = a.play();
+      if (p && p.then) p.then(() => { a.pause(); a.currentTime = 0; a.muted = false; }).catch(() => { a.muted = false; });
+      else a.muted = false;
+    });
+    remove();
+  }
+  evs.forEach((e) => window.addEventListener(e, unlock, { passive: true }));
+  return remove;
+}
+
 /**
  * 인트로 랜딩 — 긴 스크롤 섹션(750vh)을 sticky 풀뷰포트 IntroLogoBleed가 통과 진행도로 구동.
  *
@@ -217,14 +239,16 @@ function IntroLanding() {
   const worksSfxRef = useRef(null);
   useEffect(() => {
     const mk = (src, vol) => { const a = new Audio(src); a.preload = 'auto'; a.volume = vol; return a; };
-    worksSfxRef.current = {
+    const items = {
       squish: { a: mk('/audio/substance/yolk-squelch.mp3', 0.55), start: 0.02, end: 0.09, fired: false },
       inject: { a: mk('/audio/substance/injection-bubble.mp3', 0.3), start: 0.32, end: 0.5, fired: false },
       split: { a: mk('/audio/substance/division-splat.mp3', 0.65), start: 0.68, end: 0.96, fired: false },
     };
+    worksSfxRef.current = items;
+    const detachUnlock = attachAudioUnlock(Object.values(items).map((o) => o.a)); // iOS 언락
     return () => {
-      const s = worksSfxRef.current;
-      if (s) Object.values(s).forEach((o) => o.a.pause());
+      detachUnlock();
+      Object.values(items).forEach((o) => o.a.pause());
       worksSfxRef.current = null;
     };
   }, []);
@@ -269,7 +293,9 @@ function IntroLanding() {
     const onEnded = () => { voPlayingRef.current = false; playNextVo(); };
     items.forEach((o) => o.a.addEventListener('ended', onEnded));
     heroVoRef.current = items;
+    const detachUnlock = attachAudioUnlock(items.map((o) => o.a)); // iOS 언락
     return () => {
+      detachUnlock();
       items.forEach((o) => { o.a.removeEventListener('ended', onEnded); o.a.pause(); });
       voQueueRef.current = [];
       voPlayingRef.current = false;
@@ -310,7 +336,7 @@ function IntroLanding() {
   const protoIdleRef = useRef(null);
   useEffect(() => {
     const mk = (src, vol) => { const a = new Audio(src); a.preload = 'auto'; a.volume = vol; return a; };
-    protoSfxRef.current = {
+    const items = {
       // peel: 클립이 0.6s로 짧아 스크럽하면 되감김으로 끊김 → 원샷(진입 시 1회).
       peel: { a: mk('/audio/substance/protocol-1.mp3', 0.6), start: 0.17, end: 0.42, scrub: false, fired: false },
       // drain/inject: 긴 클립을 스크롤에 매핑. seek 대신 playbackRate로 부드럽게 추종(지지직 방지).
@@ -318,9 +344,11 @@ function IntroLanding() {
       // Phase 3는 protocol-3.mp3 가운데 구간 추출 + 저역 드론 배경음 제거한 protocol-3-clean.mp3 사용
       inject: { a: mk('/audio/substance/protocol-3-clean.mp3', 0.6), start: 0.74, end: 0.99, scrub: true, fired: false },
     };
+    protoSfxRef.current = items;
+    const detachUnlock = attachAudioUnlock(Object.values(items).map((o) => o.a)); // iOS 언락
     return () => {
-      const s = protoSfxRef.current;
-      if (s) Object.values(s).forEach((o) => o.a.pause());
+      detachUnlock();
+      Object.values(items).forEach((o) => o.a.pause());
       if (protoIdleRef.current) clearTimeout(protoIdleRef.current);
       protoSfxRef.current = null;
     };

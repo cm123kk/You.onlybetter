@@ -190,41 +190,35 @@ function SubstanceHeroDuality({
         } }
       />
 
-      {/* 헤더 텍스트 — 하단 풀폭 대형. 전체 그린, 'ONLY BETTER.'만 베이직 그린 글로우 */}
+      {/* 헤더 텍스트 — 하단 풀폭 대형(HTML, vw 기반 풀블리드). SVG textLength는 iOS에서 자간 오작동(겹침/짤림) → HTML로.
+          전체 그린, 'ONLY BETTER.'만 베이직 그린 글로우(CSS text-shadow, em 단위라 폰트 크기 따라 스케일). */}
       <Box
+        aria-label={ headline }
         sx={ {
           position: 'absolute',
           left: 0,
           right: 0,
-          bottom: 0,
+          bottom: { xs: '1.2vh', md: 0 },
           zIndex: 4,
-          px: { xs: 1, md: 1.5 },
+          px: { xs: 0.5, md: 1 },
           pointerEvents: 'none',
           opacity: headlineOp,
+          textAlign: 'center',
+          whiteSpace: 'nowrap',
+          lineHeight: 0.82,
+          color: '#AAFF00',
+          fontFamily: '"Bebas Neue", sans-serif',
+          fontWeight: 400,
+          fontSize: '15.2vw', // 한 줄 풀블리드(모든 폭 비례) — 클립 방지 위해 살짝 보수적
+          letterSpacing: '-0.005em',
         } }
       >
+        <Box component="span">{ headlineHead }&nbsp;</Box>
         <Box
-          component="svg"
-          viewBox="0 0 1200 216"
-          preserveAspectRatio="xMidYMax meet"
-          sx={ { width: '100%', display: 'block', overflow: 'visible' } }
+          component="span"
+          sx={ { textShadow: '0 0 0.06em rgba(170,255,0,0.95), 0 0 0.18em rgba(170,255,0,0.55), 0 0 0.4em rgba(170,255,0,0.35)' } }
         >
-          <defs>
-            {/* 베이직 그린 글로우 — 단일 소프트 블룸 */}
-            <filter id="heroGlow" x="-15%" y="-70%" width="130%" height="240%">
-              <feGaussianBlur in="SourceAlpha" stdDeviation="6" result="b" />
-              <feFlood floodColor="#AAFF00" floodOpacity="0.6" result="c" />
-              <feComposite in="c" in2="b" operator="in" result="g" />
-              <feMerge>
-                <feMergeNode in="g" />
-                <feMergeNode in="SourceGraphic" />
-              </feMerge>
-            </filter>
-          </defs>
-          <text x="600" y="180" textAnchor="middle" textLength="1180" lengthAdjust="spacing" fontFamily="'Bebas Neue', sans-serif" fontSize="212">
-            <tspan fill="#AAFF00">{ headlineHead } </tspan>
-            <tspan fill="#AAFF00" filter="url(#heroGlow)">{ headlineRest }</tspan>
-          </text>
+          { headlineRest }
         </Box>
       </Box>
     </Box>
