@@ -110,8 +110,8 @@ function IntroLanding() {
   const injectionRef = useRef(null);
   const dingRef = useRef(null);
   const dingFiredRef = useRef(false);
-  // iOS는 video.volume을 무시(볼륨 기반 페이드 무효) → 와이프를 지나면 muted로 확실히 정지시키기 위한 플래그
-  const bedsSilentRef = useRef(false);
+  // iOS는 video.volume을 무시(볼륨 기반 페이드 무효) → 각 베드가 사실상 무음인 구간을 muted로 확실히 정지시키기 위한 per-bed 플래그
+  const bedsSilentRef = useRef({ pulse: true, youth: true, injection: true });
   const interactedRef = useRef(false);
   const unlockedRef = useRef(false); // 아무 제스처(스크롤 포함)라도 있으면 소리 낼 의사 있음
   const activatedRef = useRef(false); // 진짜 활성화 제스처(클릭/키/터치)만 — 브라우저가 언뮤트 허용
@@ -178,10 +178,11 @@ function IntroLanding() {
   useEffect(() => {
     const sync = () => {
       const wantSound = unlockedRef.current && soundOnRef.current;
-      // bedsSilent: 인트로 베드(펄스/youth/injection)를 확실히 무음화(iOS 볼륨 무시 대응). 와이프 지나면 true.
-      const wantMuted = !wantSound || bedsSilentRef.current;
-      [pulseRef.current, youthRef.current, injectionRef.current].forEach((a) => {
+      const sil = bedsSilentRef.current;
+      // per-bed 무음화(iOS 볼륨 무시 대응): 각 베드가 자기 구간을 벗어나면 muted로 확실히 정지.
+      [['pulse', pulseRef.current], ['youth', youthRef.current], ['injection', injectionRef.current]].forEach(([name, a]) => {
         if (!a) return;
+        const wantMuted = !wantSound || sil[name];
         if (a.muted !== wantMuted) a.muted = wantMuted;
         if (a.paused) {
           const p = a.play();
@@ -214,11 +215,18 @@ function IntroLanding() {
     const pulseRampIn = clamp01((progress - 0.02) / 0.05); // 로고 정지 구간만 무음, 스크롤 시작하면 인
     const pulseBase = heroP > 0 ? 0.07 : (0.3 - 0.23 * handoffPhase); // 인트로 0.3 → handoff 0.3→0.07 → HERO 0.07(낮게)
     const pulseEndFade = 1 - clamp01((wipeP - 0.15) / 0.55); // HERO 끝 와이프에서 페이드아웃
-    pulse.volume = pulseRampIn * pulseBase * pulseEndFade;
-    // 와이프를 지나면 인트로 베드 확실히 무음(iOS 볼륨 무시 대응) — sync 루프가 muted로 반영. 위로 되돌리면 해제.
-    bedsSilentRef.current = wipeP >= 0.85;
-    youth.volume = clamp01((progress - LIPS_START) / 0.04) * (1 - clamp01((progress - 0.55) / 0.05)) * 0.25;
-    injection.volume = clamp01((progress - INJECTION_START) / 0.05) * (1 - clamp01((progress - 0.72) / 0.08)) * 0.4;
+    const pulseVol = pulseRampIn * pulseBase * pulseEndFade;
+    const youthVol = clamp01((progress - LIPS_START) / 0.04) * (1 - clamp01((progress - 0.55) / 0.05)) * 0.25;
+    const injVol = clamp01((progress - INJECTION_START) / 0.05) * (1 - clamp01((progress - 0.72) / 0.08)) * 0.4;
+    pulse.volume = pulseVol;
+    youth.volume = youthVol;
+    injection.volume = injVol;
+    // iOS는 volume 무시 → 각 베드가 사실상 0인 구간은 muted로 확실히 정지(youth=립스월 지나면, injection=인젝션 지나면).
+    bedsSilentRef.current = {
+      pulse: pulseVol < 0.008 || wipeP >= 0.85,
+      youth: youthVol < 0.008,
+      injection: injVol < 0.008,
+    };
     // 딩: 0.80에서 1회만 트리거(반복 아님, 하나의 긴 딩~~). 볼륨은 melt와 함께 아웃.
     ding.volume = (1 - clamp01((handoffPhase - 0.10) / 0.55)) * 0.5;
     if (progress >= 0.80 && !dingFiredRef.current) {

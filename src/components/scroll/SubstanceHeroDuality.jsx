@@ -75,11 +75,22 @@ function SubstanceHeroDuality({
   useEffect(() => {
     const v = videoRef.current;
     if (!v) return undefined;
-    // 모바일(coarse): 스크럽 대신 muted 루프 재생 — iOS seek 렌더 실패(검정/프리즈) 회피
+    // 모바일(coarse): 스크럽 대신 muted 루프 재생 — iOS seek 렌더 실패(검정/프리즈) 회피.
+    //  무음 자동재생이 저전력모드/정책으로 막힐 수 있어 → loadeddata/canplay + '다음 터치'에 재생 재시도(제스처 컨텍스트).
     if (coarse) {
-      const play = () => { const pr = v.play(); if (pr && pr.catch) pr.catch(() => {}); };
-      if (v.readyState >= 2) play(); else v.addEventListener('loadeddata', play, { once: true });
-      return undefined;
+      const tryPlay = () => { const pr = v.play(); if (pr && pr.catch) pr.catch(() => {}); };
+      const onTouch = () => tryPlay();
+      tryPlay();
+      v.addEventListener('loadeddata', tryPlay);
+      v.addEventListener('canplay', tryPlay);
+      window.addEventListener('touchstart', onTouch, { passive: true });
+      window.addEventListener('pointerdown', onTouch, { passive: true });
+      return () => {
+        v.removeEventListener('loadeddata', tryPlay);
+        v.removeEventListener('canplay', tryPlay);
+        window.removeEventListener('touchstart', onTouch);
+        window.removeEventListener('pointerdown', onTouch);
+      };
     }
     // 데스크탑: rAF 단일 루프로 스크럽(시크 코얼레싱)
     let raf = 0;
