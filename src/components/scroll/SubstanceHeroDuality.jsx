@@ -114,7 +114,7 @@ function SubstanceHeroDuality({
           position: 'absolute',
           left: 0,
           right: 0,
-          top: 0,
+          top: { xs: '9vh', md: 0 }, // 모바일: 영상을 아래로 내림(상단 GNB/여백 확보)
           bottom: { xs: '3vh', md: '2vh' }, // 이미지 크게(하단까지). 헤더와 겹치는 부분은 아래 스크림이 어둡게 처리
           zIndex: 2,
           display: 'flex',
