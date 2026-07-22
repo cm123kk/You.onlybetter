@@ -51,8 +51,11 @@ const SubstanceHowItWorks = forwardRef(function SubstanceHowItWorks({
   const titleOp = clamp01((p - 0.15) / 0.045);
   const bodyOp = clamp01((p - 0.21) / 0.045);
   const barOp = clamp01((p - 0.28) / 0.045); // 텍스트 이후 마지막 리빌
-  // 형광물질 배출 — 바가 리빌된 뒤(0.33~)부터 비워짐(등장 시엔 가득 찬 상태로 보이도록)
-  const syringeFill = clamp01(1 - clamp01((p - 0.33) / 0.4));
+  // 형광물질 배출(주입) — 바 리빌 후 0.33부터 0.55까지 완전히 비워짐(약이 다 들어가는 시점).
+  const syringeFill = clamp01(1 - clamp01((p - 0.33) / 0.22));
+  // 노른자 라이프사이클 로컬 진행도 — 주입(0.33~) 시작에 맞춰 리매핑. 이렇게 하면 주사기 배출 완료(≈0.55)와
+  // 노른자 흡수(inject) 완료가 동기되고, 그 뒤에 부글부글(wobble)→분열(split) 순으로 진행된다.
+  const yolkP = clamp01((p - 0.33) / 0.67);
   const cellProgress = clamp01((p - 0.5) / 0.5);
   const cellOpacity = cellProgress * 0.5; // 분열 구간부터 살아남(초반 blue 깨끗)
 
@@ -65,7 +68,9 @@ const SubstanceHowItWorks = forwardRef(function SubstanceHowItWorks({
         height: '100%',
         minHeight: '100vh',
         overflow: 'hidden',
-        backgroundColor: BLUE,
+        // 임시: HOW IT WORKS 배경 흰색(원복 시 BLUE + 위 라디얼 그라데이션으로 되돌리기)
+        backgroundColor: '#FFFFFF',
+        backgroundImage: 'none',
         ...sx,
       } }
       { ...props }
@@ -83,7 +88,7 @@ const SubstanceHowItWorks = forwardRef(function SubstanceHowItWorks({
       {/* 중앙 노른자 — 가장 먼저 등장(리빌 순서 1). 상단 프로그레스바와 넓은 간격을 두고 아래 공간 중앙에 크게 */}
       <Box sx={ { position: 'absolute', inset: 0, zIndex: 2, display: 'flex', alignItems: 'center', justifyContent: 'center', pt: { xs: '17vh', md: '24vh' }, opacity: yolkOp, transition: 'opacity 0.2s linear' } }>
         <YolkMorph
-          progress={ p }
+          progress={ yolkP }
           size={ yolkSize }
           hasSurface={ false }
           hasAlbumen={ false }
@@ -92,7 +97,7 @@ const SubstanceHowItWorks = forwardRef(function SubstanceHowItWorks({
       </Box>
 
       {/* 헤딩 + 제목 밑 가로 주사기 프로그레스바(세로 게이지를 회전) */}
-      <Box sx={ { position: 'absolute', top: { xs: 24, md: 44 }, left: 0, right: 0, zIndex: 3, textAlign: 'center', px: 3, pointerEvents: 'none' } }>
+      <Box sx={ { position: 'absolute', top: { xs: 60, md: 84 }, left: 0, right: 0, zIndex: 3, textAlign: 'center', px: 3, pointerEvents: 'none' } }>
         <Typography variant="overline" sx={ { display: 'block', color: '#08161E', letterSpacing: '0.32em', mb: 2, opacity: eyebrowOp, transition: 'opacity 0.25s ease' } }>
           HOW IT WORKS
         </Typography>
@@ -123,20 +128,21 @@ const SubstanceHowItWorks = forwardRef(function SubstanceHowItWorks({
 
         {/* 가로 주사기 프로그레스바 — 세로 SubstanceSyringe를 -90° 회전(디테일 그대로), 형광물질 배출 */}
         { hasSyringe && (
-          <Box sx={ { position: 'relative', width: { xs: '58vw', md: '30vw' }, height: { xs: '8vw', md: '4.2vw' }, mx: 'auto', mt: { xs: 2.5, md: 3.5 }, opacity: barOp, transition: 'opacity 0.2s linear' } }>
+          <Box sx={ { position: 'relative', width: { xs: '38vw', md: '17vw' }, height: { xs: '8vw', md: '4.2vw' }, mx: 'auto', mt: { xs: 2.5, md: 3.5 }, opacity: barOp, transition: 'opacity 0.2s linear' } }>
             <Box
               sx={ {
                 position: 'absolute',
                 top: '50%',
                 left: '50%',
-                height: { xs: '58vw', md: '30vw' }, // 회전 전 세로길이 = 바 길이
+                height: { xs: '38vw', md: '17vw' }, // 회전 전 세로길이 = 바 길이
                 // rotate(-90deg): 배출되는 표면 끝이 왼쪽으로(=왼쪽에서부터 비워짐) / scaleX: 두께만 얇게
                 transform: 'translate(-50%, -50%) rotate(-90deg) scaleX(0.72)',
                 transformOrigin: 'center center',
               } }
             >
-              {/* flipGradient: 어두운색을 왼쪽(배출 끝)으로 → 왼쪽 어두운 곳에서부터 사라짐 */}
-              <SubstanceSyringe fill={ syringeFill } flipGradient />
+              {/* flipGradient: 어두운색을 왼쪽(배출 끝)으로 → 왼쪽 어두운 곳에서부터 사라짐.
+                  endRadius=26: 관 끝을 완전 둥근 pill로(반쯤 둥근 어색함 제거) */}
+              <SubstanceSyringe fill={ syringeFill } flipGradient endRadius={ 26 } />
             </Box>
           </Box>
         ) }

@@ -18,7 +18,7 @@ const DEFAULT_LINES = [
   { text: '…OF A BETTER VERSION\nOF YOURSELF?', at: 0.22 },
   // ── 립스 → TV 월 욕망 비트 (0.33~0.49) : LipsVideoWall 가 "Younger./More beautiful./More perfect." 담당 ──
   //    (립스 구간 동안 스크립트는 자동 숨김 → "better version"은 립스 전에만 보이고 이후엔 안 나옴)
-  { text: 'ONE SINGLE INJECTION\nUNLOCKS YOUR DNA.', at: 0.52 },
+  { text: 'ONE SINGLE INJECTION\nUNLOCKS YOUR DNA.', at: 0.63 },
   { text: 'THIS IS THE SUBSTANCE.', at: 0.82, isDing: true },
   // ※ 이후 라인(YOU ARE THE MATRIX / YOU JUST HAVE TO SHARE / YOU. ARE. ONE.)은 인트로에서 제거 —
   //   HOW IT WORKS 페이즈 설명 카피로 이전 예정.
@@ -61,17 +61,18 @@ const IntroLogoBleed = forwardRef(function IntroLogoBleed({
   progress = 0,
   meltProgress = null,
   bluePhase = 0,
+  bleedColor = BLUE, // 전환 수렴 색(기본 블루). App에서 '#0A0A0A' 주면 검정으로 마감
   lines = DEFAULT_LINES,
   bleedEnd = 0.18,
   logoSize = 96,
   hasGnbLogo = true,
   hasLipsBeat = true,
   lipsStart = 0.33,
-  lipsMultiplyEnd = 0.47,
-  lipsEnd = 0.50,
+  lipsMultiplyEnd = 0.55,
+  lipsEnd = 0.58,
   hasInjectionBeat = true,
   injectionVideoSrc = '/video/ink-diffusion.mp4',
-  injectionStart = 0.48,
+  injectionStart = 0.60,
   injectionEnd = 0.80,
   onLineReveal,
   onLipsStep,
@@ -146,6 +147,9 @@ const IntroLogoBleed = forwardRef(function IntroLogoBleed({
   const bgT = clamp01((bleedEased - 0.35) / 0.55);
   const bgV = Math.round(255 + (10 - 255) * bgT);
   const gnbOpacity = clamp01((bleedEased - 0.7) / 0.3);
+  // GNB 로고 색: 검은 배경에선 흰색, 배경이 블루로 물들면 검정으로 보간(파란 배경 위 고대비)
+  const gnbT = clamp01((bluePhase - 0.5) / 0.3);
+  const gnbLogoColor = `rgb(${ Math.round(245 - 235 * gnbT) }, ${ Math.round(245 - 235 * gnbT) }, ${ Math.round(240 - 230 * gnbT) })`;
   // 립스 숨김 구간엔 현재 라인을 없앰(-1) → "better version"이 미리 페이드아웃되어,
   // 립스 종료 후 컨테이너가 다시 보일 때 잔상으로 깜빡이지 않음.
   const currentIndex = scriptsHidden ? -1 : activeCount - 1;
@@ -163,13 +167,17 @@ const IntroLogoBleed = forwardRef(function IntroLogoBleed({
   // 가 되어 글자 전체가 파랑. (blueLine 위쪽=초록, 아래쪽=파랑)
   const blueLine = 130 - meltP * 160;
   // 배경 전환 — "파랗게 물든 글자 자체"가 팽창(dilate)해 잉크처럼 번져 배경이 된다(원 아님, 글자에서 확산).
-  const floodP = clamp01((bluePhase - 0.35) / 0.5); // 0.35부터 번지기 시작
+  const floodP = clamp01((bluePhase - 0.3) / 0.6); // 씬 끝(≈0.9)에 완료 → 완료 직후 곧바로 노른자로(빈 블루 최소)
   const flood = floodP * floodP; // ease-in
-  // 배경색을 검정→블루로 수렴 — 팽창이 못 덮은 모서리까지 같은 블루로 채워 투톤/경계 없이 자연스럽게 마감
-  const bgBlueT = clamp01((bluePhase - 0.45) / 0.45);
-  const bgR = Math.round(bgV + (135 - bgV) * bgBlueT);
-  const bgG = Math.round(bgV + (193 - bgV) * bgBlueT);
-  const bgB = Math.round(bgV + (224 - bgV) * bgBlueT);
+  // 배경색을 검정→bleedColor로 수렴 — 팽창이 못 덮은 모서리까지 같은 색으로 채워 경계 없이 마감
+  const bgBlueT = clamp01((bluePhase - 0.4) / 0.5);
+  const bcHex = bleedColor.replace('#', '');
+  const bcR = parseInt(bcHex.slice(0, 2), 16);
+  const bcG = parseInt(bcHex.slice(2, 4), 16);
+  const bcB = parseInt(bcHex.slice(4, 6), 16);
+  const bgR = Math.round(bgV + (bcR - bgV) * bgBlueT);
+  const bgG = Math.round(bgV + (bcG - bgV) * bgBlueT);
+  const bgB = Math.round(bgV + (bcB - bgV) * bgBlueT);
   const bgColor = `rgb(${ bgR }, ${ bgG }, ${ bgB })`;
 
   return (
@@ -300,8 +308,10 @@ const IntroLogoBleed = forwardRef(function IntroLogoBleed({
                 px: 3,
                 transformOrigin: 'center top',
                 ...(isMelting ? {
-                  // 제자리에서 gooey로 녹으며 초록→파랑으로 물들고, 후반엔 팽창해 배경이 됨(배경색이 블루로 수렴해 이음새 없음)
-                  opacity: 1,
+                  // 제자리에서 gooey로 녹으며 초록→파랑으로 물들고, 후반엔 팽창해 배경이 됨(배경색이 블루로 수렴해 이음새 없음).
+                  // flood 완료(배경=블루 수렴)에 맞춰 텍스트 요소를 완전히 페이드아웃 → 반투명 블루가 배경 위에 겹쳐
+                  // 남는 "진한 블루 블롭/사각형" 잔상 제거.
+                  opacity: 1 - clamp01((floodP - 0.55) / 0.45),
                   filter: `url(#${ meltId })`,
                   transform: 'none',
                   transition: 'none',
@@ -328,10 +338,10 @@ const IntroLogoBleed = forwardRef(function IntroLogoBleed({
                   whiteSpace: 'pre-line',
                   fontSize: 'clamp(2.75rem, 9vw, 8rem)',
                   ...(line.isDing && { textShadow: '0 0 30px rgba(170,255,0,0.6)' }),
-                  // 녹는 동안 형광초록→블루 세로 그라데이션. blueLine(파랑 경계)이 아래→위로 차오름
+                  // 녹는 동안 형광초록→bleedColor 세로 그라데이션. 경계선이 아래→위로 차오름
                   ...(isMelting && {
                     color: 'transparent',
-                    background: `linear-gradient(180deg, #AAFF00 ${ blueLine - 35 }%, ${ BLUE } ${ blueLine }%)`,
+                    background: `linear-gradient(180deg, #AAFF00 ${ blueLine - 35 }%, ${ bleedColor } ${ blueLine }%)`,
                     WebkitBackgroundClip: 'text',
                     backgroundClip: 'text',
                     WebkitTextFillColor: 'transparent',
@@ -358,7 +368,7 @@ const IntroLogoBleed = forwardRef(function IntroLogoBleed({
             transition: 'opacity 0.4s ease',
           } }
         >
-          <SubstanceLogo size={ 44 } color="#F5F5F0" hasSplitOnHover={ false } />
+          <SubstanceLogo size={ 44 } color={ gnbLogoColor } hasSplitOnHover={ false } />
         </Box>
       ) }
     </Box>

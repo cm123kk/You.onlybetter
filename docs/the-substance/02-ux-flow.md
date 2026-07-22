@@ -1,5 +1,28 @@
 # THE SUBSTANCE — UX Flow
 
+> ✅ **구현 현황 (2026-07-21) — 문서 vs 실제 빌드 정합**
+> 이 문서의 나머지는 원안(기획 의도)이며 아직 다수 미구현이다. 아래는 **현재 앱(`App.jsx`)에 실제로 빌드된 것**과 원안이 갈라진 지점의 요약 — 충돌 시 이 블록이 최신이다.
+>
+> **1. 단일 sticky 씬 아키텍처 (중요).** 인트로 → 전환 → HOW IT WORKS → THE PROTOCOL 전 구간을 **하나의 sticky 뷰포트**(`sceneRef`, `SCENE_VH`)에서 진행한다. 진행도(`sceneProgress`)를 `introPhase`/`handoffPhase`/`worksP`/`protoP`로 분할. **별도 sticky 섹션으로 나누지 않는다** — 섹션 사이에 1화면 죽은 공백(seam)이 생겨서(인트로↔HOW IT WORKS, HOW IT WORKS↔PROTOCOL에서 반복 발생) 전부 병합함.
+>
+> **2. 인트로(IntroLogoBleed).** 흰→검정 로고 블리드 → 그린 스크립트 순차 stamp(HAVE YOU EVER DREAMT / …BETTER VERSION / [립스월 3연] / ONE SINGLE INJECTION[잉크확산 영상 비트] / THIS IS THE SUBSTANCE[딩]). 립스 비트 구간·인젝션 영상 비트 존재. GNB ◗◗ 로고는 배경색 따라 흰↔검정 적응.
+>
+> **3. 인트로 → HOW IT WORKS 전환.** 마지막 "THIS IS THE SUBSTANCE"가 **제자리에서 gooey로 녹으며 초록→파랑**으로 물들고, 그 파란 글자가 **팽창(dilate)해 잉크처럼 번져 배경 자체가 됨**(별도 원/커튼 아님 — 유저가 원형 확산·배수·디졸브안 거부). 배경색은 검정→블루로 수렴.
+>
+> **4. HOW IT WORKS(SubstanceHowItWorks).** 리빌 순서 = **노른자 등장 → (pause) → 헤더 텍스트 순차(eyebrow→title→body) → 프로그레스바(마지막)**. 메커닉: 좌 주사기 배출(주입)이 **완전히 끝난 뒤** 노른자 부글부글 → 분열(싱크 맞춤). 프로그레스바 끝=완전 둥근 pill. SFX 3종(노른자 등장=squishy, 주입 시작=big-bubble 1회, 분열=split, 윈도우 원샷).
+>
+> **5. HOW IT WORKS(블루) → THE PROTOCOL(검정) 전환.** **WebGL 리퀴드 마블**(`SubstanceLiquidWipe`, fBm 도메인워핑) — 평평한 블루가 액체로 살아나 블루↔블랙 흐르다 전체 블랙 수렴(포스터 액체/수중 dispersion 모티프).
+>
+> **6. THE PROTOCOL.** 상단 흰색 "THE PROTOCOL" 타이틀. Phase 01 ACTIVATION(ACTIVATOR 필름 뜯기 스크럽) → Phase 02 STABILIZATION(**FOOD MATRIX + FOOD OTHER SELF 두 파우치**, 위→아래 소진, `frameSnap` 하드컷) → Phase 03 CONTINUATION(**SWITCH** 투명 코일에 그린 액체 주입, 양끝 오프스크린·배경 투명·글로우 없음, `frameSnap`). 상세는 아래 "PHASE 키트" 표 참조.
+>
+> **7. 사운드.** 자동재생 정책 회피 위해 **muted `<video>`(mp4)** 로 pulse/youth/injection/ding 재생 후 첫 제스처에 언뮤트. works SFX는 `new Audio()` 원샷. 우하단 커스텀 세로 pill 토글(배경따라 색 적응).
+>
+> **8. 카피.** Phase 카피는 4원칙(꿈 공개·대가 은닉, 유혹적/궁금, 비위협)에 맞춰 리라이트됨 — 아래 "Phase 카피" 표 참조.
+>
+> **미구현(원안 유지):** HERO/DUALITY, THEY KNOW(증언), ACCESS(폼), FOOTER, 컬러아크 훅, 사운드 엔진 전체 설계. (Phase 03 SWITCH는 구현 완료)
+
+---
+
 > 이 페이지는 **경험·서사 우선** 설계다. "마찰 최소화 → 빠른 전환"이라는 통상적 UX 목적을 그대로 따르지 않고, 영화적 시청각 경험을 웹으로 번역하는 것을 목적으로 둔다. 통상 UX 문법(명료한 CTA, 정보 제공, 부드러운 진행)은 버리는 것이 아니라 **서사에 맞게 취사선택하는 도구**다. 톤은 차갑고 단정하고 유혹적이되, 유저를 속이거나 방해하지 않는다 — 다만 편안하게 안심시키지도 않는다.
 
 ---
@@ -22,7 +45,7 @@
 - **로고 블리드(인트로 오프닝)**: **흰 배경** 위 **검은 ◗◗ 로고**로 시작 → 스크롤하면 로고의 검정이 원형으로 배경 전체에 번져 `#0A0A0A`로 전환. 어둠이 로고에서 태어나 화면을 삼키는 감각. 배경이 검어진 뒤 각 활성화 스크립트는 **형광 그린**(secondary.main)으로 stamp
 - **컬러 아크의 방향성**: 옐로→그린 전환은 스크롤 진행의 감정선(주로 **HOW IT WORKS의 노른자**와 전체 액센트에 적용). 되돌릴 때 약한 저항(히스테리시스)으로 "진행됐다"는 감각. ※ 인트로 자체는 흰→검 블리드 + 그린 텍스트의 모노 팔레트(옐로 아님)
 - **사라지는 면책조항**: hover 시 페이드 — 읽히지 않으려는 텍스트라는 연출 (단, 키보드 focus로는 읽을 수 있게 접근성 보장)
-- **잠긴 Phase 03**: hover 시 #C41E3A "ACCESS DENIED" — 거부가 갈망으로
+- **Phase 03(CONTINUATION)**: 티저 카피를 블러 위에 노출해 궁금증 유발 — 겁주지 않고 "자동 지속 + 종료 결정은 유저"로 통제권을 남김 (※ 초기안의 hover "ACCESS DENIED" 박스는 제거됨)
 - **침묵의 순간**: 사운드 ON 시 Phase 03 구간은 앰비언트가 끊기고 형광등 허밍만 — 정적의 긴장
 
 ---
@@ -203,19 +226,31 @@ dread는 **욕망이 먼저 형성된 뒤에만** "진짜구나"로 읽힌다. �
 
 | Phase | 키트 (실사, 영화 실물) | full → consumed | 사운드 |
 |-------|----------------------|-----------------|--------|
-| 01 ACTIVATION | **ACTIVATOR** 블리스터 트레이(주사기 + 형광그린 바이알 + 툴) | 그린 바이알 액면 하강 → 빈 유리병, 트레이 눌림 | 인젝션 1회 |
-| 02 STABILIZATION | **STABILIZER** 파우치(넘버링 1–7 그린캡 바이알 + 화이트 주사기건) | 바이알 소진(넘버 순) → 쭈그러든 빈 파우치 | 인젝션 1회 |
-| 03 CONTINUATION [LOCKED] | **FOOD MATRIX / FOOD OTHER SELF**(넘버링 1–7 크림 튜브) + **SWITCH**(투명 튜빙) | 크림 튜브 비워짐(넘버 순) → 비닐만 쪼글쪼글 | 인젝션 1회(잠금 침묵/허밍과 조율) |
+| 01 ACTIVATION | **ACTIVATOR** 블리스터 트레이(주사기 + 형광그린 바이알 + 툴) | 봉인 필름 뜯기(스크럽) → 개봉·내용물 노출 | 인젝션 1회 |
+| 02 STABILIZATION | **FOOD MATRIX + FOOD OTHER SELF** 두 파우치 나란히(넘버 1–7, 불투명 흰 젤 튜브, 하단 SWITCH 라벨. **밸브 없음** — 검정/오렌지 밸브는 레퍼런스에 없는 환각이라 제외) | 위(7)→아래(1) 순으로 내용물만 비움. **파우치 위치·라벨·라이팅은 완전 고정**, 내용물만 단계 소진(흔들림 없음) | 인젝션 1회 |
+| 03 CONTINUATION | **SWITCH** — 포장 없는 **투명 코일 튜브 한 줄**(밸브·라벨·포장 전혀 없음, 레퍼런스 `c4edf4f8` 4패널의 SWITCH). **코일 양쪽 끝이 화면 밖으로 나가** 액체가 어디선가 주입되는 느낌. 두 자아를 잇는 전환 라인 | 그린(액티베이터색) 서브스탠스가 코일을 타고 **주입(빈 코일→절반→가득)** 스크럽. **글로우/블룸/헤일로 없음.** 검정 카드에 얹히도록 배경은 투명 키잉 + 양끝 소프트 페이드 | 액체 주입 SFX |
+
+> ⚠️ **구현 현황 업데이트(2026-07-21)** — 실제 빌드가 위 표로 반영됨. 원안(02=그린캡 STABILIZER 바이알, 03=FOOD)에서 변경: **FOOD MATRIX/FOOD OTHER SELF 두 파우치를 Phase 02(STABILIZATION)로 이동**(섹션 네이밍은 STABILIZER 유지), Phase 03(CONTINUATION)은 **SWITCH 단독**. 구현 방식 요약:
+> - **하나의 sticky 씬**(`App.jsx` `sceneRef`, `SCENE_VH`)에서 인트로→전환(melt/블루)→HOW IT WORKS→THE PROTOCOL 전 구간 진행 → **섹션 seam(죽은 중간 영역) 제거**. 별도 sticky 섹션 금지.
+> - HOW IT WORKS(블루) → THE PROTOCOL(검정) 전환 = **WebGL 리퀴드 마블**(`SubstanceLiquidWipe`, fBm 도메인워핑) — 블루↔블랙 흐르다 전체 블랙 수렴(잉크 dispersion 모티프). 커튼/배수/디졸브안은 유저 거부.
+> - Phase 01 = 필름 뜯기 스크럽(activator-f1~f4, 부드러운 크로스페이드). Phase 02 = 4프레임(filled→7·6빔→위쪽절반빔→전부쭈글) **하드컷 스냅**(`KitSpecimen frameSnap`) — 파우치 고정·내용물만 단계 소진(크로스페이드 시 파우치가 흔들려 스냅으로 교체). 번호는 이미지에 baked-in이라 세그먼트 게이지 미사용.
+> - **Phase 03 = SWITCH 구현 완료**(switch-f1~f4, frameSnap). 빈 코일→그린 액체 주입(절반→가득) 스크럽. 코일 **양쪽 끝이 화면 밖**으로 나가 오프스크린에서 주입되는 느낌. **글로우 없음.** 코일 이미지는 원본에 스튜디오 빛비침이 있어 **휘도 기반 알파 키잉으로 배경 투명화 + 양끝 2D 소프트 페이드**(검정 카드에 seam 없이 blend). **ACCESS DENIED 박스 제거됨**(유저 요청).
+> - THE PROTOCOL 섹션 타이틀 = 상단 고정 **흰색**(블루 배경색과 겹쳐 안 보이던 문제 해결, 카드가 커져도 안 잘리게 absolute top 고정). 카드 패딩 축소·이미지 확대.
+> - 키트 실사는 Flora로 생성해 `public/kit/`에 배치(activator-f1~f4, stabilizer-f1~f4, switch-f1~f4).
 
 #### Phase 카피 — 키트에 정렬 (disclosure 준수)
 
-> 각 Phase 텍스트는 그 Phase의 키트와 일치한다. 카피 원칙(꿈은 공개·대가는 은닉, 임상적·모호)을 유지: Phase 01은 순수 욕망(전문 공개), Phase 02는 절반만(——— 처리로 대가 암시), Phase 03은 잠금(hover ACCESS DENIED).
+> 각 Phase 텍스트는 그 Phase의 키트와 일치한다. 카피 원칙(꿈은 공개·대가는 은닉, 임상적·모호)을 유지: Phase 01은 순수 욕망(전문 공개), Phase 02는 절반만(——— 처리로 대가 암시), Phase 03은 블러 위 티저 노출(ACCESS DENIED 박스 없음).
 
-| Phase (키트) | disclosure | 카피 (요지, ALL CAPS) |
+> **카피 리라이트(2026-07-21)** — 기존 카피가 임상적·설명적이라 욕망/궁금증이 약했음. 4원칙(판타지 먼저→dread는 임상·모호, 상실 폭로 금지, 유혹을 선언하지 않음)에 맞춰 **더 유혹적·궁금하게, 절대 겁줘 쫓아내지 않게** 교체. Phase가 진행될수록 공개도가 줄어(full→half→locked) "알수록 못 아는" 갈망을 만든다.
+
+| Phase (키트) | disclosure | 카피 |
 |---|---|---|
-| 01 ACTIVATION (ACTIVATOR) | full | "ONE ACTIVATION. YOUR OTHER SELF IS BORN — YOUNGER, MORE PERFECT." · 임상 소자: "Administered once. Irreversible." |
-| 02 STABILIZATION (STABILIZER 1–7) | half | "ONE DOSE. EVERY DAY. SEVEN DAYS." · "Extracted from ————, injected into ————. The balance holds only while you comply." (——— 리댁션으로 대가 암시) |
-| 03 CONTINUATION [LOCKED] (SWITCH + FOOD 1–7) | locked | 잠김 · hover 시 **ACCESS DENIED** · 티저: "SWITCH EVERY SEVEN DAYS. FEED BOTH. ████████" · "RESPECT THE BALANCE. YOU ARE ONE." |
+| 01 ACTIVATION (ACTIVATOR) | full | **헤드라인** "ONE ACTIVATION. AND THE BETTER YOU WAKES." · **본문** "A single dose. The younger, sharper, more perfect version you always knew was in there — now breathing on its own." · **임상 소자(작게)** "Administered once. Yours, forever." (불가역=상실 아닌 '영원'=보상) |
+| 02 STABILIZATION (FOOD MATRIX + FOOD OTHER SELF, 1–7) | half | **헤드라인** "SEVEN DAYS. SEVEN DOSES. THE RHYTHM THAT KEEPS YOU BOTH." · **본문** "Feed the matrix. Feed the other self. Hold the balance, and the two of you stay ████████." (리댁션=대가 폭로 대신 궁금증 — 무엇을 유지하는지 가림) |
+| 03 CONTINUATION (SWITCH) | locked-teaser | **헤드라인** "CONTINUATION" · **티저(블러 위 노출)** "BEYOND THE SEVENTH DAY, THE PROTOCOL CONTINUES ON ITS OWN. A NEW KIT ARRIVES AT YOUR DOORSTEP EVERY WEEK — UNTIL YOU DECIDE TO TERMINATE THE SERVICE." (겁주지 않음 — 자동 지속 + **'언제든 종료 결정은 유저'**로 통제권을 유저에게 두면서, 끊지 않는 한 계속된다는 잔잔한 구속감. ※ hover ACCESS DENIED 박스는 제거됨) |
+
+> **카피 의도(왜 이렇게)**: ① 01은 순수 판타지(대가 0) — "이미 네 안에 있던 더 나은 나"로 유저 자신의 욕망을 가리킴(선언 X). ② 02는 절반 — 리듬/의무는 보여주되 "무엇을 유지하는지"는 ████로 가려 궁금증. 위협("comply/consequences") 어휘 삭제. ③ 03은 잠금 — 대가를 폭로하지 않고 "그 다음이 스스로 이어진다 + 활성화하면 공개"로 **더 알고 싶게** 만들어 ACCESS로 끌어당김. dread는 전면에 없고, 어두운 대가는 제출 이후/fine-print로 유보.
 
 > - **수직 넘버-라인 프로그레스 바 (넘버링 키트)**: STABILIZER(1–7 그린캡 바이알)·FOOD MATRIX/OTHER SELF(1–7 크림 튜브)처럼 넘버링된 키트는 아이템을 **세로로 적층**하고 **각 넘버(1…7)에 가로 라인(rule)**을 달아 **수직 프로그레스 게이지**처럼 읽히게 한다(레퍼런스 `fe71bdf0`·`7b43d278` 그대로 — 넘버 옆 눈금 라인). 주입/소진은 이 세로 게이지를 **넘버 순(위→아래)으로 채움→비움**하며 진행 = 말 그대로 프로그레스 바. `scrollProgress`가 채움 레벨(`fill` 1→0)과 **활성 넘버**를 구동하고, `KitSpecimen`이 넘버-라인 눈금을 **코드 오버레이**로 실사 위에 정합해 그린다(소진된 넘버는 dim/비움, 활성 넘버 강조). ACTIVATOR(단일 바이알)는 넘버 없이 단일 액면 하강.
 > - **봉인 뜯기 = 스크롤 스크럽 이미지 시퀀스 (비디오 아님)**: 봉인된 진공 파우치가 **뜯겨 열리는** 비트는 영상이 아니라 **생성 키프레임 시퀀스**를 `scrollProgress`로 스크럽한다(VideoScrubbing의 이미지 버전). ACTIVATOR 기준 **5프레임**: ① 봉인(intact) → ② 코너 탭 당김/씰 벌어짐 시작 → ③ 상단 씰 1/3 필링 → ④ 절반 뜯김·내용물 노출 → ⑤ 완전 개봉·필름 벗겨짐. 프레이밍(각도·스케일·라벨·내용물) 동결(A1 마스터를 i2i 레퍼런스로 파생해 정합). 스크롤로 프레임 인덱스 구동 → 역스크롤도 매끄러움. **왜 영상 아님**: 스크롤이 타임라인이라 video currentTime 스크럽은 무겁고 역방향 버벅, payload 과다. 키프레임 스크럽이 가볍고 정밀 동기.
@@ -285,7 +320,7 @@ flowchart TD
     VISUAL --> HERO
     FULL --> HERO
 
-    HERO[Section 01 · HERO<br/>NOT FOR EVERYONE] --> PROBLEM[Section 02 · PROBLEM<br/>the mirror knows]
+    HERO[Section 01 · HERO / DUALITY<br/>검정 · 젊음↔늙음 회전 · YOU. ONLY BETTER. · 검정→블루 전환] --> PROBLEM[Section 02 · PROBLEM<br/>the mirror knows]
     PROBLEM --> SUBSTANCE[Section 03 · HOW IT WORKS / DUALITY<br/>주사기 주입 · 노른자 분열 · 세포 분열 · 키트 · YOU 분화]
     SUBSTANCE --> PROTOCOL[Section 04 · THE PROTOCOL<br/>Phase 01/02 절반공개]
 
@@ -328,10 +363,17 @@ THE SUBSTANCE (single-page · 선형)
 │   │    · 욕망 3연 "Younger./More beautiful./More perfect." 순차 stamp 1:1 동기 — 안무 참조]
 │   └── ※ 노른자·세포·액체 배경 없음 (HOW IT WORKS 전용) · SFX만(VO는 나중)
 │
-├── Section 01 — HERO (center column, max 680px)
-│   ├── ◗◗
-│   ├── NOT FOR EVERYONE.
-│   └── You've already imagined it.
+├── Section 01 — HERO / THE DUALITY (full-bleed · 검정 #0A0A0A 유지 — 인트로 끝과 이음새 없음 · SKIP INTRO 목적지)
+│   ├── ◗◗ (상단 · 그린 · 브랜드 아이덴티티)
+│   ├── [회전 인물: 젊은 여자 ↔ 늙은 여자 · 스크롤로 수직축 회전(i2v 회전영상 스크럽) → Elizabeth/Sue 이중 자아]
+│   │    · 두 자아가 붙은 수직 seam = 형광 그린(#AAFF00) 막 — **끈적하되 gross 금지**(럭셔리 세럼 질감 · body-horror ✕ · uncanny면 구매동기 붕괴) · 실사·고해상 필수(플랫 일러스트 금지)
+│   │    · 젊은 쪽 옐로(#F5E642) 미세 조명 → 옐로→그린 컬러 아크를 인물에 투영
+│   ├── YOU. ONLY BETTER. (헤드라인 · ALL CAPS · stamp 시 임상 과잉조명 플래시 1회)
+│   ├── [서브카피 순차 리빌] You've done everything. And still, the mirror knows.
+│   │    / You've already imagined it — yourself, younger. Forever. / The Substance is here for it.
+│   ├── 필름 그레인 + 비네트(실사 질감) · 드론(펄스) 인트로에서 지속
+│   └── [전환] 꼬리에서 인물/seam 점액 용해 → 검정→블루 리퀴드 와이프(SubstanceLiquidWipe 재활용) → HOW IT WORKS(블루)
+│       ※ 스펙 상세: docs/the-substance/06-hero-duality.md · 구현: SubstanceHeroDuality(components/scroll/)
 │
 ├── Section 02 — PROBLEM
 │   └── "the mirror knows / the camera knows / the room knows" → Until now.
@@ -440,6 +482,7 @@ THE SUBSTANCE (single-page · 선형)
 | SubstanceKit | HOW IT WORKS 영화 고증 키트(넘버링 clinical 케이스 · 7-바이알 · 주사기 · 영양팩) — 코드 SVG, 조사 후 제작 | 신규 | `media/` |
 | IntroLogoBleed | 인트로 오프닝: 흰 배경 검은 로고 → 스크롤 시 검정 원 확산으로 배경 전환 | 신규 | `scroll/` 또는 `motion/` |
 | LipsVideoWall | **인트로** 욕망 비트("…a better version of yourself?" 직후): 빈티지 글로시 립스 루프 영상 → 스크롤로 레트로 CRT TV 월(격자)로 멀티플라이. 캔버스 타일링(영상 1개 디코드 → 격자 draw) + poster 스틸 폴백. 욕망 3연 순차 stamp와 1:1 동기 | 신규 | `scroll/` (또는 `media/`) |
+| SubstanceHeroDuality | **HERO/DUALITY**(검정): 젊음↔늙음 회전(i2v 회전영상 스크럽, `rotationVideoSrc`)으로 Elizabeth/Sue 이중 자아 · 수직 seam 그린 gooey 막 · "YOU. ONLY BETTER." + 서브카피 순차 리빌 · 과잉조명 플래시 · 그레인/비네트 · 꼬리 용해(전환은 부모가 SubstanceLiquidWipe 검정→블루). props `progress`·`rotationVideoSrc`·`poster` | 신규 | `scroll/` |
 | KitSpecimen | PROTOCOL Phase별 키트 실사(영화 실물 "그대로"). 하이브리드: 실사 사진(full) + 코드 드레인(액면/튜브 하강) + '쭈글 빈 비닐' 실사 crossfade. props `fill`(1→0)·`isConsumed`·`onAdminister`(인젝션 사운드) | 신규 | `media/` |
 | DualitySequence | STAGE A/B/C — YOU 텍스트 분화 (옐로/그린) | 신규 | `kinetic-typography/` |
 | LockedPhase | Phase 03 잠금 + hover ACCESS DENIED (#C41E3A) | 신규 | `overlay-feedback/` 또는 `card/` |
@@ -473,21 +516,23 @@ THE SUBSTANCE (single-page · 선형)
 
 ### 컴포넌트 상태
 
-- **완료**: SubstanceLogo · SubstanceSyringe · YolkMorph(블루+흰자+주입/블리스터/budding) · CellDivisionCanvas(뼈대) · DualitySequence · ProtocolPhaseCard(기본) · VanishingDisclaimer · RequestConsideration.
-- **신규 예정**: IntroLogoBleed · LipsVideoWall · KitSpecimen.
+- **완료**: SubstanceLogo · SubstanceSyringe · YolkMorph(블루+흰자+주입/블리스터/budding) · CellDivisionCanvas(뼈대) · DualitySequence · ProtocolPhaseCard(기본) · VanishingDisclaimer · RequestConsideration · IntroLogoBleed · LipsVideoWall · KitSpecimen · SubstanceLiquidWipe.
+- **뼈대 완료(에셋·App통합 대기)**: SubstanceHeroDuality — 실사 회전영상 생성 + App 씬 통합(인트로 검정 종료→HERO→검정→블루 와이프) 남음.
 - **확장 예정**: ProtocolPhaseCard(키트+카피+스크롤) · 수정 목록(FadeTransition/Perspective/ScrollScale/GradientOverlay/Button/Switch/HighlightedTypography).
 
 ### 빌드 순서 (제안)
 
-1. **INTRO** — IntroLogoBleed + 그린 스크립트 리빌 + **LipsVideoWall**(욕망 3연 비트, poster 폴백) + SFX
-2. **HOW IT WORKS 조립** — 주사기 게이지 + 노른자 + 세포 (1개 scrollProgress로 구동)
-3. **KitSpecimen** + **ProtocolPhaseCard 확장**(키트 side-by-side + 카피 정렬 + 주입/소진)
-4. **나머지 섹션** 조립 — HERO/PROBLEM/THEY KNOW/PRICING/ACCESS/FOOTER
-5. **사운드 배선** + 접근성/reduced-motion + 오디오 디버그 정리
+1. **INTRO** — IntroLogoBleed + 그린 스크립트 리빌 + **LipsVideoWall**(욕망 3연 비트, poster 폴백) + SFX ✅
+2. **HOW IT WORKS 조립** — 주사기 게이지 + 노른자 + 세포 (1개 scrollProgress로 구동) ✅
+3. **KitSpecimen** + **ProtocolPhaseCard 확장**(키트 side-by-side + 카피 정렬 + 주입/소진) ✅
+4. **HERO/DUALITY**(SubstanceHeroDuality) — (a) 실사 회전영상 생성(FLORA i2v: 실사 스틸→회전영상→all-intra 인코딩+poster) (b) **App 씬 통합**: 인트로 핸드오프를 "검정 종료"까지로 바꾸고 그 뒤 HERO(검정) 삽입 → HERO 꼬리에서 검정→블루 SubstanceLiquidWipe → HOW IT WORKS(블루). SCENE_VH에 HERO_VH 추가·`heroP` 분할, SKIP INTRO 목적지=HERO
+5. **나머지 섹션** 조립 — PROBLEM/THEY KNOW/PRICING/ACCESS/FOOTER
+6. **사운드 배선** + 접근성/reduced-motion + 오디오 디버그 정리
 
 ### 필요 자산 (생성)
 
 - `public/video/lips-loop.webm` (+ poster = 기존 립스 스틸) — 프롬프트 확정
+- **`public/video/hero-duality.mp4`** — HERO 젊음↔늙음 회전 실사(FLORA i2v, all-intra 인코딩) + `hero-duality-poster.jpg`
 - 키트 실사(영화 레퍼런스 기반 생성): ACTIVATOR / STABILIZER / FOOD 각 **full + consumed(쭈글)**
 - `public/cell-green.png` — 세포 텍스처
 

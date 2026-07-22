@@ -34,7 +34,7 @@ Vibe Dictionary 텍소노미 v0.4 기반 분류. 번호는 텍소노미 카테�
 - CustomCard: 미디어+콘텐츠 카드. vertical/horizontal/overlay 레이아웃 (`components/card/CustomCard.jsx`)
 - ImageCard: 이미지 카드 (`components/card/ImageCard.jsx`)
 - MoodboardCard: 무드보드 컬렉션 카드. 2x2 썸네일 그리드 (`components/card/MoodboardCard.jsx`)
-- ProtocolPhaseCard: The Substance THE PROTOCOL Phase 카드. disclosure(full/half/locked)로 정보 공개도 제어, locked는 hover 시 ACCESS DENIED 오버레이 + 사운드 침묵 콜백(LockedPhase 통합) (`components/card/ProtocolPhaseCard.jsx`)
+- ProtocolPhaseCard: The Substance THE PROTOCOL Phase 카드. disclosure(full/half/locked)로 정보 공개도 제어, locked는 hover 시 ACCESS DENIED 오버레이 + 사운드 침묵 콜백(LockedPhase 통합). **kitFrames 제공 시 텍스트+키트(KitSpecimen) side-by-side(반응형 flex, md↓ 스택) 배치 + scrollProgress로 뜯기 스크럽(동시에 완전 개봉) + onAdminister(완전 개봉 시 인젝션). phaseSteps/phaseIndex 제공 시 좌측에 세로 페이즈 프로그레스 레일(형광 원 노드 + 연결선, scrollProgress로 흰색→형광 채움). kit 모드는 IRREVERSIBLE 뱃지 숨김 + 바디텍스트 HOW IT WORKS 스타일(흰색·얇은 Bebas·opacity 0.55) + 큰 키트 이미지** (`components/card/ProtocolPhaseCard.jsx`)
 - Card: MUI Card 컴포넌트 [MUI]
 
 ## 4. Media — 이미지, 비디오 표시
@@ -43,6 +43,7 @@ Vibe Dictionary 텍소노미 v0.4 기반 분류. 번호는 텍소노미 카테�
 - ImageCarousel: 이미지 캐로셀 (`components/media/ImageCarousel.jsx`)
 - ImageTransition: 이미지 트랜지션 효과 (`components/media/ImageTransition.jsx`)
 - CarouselIndicator: 캐로셀 인디케이터 (`components/media/CarouselIndicator.jsx`)
+- KitSpecimen: The Substance PROTOCOL 키트 실사. 봉인→개봉 **프레임 시퀀스**를 openProgress로 스크럽(인접 프레임 opacity crossfade, DOM img 스택), consumedSrc로 소진(쭈글 빈 비닐) crossfade, 넘버링 키트(STABILIZER/FOOD)는 **수직 넘버-라인 프로그레스 게이지**(segments/activeSegment) 오버레이. openProgress=1 도달 시 onAdminister(인젝션) (`components/media/KitSpecimen.jsx`)
 
 ## 5. Data Display — 구조화된 데이터 시각화
 
@@ -105,6 +106,7 @@ Vibe Dictionary 텍소노미 v0.4 기반 분류. 번호는 텍소노미 카테�
 - CellDivisionCanvas: The Substance 살아있는 배경 세포 분열 레이어. 형광 그린 세포가 progress로 밀도·분열 구동, 분열 시 onDivision(사운드) 콜백. 하이브리드(실사 텍스처 public/cell-green.png + 코드, 없으면 절차적 폴백) (`components/scroll/CellDivisionCanvas.jsx`)
 - ScrollScaleContainer: 뷰포트 노출 비율 연동 스케일 컨테이너. Framer Motion useScroll + useTransform (`components/scroll/ScrollScaleContainer.jsx`)
 - LipsVideoWall: The Substance 인트로 "욕망 비트". 그레이딩된 립스 루프 영상 1개를 캔버스로 풀블리드 타일링해 progress로 단일→2×2/3×3→풀 CRT TV 월(베젤·스캔라인·비네트·파워온 플리커)로 멀티플라이. 욕망 3연("Younger./More beautiful./More perfect.")을 격자 단계와 1:1로 하나씩 교체 stamp, onStep(사운드) 콜백. 영상 1개만 디코드(다수 video 회피), 애니값 ref+rAF, reduced-motion 시 poster 단일 유지+텍스트 stamp, 탭 백그라운드 시 pause. public/video/lips-loop.webm(+mp4, lips-poster.jpg) (`components/scroll/LipsVideoWall.jsx`)
+- SubstanceHeroDuality: The Substance 랜딩 HERO(이중 자아). 인트로 종료(검정) 직후 같은 배경에서 이어지며, progress로 젊음↔늙음 회전(i2v 회전영상 스크럽, rotationVideoSrc)을 드러내 Elizabeth/Sue 이중 자아 표현. 두 자아가 붙은 수직 seam에 형광 그린 gooey 막. "YOU. ONLY BETTER." 헤드라인 + 서브카피(04-DesireUX 톤) 순차 리빌, 헤드라인 stamp 시 임상 과잉조명 플래시 1회, 꼬리에서 인물 용해(다음 섹션 검정→블루 리퀴드 와이프는 부모가 처리). 실사 영상 미제공 시 placeholder 미디어로 뼈대 검증. 부모 progress 구동 (`components/scroll/SubstanceHeroDuality.jsx`) — 스펙: docs/the-substance/06-hero-duality.md
 
 ## 14. Motion (Interactive) — 스토리텔링 모션
 

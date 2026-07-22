@@ -19,3 +19,6 @@ export { Indicator } from '../../common/ui/Indicator.jsx';
 
 // CarouselIndicator - 레거시 호환용 (Indicator 사용 권장)
 export { CarouselIndicator } from './CarouselIndicator.jsx';
+
+// KitSpecimen - The Substance PROTOCOL 키트 실사 뜯기 이미지 시퀀스 스크럽 + 넘버-라인 게이지
+export { KitSpecimen } from './KitSpecimen.jsx';

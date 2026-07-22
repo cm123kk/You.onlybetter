@@ -2,3 +2,4 @@
 export { FilterBar } from './FilterBar.jsx';
 export { RequestConsideration } from './RequestConsideration.jsx';
 export { SubstanceHowItWorks } from './SubstanceHowItWorks.jsx';
+export { SubstanceFooter } from './SubstanceFooter.jsx';

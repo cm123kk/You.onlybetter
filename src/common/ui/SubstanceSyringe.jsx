@@ -46,6 +46,7 @@ const BUBBLES = [
  * @param {boolean} hasBubbles - 상승 기포 애니메이션 [Optional, 기본값: true]
  * @param {boolean} stretch - 종횡비 고정 해제(컨테이너 폭×높이로 늘림) — 두껍고 짧게 쓸 때 [Optional, 기본값: false]
  * @param {boolean} flipGradient - 액체 그라디언트 반전(어두운색을 표면=배출 끝으로) [Optional, 기본값: false]
+ * @param {number} endRadius - 관 끝 모서리 반경(0=일자, 26=완전 둥근 pill) [Optional, 기본값: 18]
  * @param {object} sx - 추가 스타일 [Optional]
  *
  * Example usage:
@@ -59,6 +60,7 @@ const SubstanceSyringe = forwardRef(function SubstanceSyringe({
   hasBubbles = true,
   stretch = false,
   flipGradient = false,
+  endRadius = RX,
   sx,
   ...props
 }, ref) {
@@ -159,7 +161,7 @@ const SubstanceSyringe = forwardRef(function SubstanceSyringe({
             <stop offset="100%" stopColor="#FFFFFF" stopOpacity="0" />
           </radialGradient>
           <clipPath id={ vialClip }>
-            <rect x={ X0 } y={ TOP_Y } width={ X1 - X0 } height={ INNER_H } rx={ RX } ry={ RX } />
+            <rect x={ X0 } y={ TOP_Y } width={ X1 - X0 } height={ INNER_H } rx={ endRadius } ry={ endRadius } />
           </clipPath>
           <clipPath id={ fluidClip }>
             <rect x={ X0 } y={ fluidTop } width={ X1 - X0 } height={ Math.max(0, BOTTOM_Y - fluidTop) } />
@@ -168,7 +170,7 @@ const SubstanceSyringe = forwardRef(function SubstanceSyringe({
 
         {/* 외곽 형광 발광 */}
         { f > 0 && (
-          <rect x={ X0 } y={ fluidTop } width={ X1 - X0 } height={ BOTTOM_Y - fluidTop } rx={ RX } fill={ liquidMid } opacity="0.35" filter={ `url(#${ glowId })` } />
+          <rect x={ X0 } y={ fluidTop } width={ X1 - X0 } height={ BOTTOM_Y - fluidTop } rx={ endRadius } fill={ liquidMid } opacity="0.35" filter={ `url(#${ glowId })` } />
         ) }
 
         <g clipPath={ `url(#${ vialClip })` }>
@@ -236,7 +238,7 @@ const SubstanceSyringe = forwardRef(function SubstanceSyringe({
         </g>
 
         {/* 유리관 테두리(선명) */}
-        <rect x={ X0 } y={ TOP_Y } width={ X1 - X0 } height={ INNER_H } rx={ RX } ry={ RX } fill="none" stroke={ glassInk } strokeWidth="1.4" />
+        <rect x={ X0 } y={ TOP_Y } width={ X1 - X0 } height={ INNER_H } rx={ endRadius } ry={ endRadius } fill="none" stroke={ glassInk } strokeWidth="1.4" />
       </Box>
     </Box>
   );

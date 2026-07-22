@@ -27,6 +27,10 @@ CLAUDE.local.md
 *.sw?
 storybook-static
 
-# 대용량 히어로 lips 영상 — GitHub 100MB 초과라 제외(로컬 전용, 필요 시 LFS/경량 인코딩)
-public/video/lips-loop.mp4
-public/video/lips-loop.webm
+# 대용량 소스 작업파일 — 코드에서 import 안 함(앱/빌드 불필요). GitHub 100MB 초과 방지.
+src/assets/Comp assets/
+
+# 히어로 회전영상 중간 산출물 — 최종본(hero-rotation-full.mp4)만 사용, 나머지는 제외
+public/hero/segments/
+public/hero/hero-rotation-male.mp4
+public/hero/hero-rotation.mp4

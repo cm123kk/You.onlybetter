@@ -347,8 +347,15 @@ const components = {
   MuiButton: {
     styleOverrides: {
       root: {
-        borderRadius: 0,
+        borderRadius: '6px', // CTA/버튼 라운드 — GNB CTA와 동일(6px). 사각 기조의 예외
         textTransform: 'uppercase', // 전면 ALL CAPS
+      },
+    },
+  },
+  MuiOutlinedInput: {
+    styleOverrides: {
+      root: {
+        borderRadius: '6px', // 인풋도 CTA와 동일 6px
       },
     },
   },
