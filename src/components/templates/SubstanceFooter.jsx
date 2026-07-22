@@ -163,7 +163,7 @@ function SubstanceFooter({
           m: 0,
           position: 'relative',
           zIndex: 1,
-          mt: { xs: '-30vw', md: '-19vw' },
+          mt: { xs: '-10vw', md: '-19vw' }, // 모바일: 헤드라인 높이보다 크면 폼까지 영상 위로 끌려와 겹침 → 오버랩 축소
           width: '100%',
           textAlign: 'center',
           textTransform: 'uppercase',

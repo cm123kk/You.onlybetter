@@ -88,6 +88,8 @@ function IntroLanding() {
   const injectionRef = useRef(null);
   const dingRef = useRef(null);
   const dingFiredRef = useRef(false);
+  // iOS는 video.volume을 무시(볼륨 기반 페이드 무효) → 와이프를 지나면 muted로 확실히 정지시키기 위한 플래그
+  const bedsSilentRef = useRef(false);
   const interactedRef = useRef(false);
   const unlockedRef = useRef(false); // 아무 제스처(스크롤 포함)라도 있으면 소리 낼 의사 있음
   const activatedRef = useRef(false); // 진짜 활성화 제스처(클릭/키/터치)만 — 브라우저가 언뮤트 허용
@@ -154,7 +156,8 @@ function IntroLanding() {
   useEffect(() => {
     const sync = () => {
       const wantSound = unlockedRef.current && soundOnRef.current;
-      const wantMuted = !wantSound;
+      // bedsSilent: 인트로 베드(펄스/youth/injection)를 확실히 무음화(iOS 볼륨 무시 대응). 와이프 지나면 true.
+      const wantMuted = !wantSound || bedsSilentRef.current;
       [pulseRef.current, youthRef.current, injectionRef.current].forEach((a) => {
         if (!a) return;
         if (a.muted !== wantMuted) a.muted = wantMuted;
@@ -190,6 +193,8 @@ function IntroLanding() {
     const pulseBase = heroP > 0 ? 0.07 : (0.3 - 0.23 * handoffPhase); // 인트로 0.3 → handoff 0.3→0.07 → HERO 0.07(낮게)
     const pulseEndFade = 1 - clamp01((wipeP - 0.15) / 0.55); // HERO 끝 와이프에서 페이드아웃
     pulse.volume = pulseRampIn * pulseBase * pulseEndFade;
+    // 와이프를 지나면 인트로 베드 확실히 무음(iOS 볼륨 무시 대응) — sync 루프가 muted로 반영. 위로 되돌리면 해제.
+    bedsSilentRef.current = wipeP >= 0.85;
     youth.volume = clamp01((progress - LIPS_START) / 0.04) * (1 - clamp01((progress - 0.55) / 0.05)) * 0.25;
     injection.volume = clamp01((progress - INJECTION_START) / 0.05) * (1 - clamp01((progress - 0.72) / 0.08)) * 0.4;
     // 딩: 0.80에서 1회만 트리거(반복 아님, 하나의 긴 딩~~). 볼륨은 melt와 함께 아웃.
@@ -489,7 +494,7 @@ function IntroLanding() {
           섹션을 나누지 않으므로 사이에 죽은 중간 영역(seam)이 생기지 않는다. works(블루)에서 THE PROTOCOL로
           같은 화면에서 이어짐: 블루 액체가 배수되며 검정 노출 → 검정 위 Phase 01 키트 뜯기. */}
       <Box ref={sceneRef} sx={{ position: 'relative', height: `${SCENE_VH}vh`, backgroundColor: '#0A0A0A' }}>
-        <Box sx={{ position: 'sticky', top: 0, height: '100vh', width: '100%', overflow: 'hidden' }}>
+        <Box sx={{ position: 'sticky', top: 0, height: '100dvh', width: '100%', overflow: 'hidden' }}>
           {/* 인트로 — melt는 검정으로 수렴(HERO와 동일 배경). 블루 아님. GNB 로고는 App 레벨 고정으로 대체(중복 방지) */}
           <IntroLogoBleedMemo progress={introPhase} meltProgress={handoffPhase} bluePhase={handoffPhase} bleedColor="#0A0A0A" hasGnbLogo={false} />
           {/* HERO — 이중자아 회전(검정). 인트로 다음, 와이프 전까지 표시 */}
@@ -660,7 +665,7 @@ function HomePage() {
       sx={{
         p: 4,
         textAlign: 'center',
-        minHeight: '100vh',
+        minHeight: '100dvh',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',

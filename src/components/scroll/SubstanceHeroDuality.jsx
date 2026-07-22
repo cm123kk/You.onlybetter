@@ -1,8 +1,15 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
 const clamp01 = (v) => Math.min(1, Math.max(0, v));
+
+/** 터치/모바일(coarse pointer) 감지 — iOS는 paused video의 seek 프레임을 렌더하지 않아 스크럽이 검정으로 깨짐.
+ *  이 경우 스크럽 대신 muted 루프 자동재생으로 폴백(재생 중 프레임은 iOS도 정상 렌더). */
+const isCoarsePointer = () =>
+  typeof window !== 'undefined' &&
+  typeof window.matchMedia === 'function' &&
+  window.matchMedia('(pointer: coarse)').matches;
 
 /**
  * SubstanceHeroDuality 컴포넌트
@@ -46,6 +53,7 @@ function SubstanceHeroDuality({
 }) {
   const p = clamp01(progress);
   const videoRef = useRef(null);
+  const [coarse] = useState(isCoarsePointer);
 
   // 진행도 → 각 요소 매핑
   const figureIn = clamp01(p / 0.08); // 인물 페이드인
@@ -65,7 +73,14 @@ function SubstanceHeroDuality({
   useEffect(() => { targetRef.current = rotLocal; }, [rotLocal]);
   useEffect(() => {
     const v = videoRef.current;
-    if (!v) return;
+    if (!v) return undefined;
+    // 모바일(coarse): 스크럽 대신 muted 루프 재생 — iOS seek 렌더 실패(검정/프리즈) 회피
+    if (coarse) {
+      const play = () => { const pr = v.play(); if (pr && pr.catch) pr.catch(() => {}); };
+      if (v.readyState >= 2) play(); else v.addEventListener('loadeddata', play, { once: true });
+      return undefined;
+    }
+    // 데스크탑: rAF 단일 루프로 스크럽(시크 코얼레싱)
     let raf = 0;
     const tick = () => {
       raf = requestAnimationFrame(tick);
@@ -78,7 +93,7 @@ function SubstanceHeroDuality({
     };
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
-  }, []);
+  }, [coarse]);
 
   return (
     <Box
@@ -86,7 +101,7 @@ function SubstanceHeroDuality({
         position: 'relative',
         width: '100%',
         height: '100%',
-        minHeight: '100vh',
+        minHeight: '100dvh',
         overflow: 'hidden',
         backgroundColor: '#0A0A0A', // 인트로 끝과 동일 검정 → 이음새 없음
         ...sx,
@@ -132,6 +147,7 @@ function SubstanceHeroDuality({
             muted
             playsInline
             preload="auto"
+            { ...(coarse ? { autoPlay: true, loop: true } : {}) }
             sx={ {
               width: '100%',
               height: '100%',
