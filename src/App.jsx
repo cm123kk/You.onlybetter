@@ -437,20 +437,29 @@ function IntroLanding() {
           <>
             {gateOp > 0.01 && (
               !entered ? (
+                // 첫 화면 전체가 탭 = 입장(작은 버튼 조준 불필요) → 모바일에서 확실히 눌림. ENTER 텍스트는 시각 표시.
                 <Box
-                  component="button"
                   onClick={handleEnter}
+                  role="button"
+                  aria-label="ENTER"
                   sx={{
-                    position: 'fixed', left: '50%', bottom: { xs: '22%', md: '13%' }, transform: 'translateX(-50%)', zIndex: 15,
-                    px: 4, py: 1.6, minHeight: 48, borderRadius: '999px', border: '1px solid', borderColor: line,
-                    backgroundColor: 'transparent', color: faint, cursor: 'pointer',
+                    position: 'fixed', inset: 0, zIndex: 15, cursor: 'pointer',
                     touchAction: 'manipulation', WebkitTapHighlightColor: 'transparent',
-                    fontFamily: '"Bebas Neue", sans-serif', fontSize: '1rem', letterSpacing: '0.16em',
-                    opacity: gateOp, transition: 'opacity 0.3s ease, color 0.35s ease, border-color 0.35s ease',
-                    '&:hover': { color: strong, borderColor: strong },
+                    display: 'flex', alignItems: 'flex-end', justifyContent: 'center',
+                    pb: { xs: '24%', md: '13%' },
+                    opacity: gateOp, transition: 'opacity 0.3s ease',
                   }}
                 >
-                  ENTER
+                  <Box
+                    component="span"
+                    sx={{
+                      px: 4, py: 1.6, borderRadius: '999px', border: '1px solid', borderColor: line,
+                      color: faint, fontFamily: '"Bebas Neue", sans-serif', fontSize: '1rem', letterSpacing: '0.16em',
+                      transition: 'color 0.35s ease, border-color 0.35s ease',
+                    }}
+                  >
+                    ENTER
+                  </Box>
                 </Box>
               ) : (
                 <Typography
@@ -470,8 +479,9 @@ function IntroLanding() {
                 component="button"
                 onClick={skipIntro}
                 sx={{
-                  position: 'fixed', left: '50%', bottom: '6%', transform: 'translateX(-50%)', zIndex: 9,
-                  border: 'none', backgroundColor: 'transparent', color: faint, cursor: 'pointer', p: 0.5,
+                  position: 'fixed', left: '50%', bottom: '6%', transform: 'translateX(-50%)', zIndex: 16,
+                  border: 'none', backgroundColor: 'transparent', color: faint, cursor: 'pointer', p: 1,
+                  touchAction: 'manipulation', WebkitTapHighlightColor: 'transparent',
                   fontFamily: '"Bebas Neue", sans-serif', fontSize: '0.74rem', letterSpacing: '0.12em',
                   opacity: 0.55, textDecoration: 'none',
                   transition: 'opacity 0.3s ease, color 0.4s ease',

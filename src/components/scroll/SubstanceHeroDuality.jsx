@@ -44,6 +44,7 @@ const isCoarsePointer = () =>
 function SubstanceHeroDuality({
   progress = 0,
   rotationVideoSrc = '/hero/hero-rotation-full.mp4',
+  rotationVideoMobileSrc = '/hero/hero-rotation-mobile.mp4', // 모바일 전용 경량(자동 루프 재생용)
   poster = '/hero/hero-rotation-full-poster.jpg',
   headline = 'YOU. ONLY BETTER.',
   rotationStart = 0.2,
@@ -142,7 +143,7 @@ function SubstanceHeroDuality({
           <Box
             component="video"
             ref={ videoRef }
-            src={ rotationVideoSrc }
+            src={ coarse ? rotationVideoMobileSrc : rotationVideoSrc }
             poster={ poster }
             muted
             playsInline

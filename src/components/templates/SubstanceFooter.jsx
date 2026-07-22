@@ -46,10 +46,28 @@ function SubstanceFooter({
     impactRef.current.volume = 0.85;
     dingRef.current = new Audio('/audio/substance/ding-long.wav');
     dingRef.current.volume = 0.6;
+    // iOS 언락 — new Audio()는 사용자 제스처 안에서 1회 재생돼야 이후 프로그램 재생이 허용됨.
+    //  첫 제스처에 muted play→pause로 언락(안 하면 impact/ding이 iOS에서 무음).
+    const els = [riserRef.current, impactRef.current, dingRef.current];
+    let unlocked = false;
+    const evs = ['pointerdown', 'touchstart', 'keydown'];
+    const removeUnlock = () => evs.forEach((e) => window.removeEventListener(e, unlock));
+    function unlock() {
+      if (unlocked) return;
+      unlocked = true;
+      els.forEach((a) => {
+        if (!a) return;
+        a.muted = true;
+        const p = a.play();
+        if (p && p.then) p.then(() => { a.pause(); a.currentTime = 0; a.muted = false; }).catch(() => { a.muted = false; });
+        else a.muted = false;
+      });
+      removeUnlock();
+    }
+    evs.forEach((e) => window.addEventListener(e, unlock, { passive: true }));
     return () => {
-      riserRef.current && riserRef.current.pause();
-      impactRef.current && impactRef.current.pause();
-      dingRef.current && dingRef.current.pause();
+      removeUnlock();
+      els.forEach((a) => a && a.pause());
     };
   }, []);
 
