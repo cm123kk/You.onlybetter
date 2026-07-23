@@ -81,10 +81,15 @@ const P_WIPE = (INTRO_VH + HANDOFF_VH + HERO_VH) / SCENE_VH; // 검정→블루 
 const P_WORKS = (INTRO_VH + HANDOFF_VH + HERO_VH + WIPE_VH) / SCENE_VH; // HOW IT WORKS 시작
 const P_PROTO = (INTRO_VH + HANDOFF_VH + HERO_VH + WIPE_VH + WORKS_VH) / SCENE_VH; // THE PROTOCOL 시작
 const PROTO_TRANS = 0.14; // protoP 이 구간까지 블루→검정 리퀴드 전환, 이후 Phase 카드들
+const AUTOPLAY_MS = 60000; // 모바일 전체 자동재생 총 길이(progress 0→1). 파트별 체감은 각 구간 vh 비율에 비례.
 
 function IntroLanding() {
   const sceneRef = useRef(null);
-  const { progress: sceneProgress } = useScrollProgress(sceneRef);
+  const { progress: scrollProgress } = useScrollProgress(sceneRef);
+  // 모바일(coarse pointer): 스크롤 대신 타이머로 progress를 구동(전체 자동재생) — iOS 스크럽/주소창 desync/버벅임을 원천 제거.
+  const [coarse] = useState(() => typeof window !== 'undefined' && typeof window.matchMedia === 'function' && window.matchMedia('(pointer: coarse)').matches);
+  const [autoProgress, setAutoProgress] = useState(0);
+  const sceneProgress = coarse ? autoProgress : scrollProgress;
   // 하나의 진행도(sceneProgress)를 구간별 분할(전부 같은 sticky → seam 없음)
   const introPhase = clamp01(sceneProgress / P_HERO); // 인트로 라인/블리드(melt까지 HERO 시작에 완료)
   const handoffPhase = clamp01((sceneProgress - P_HANDOFF) / (P_HERO - P_HANDOFF)); // 인트로 melt → 검정
@@ -120,7 +125,7 @@ function IntroLanding() {
   useEffect(() => { soundOnRef.current = soundOn; }, [soundOn]);
   const [entered, setEntered] = useState(false); // 입장 게이트(ENTER) — 클릭=활성화 제스처로 소리 언락
 
-  // ENTER — 제스처 컨텍스트 안에서 즉시 언뮤트(브라우저 정책 확실 충족) + 게이트 닫기. 이후 스크롤로 진행.
+  // ENTER — 제스처 컨텍스트 안에서 즉시 언뮤트(브라우저 정책 확실 충족) + 게이트 닫기. 이후 스크롤(데스크탑)/자동재생(모바일)로 진행.
   const handleEnter = useCallback(() => {
     setEntered(true);
     unlockedRef.current = true; activatedRef.current = true; interactedRef.current = true;
@@ -132,6 +137,31 @@ function IntroLanding() {
       });
     }
   }, []);
+
+  // 모바일 전체 자동재생 — ENTER 후 progress를 실시간(rAF)으로 0→1 구동. 재생 중엔 스크롤 잠금(자동 진행),
+  //  완료(=1) 시 잠금 해제 → 아래 푸터(이메일 폼)로 스크롤 가능. 데스크탑(coarse=false)엔 영향 없음.
+  useEffect(() => {
+    if (!coarse || !entered) return undefined;
+    let raf = 0;
+    let startTs = null;
+    const tick = (t) => {
+      if (startTs === null) startTs = t;
+      const prog = Math.min(1, (t - startTs) / AUTOPLAY_MS);
+      setAutoProgress(prog);
+      if (prog < 1) raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [coarse, entered]);
+  // 자동재생 진행 중 스크롤 잠금(모바일). autoProgress가 1에 도달하면 해제해 푸터로 이동 가능.
+  useEffect(() => {
+    if (coarse && entered && autoProgress < 1) {
+      const prev = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+      return () => { document.body.style.overflow = prev; };
+    }
+    return undefined;
+  }, [coarse, entered, autoProgress]);
 
   // 오디오는 선언적 <audio autoPlay muted>(return 하단)로 렌더 → muted 재생이 실제로 걸림(new Audio()
   // 무음 autoplay는 브라우저에서 안 걸리는 경우가 많음). 재생 중 요소의 언뮤트는 휠/스크롤에도 허용 →
@@ -417,12 +447,14 @@ function IntroLanding() {
 
   // SKIP INTRO — HERO 시작 지점으로 스크롤. 클릭 자체가 오디오 unlock 제스처도 됨.
   const skipIntro = useCallback(() => {
+    // 모바일(자동재생): 인트로 건너뛰고 HERO 지점으로 progress 점프. 데스크탑: HERO 지점으로 스크롤.
+    if (coarse) { setEntered(true); setAutoProgress(P_HERO); return; }
     const el = sceneRef.current;
     if (!el) return;
     const scrollable = el.offsetHeight - window.innerHeight;
     const target = el.offsetTop + P_HERO * scrollable + 4;
     window.scrollTo({ top: target, behavior: 'smooth' });
-  }, []);
+  }, [coarse]);
 
   return (
     <>
@@ -469,7 +501,7 @@ function IntroLanding() {
                     ENTER
                   </Box>
                 </Box>
-              ) : (
+              ) : coarse ? null : (
                 <Typography
                   component="div"
                   sx={{
@@ -542,7 +574,7 @@ function IntroLanding() {
       {/* 통합 씬 — 인트로 + 전환 + HOW IT WORKS + THE PROTOCOL을 전부 하나의 sticky 뷰포트에서 진행.
           섹션을 나누지 않으므로 사이에 죽은 중간 영역(seam)이 생기지 않는다. works(블루)에서 THE PROTOCOL로
           같은 화면에서 이어짐: 블루 액체가 배수되며 검정 노출 → 검정 위 Phase 01 키트 뜯기. */}
-      <Box ref={sceneRef} sx={{ position: 'relative', height: `${SCENE_VH}vh`, backgroundColor: '#0A0A0A' }}>
+      <Box ref={sceneRef} sx={{ position: 'relative', height: coarse ? '100vh' : `${SCENE_VH}vh`, backgroundColor: '#0A0A0A' }}>
         <Box sx={{ position: 'sticky', top: 0, height: '100vh', width: '100%', overflow: 'hidden' }}>
           {/* 인트로 — melt는 검정으로 수렴(HERO와 동일 배경). 블루 아님. GNB 로고는 App 레벨 고정으로 대체(중복 방지) */}
           <IntroLogoBleedMemo progress={introPhase} meltProgress={handoffPhase} bluePhase={handoffPhase} bleedColor="#0A0A0A" hasGnbLogo={false} />

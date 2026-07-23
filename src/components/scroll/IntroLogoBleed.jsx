@@ -237,13 +237,18 @@ const IntroLogoBleed = forwardRef(function IntroLogoBleed({
           top: '50%',
           left: '50%',
           zIndex: 1,
-          transform: 'translate(-50%, -50%)',
+          // 모바일: 로고를 900px로 '한 번만' 렌더하고 CSS transform scale(GPU)로 확대 — 매 프레임 거대 SVG
+          //   재래스터화(멈춤/끊김) 제거. scale 상한 2.4배(=2160px)로 iOS 텍스처 한계(4096px) 이내 유지.
+          //   (bg도 검정으로 수렴하므로 로고가 전 픽셀을 덮지 않아도 전환이 깨끗)
+          transform: coarse
+            ? `translate(-50%, -50%) scale(${ Math.min(2.4, (logoSize * logoScale) / 900) })`
+            : 'translate(-50%, -50%)',
+          willChange: coarse ? 'transform' : undefined,
           lineHeight: 0,
           opacity: 1 - clamp01((bluePhase - 0.1) / 0.3),
         } }
       >
-        {/* 모바일은 렌더 크기를 1200px로 캡 — 화면은 충분히 덮으면서(bg도 검정 수렴) 5800px 재렌더/텍스처 한계 회피 */}
-        <SubstanceLogo size={ Math.round(coarse ? Math.min(1200, logoSize * logoScale) : logoSize * logoScale) } color="#0A0A0A" hasSplitOnHover={ false } />
+        <SubstanceLogo size={ coarse ? 900 : Math.round(logoSize * logoScale) } color="#0A0A0A" hasSplitOnHover={ false } />
       </Box>
 
       {/* 립스 → TV 월 욕망 비트 — 풀블리드, 로컬 progress로 단일→멀티플라이, 3연 stamp(내장) */}
