@@ -78,7 +78,10 @@ function SubstanceHeroDuality({
     // 모바일(coarse): 스크럽 대신 muted 루프 재생 — iOS seek 렌더 실패(검정/프리즈) 회피.
     //  무음 자동재생이 저전력모드/정책으로 막힐 수 있어 → loadeddata/canplay + '다음 터치'에 재생 재시도(제스처 컨텍스트).
     if (coarse) {
-      const tryPlay = () => { const pr = v.play(); if (pr && pr.catch) pr.catch(() => {}); };
+      const tryPlay = () => {
+        v.playbackRate = 1.9; // 회전 더 빠르게 + 자동재생 창 안에서 젊은 남자 정면까지 완주
+        const pr = v.play(); if (pr && pr.catch) pr.catch(() => {});
+      };
       const onTouch = () => tryPlay();
       tryPlay();
       v.addEventListener('loadeddata', tryPlay);
