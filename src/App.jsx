@@ -81,7 +81,7 @@ const P_WIPE = (INTRO_VH + HANDOFF_VH + HERO_VH) / SCENE_VH; // 검정→블루 
 const P_WORKS = (INTRO_VH + HANDOFF_VH + HERO_VH + WIPE_VH) / SCENE_VH; // HOW IT WORKS 시작
 const P_PROTO = (INTRO_VH + HANDOFF_VH + HERO_VH + WIPE_VH + WORKS_VH) / SCENE_VH; // THE PROTOCOL 시작
 const PROTO_TRANS = 0.14; // protoP 이 구간까지 블루→검정 리퀴드 전환, 이후 Phase 카드들
-const AUTOPLAY_MS = 40000; // 모바일 인트로+HERO 자동재생 길이(progress 0→P_WIPE). 이후는 스크롤 구동.
+const AUTOPLAY_MS = 44000; // 모바일 인트로+HERO+와이프 자동재생 길이(progress 0→P_WORKS). 이후는 스크롤 구동.
 
 function IntroLanding() {
   const sceneRef = useRef(null);
@@ -149,16 +149,17 @@ function IntroLanding() {
       if (startTs === null) startTs = t;
       const frac = Math.min(1, (t - startTs) / AUTOPLAY_MS);
       if (frac < 1) {
-        setAutoProgress(frac * P_WIPE);
+        setAutoProgress(frac * P_WORKS);
         raf = requestAnimationFrame(tick);
       } else {
-        // 인계: 스크롤 잠금 해제 후 스크롤 위치를 P_WIPE에 맞춘 뒤 autoDone → sceneProgress 점프/번쩍임 없음.
-        setAutoProgress(P_WIPE);
+        // 인계: 인트로+HERO+와이프까지 자동재생 끝(P_WORKS=HOW IT WORKS 시작). 스크롤 위치를 그 지점에 맞춘 뒤
+        //  autoDone → sceneProgress 점프/번쩍임 없이 스크롤 구동으로 전환(HERO는 언마운트되어 더 재생 안 됨).
+        setAutoProgress(P_WORKS);
         document.body.style.overflow = '';
         const el = sceneRef.current;
         if (el) {
           const scrollable = el.offsetHeight - window.innerHeight;
-          window.scrollTo(0, Math.round(el.offsetTop + P_WIPE * scrollable));
+          window.scrollTo(0, Math.round(el.offsetTop + P_WORKS * scrollable));
         }
         setAutoDone(true);
       }
