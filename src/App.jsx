@@ -321,64 +321,7 @@ function IntroLanding() {
     });
   }, [worksP, soundOn]);
 
-  // HERO 보이스오버 — 스크롤 임계점을 지나면 자르지 않고 큐에 쌓고, 한 라인이 끝나면 다음 라인 재생.
-  // → 스크롤 속도와 무관하게 모든 라인이 끝까지 순차로 다 나옴(겹침/스킵 없음). 위로 되돌리면 리셋해 재트리거.
-  const heroVoRef = useRef(null);
-  const voQueueRef = useRef([]);
-  const voPlayingRef = useRef(false);
-  const playNextVo = useCallback(() => {
-    if (voPlayingRef.current) return; // 재생 중이면 대기(끝나면 ended가 다음 호출)
-    const q = voQueueRef.current;
-    if (!q.length) return;
-    const a = q.shift();
-    voPlayingRef.current = true;
-    a.currentTime = 0;
-    const p = a.play(); if (p && p.catch) p.catch(() => { voPlayingRef.current = false; });
-  }, []);
-  useEffect(() => {
-    const mk = (src) => { const a = new Audio(src); a.preload = 'auto'; a.volume = 0.18; return a; };
-    const items = [
-      { a: mk('/hero/vo/vo1.mp3'), trigger: 0.14, reset: 0.10, fired: false }, // 헤드라인 stamp 직후
-      { a: mk('/hero/vo/vo2.mp3'), trigger: 0.30, reset: 0.26, fired: false }, // 회전 초·중반
-      { a: mk('/hero/vo/vo3.mp3'), trigger: 0.60, reset: 0.56, fired: false }, // 회전 후반(남성 전이)
-    ];
-    const onEnded = () => { voPlayingRef.current = false; playNextVo(); };
-    items.forEach((o) => o.a.addEventListener('ended', onEnded));
-    heroVoRef.current = items;
-    const detachUnlock = attachAudioUnlock(items.map((o) => o.a)); // iOS 언락
-    return () => {
-      detachUnlock();
-      items.forEach((o) => { o.a.removeEventListener('ended', onEnded); o.a.pause(); });
-      voQueueRef.current = [];
-      voPlayingRef.current = false;
-      heroVoRef.current = null;
-    };
-  }, [playNextVo]);
-  useEffect(() => {
-    const items = heroVoRef.current;
-    if (!items) return;
-    // 소리 OFF: 전부 정지 + 큐 비움
-    if (!soundOn) {
-      items.forEach((o) => o.a.pause());
-      voQueueRef.current = [];
-      voPlayingRef.current = false;
-      return;
-    }
-    // 인트로 맨 위로 되돌아오면 전 라인 리셋(다음 입장 시 처음부터 다시)
-    if (heroP <= 0) { items.forEach((o) => { o.fired = false; }); return; }
-    const canPlay = interactedRef.current;
-    items.forEach((o) => {
-      if (heroP >= o.trigger) {
-        if (!o.fired && canPlay) {
-          o.fired = true;
-          if (!voQueueRef.current.includes(o.a)) voQueueRef.current.push(o.a); // 자르지 않고 큐잉
-          playNextVo();
-        }
-      } else if (heroP < o.reset) {
-        o.fired = false; // 위로 되돌림 — 재트리거 허용
-      }
-    });
-  }, [heroP, soundOn, playNextVo]);
+  // (HERO 보이스오버 제거 — 합성음 내레이션이 톤을 깎아 펄스+비주얼+헤드라인만으로 진행)
 
   // THE PROTOCOL SFX — 각 Phase 키트 애니메이션 시작 구간에서 원샷(protoP 기준).
   //  - protocol-1(포장 필름 뜯기): Phase 01 개봉 스크럽(p01Kit 활성 ≈ 0.17~0.36)
